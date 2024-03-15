@@ -8,7 +8,7 @@ import useCalculateResult from './hooks/calculateResult';
 
 function App() {
 	const [inputValues, setInputValues] = useState<InputValuesT>({});
-	const typedYamlData: FormulaT[] = yamlData as FormulaT[];
+	const typedYamlData = yamlData as FormulaT[];
 
 	const { results, calculateResult } = useCalculateResult(typedYamlData);
 
@@ -42,17 +42,17 @@ function App() {
 			<div className="calculate_container">
 				{typedYamlData.map((data: FormulaT, index: number) => (
 					<div className="calculcatejuttu" key={index}>
-						<h2>{data.name}</h2>
+						<h2>{data.title}</h2>
 						{data.fields.map((field: FieldT, fieldIndex: number) => (
 							<input
 								className="calculatebox"
 								key={fieldIndex}
 								name={field.nimi}
-								onChange={(e) => handleInputChange(e, data.name, field.muuttuja)}
+								onChange={(e) => handleInputChange(e, data.title, field.muuttuja)}
 								type="number"
 							/>
 						))}
-						<p>Tulos: {results[data.name]}</p>
+						<p>Tulos: {results[data.title]}</p>
 					</div>
 				))}
 			</div>

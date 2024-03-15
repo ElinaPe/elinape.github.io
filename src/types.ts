@@ -8,7 +8,7 @@ const Field = z.object({
 });
 
 const Formula = z.object({
-	name: z.string(),
+	title: z.string(),
 	description: z.string().optional(),
 	fields: z.array(Field),
 	formula: z.string(),

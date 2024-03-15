@@ -1,4 +1,4 @@
-- name: Montako kuljetettavaa lasta?
+- title: Montako kuljetettavaa lasta?
   description: 
   fields:
     - nimi: Number of children
@@ -14,7 +14,7 @@
     nimi: Kuljetettavat lapset
     tyyppi: float
 
-- name: Kuinka monta henkilöä osallistuu kuljetusmuutoksiin?
+- title: Kuinka monta henkilöä osallistuu kuljetusmuutoksiin?
   fields:
     - nimi: Kunta henkiloiden Lukumaara
       muuttuja: kuntaLkm
@@ -37,7 +37,7 @@
   formula: (kuntaLkm * kuntaPalkka) + (kouluHloLkm * kouluHloPalkka) + (kuljetusHloLkm * kuljetusHloPalkka)
 
 
-- name: Kolmas indeksi
+- title: Kolmas indeksi
   fields:
     - nimi: paino
       muuttuja: a
