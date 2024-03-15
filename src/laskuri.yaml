@@ -1,0 +1,53 @@
+- name: Montako kuljetettavaa lasta?
+  description: 
+  fields:
+    - nimi: Number of children
+      muuttuja: a
+      control-type: type
+      tyyppi: float
+    - nimi: Prosentual absence
+      muuttuja: b
+      control-type: slider
+      tyyppi: float
+  formula: b/100*a
+  result:
+    nimi: Kuljetettavat lapset
+    tyyppi: float
+
+- name: Kuinka monta henkilöä osallistuu kuljetusmuutoksiin?
+  fields:
+    - nimi: Kunta henkiloiden Lukumaara
+      muuttuja: kuntaLkm
+      tyyppi: integer
+    - nimi: Kunta keskimaarainen Palkka
+      muuttuja: kuntaPalkka
+      tyyppi: float
+    - nimi: Koulu henkiloiden Lukumaara
+      muuttuja: kouluHloLkm
+      tyyppi: integer
+    - nimi: Koulu keskimaarainen Palkka
+      muuttuja: kouluHloPalkka
+      tyyppi: float
+    - nimi: Kuljetusyritys henkiloiden Lukumaara
+      muuttuja: kuljetusHloLkm
+      tyyppi: integer
+    - nimi: Kuljetusyritys keskimaarainen Palkka
+      muuttuja: kuljetusHloPalkka
+      tyyppi: float
+  formula: (kuntaLkm * kuntaPalkka) + (kouluHloLkm * kouluHloPalkka) + (kuljetusHloLkm * kuljetusHloPalkka)
+
+
+- name: Kolmas indeksi
+  fields:
+    - nimi: paino
+      muuttuja: a
+      control-type: type
+      tyyppi: float
+    - nimi: pituus
+      muuttuja: b
+      control-type: type
+      tyyppi: float
+  formula: a - b
+  result:
+    nimi: painoindeksi
+    tyyppi: float
