@@ -1,53 +1,155 @@
 - title: Montako kuljetettavaa lasta?
   description: 
   fields:
-    - nimi: Number of children
-      muuttuja: a
-      control-type: type
-      tyyppi: float
-    - nimi: Prosentual absence
-      muuttuja: b
-      control-type: slider
-      tyyppi: float
+    - name: Lasten lkm
+      variable: a
+      type: float
+      controlType: type
+    - name: Poissaoloprosentti
+      variable: b
+      type: float
+      controlType: slider
+      marks:
+        - value: 0
+          label: "0%"
+        - value: 100
+          label: "100%"
   formula: b/100*a
   result:
-    nimi: Kuljetettavat lapset
-    tyyppi: float
+    id: lapset
+    name: Määrä
+    type: int
+    ending: lasta pois
 
 - title: Kuinka monta henkilöä osallistuu kuljetusmuutoksiin?
   fields:
-    - nimi: Kunta henkiloiden Lukumaara
-      muuttuja: kuntaLkm
-      tyyppi: integer
-    - nimi: Kunta keskimaarainen Palkka
-      muuttuja: kuntaPalkka
-      tyyppi: float
-    - nimi: Koulu henkiloiden Lukumaara
-      muuttuja: kouluHloLkm
-      tyyppi: integer
-    - nimi: Koulu keskimaarainen Palkka
-      muuttuja: kouluHloPalkka
-      tyyppi: float
-    - nimi: Kuljetusyritys henkiloiden Lukumaara
-      muuttuja: kuljetusHloLkm
-      tyyppi: integer
-    - nimi: Kuljetusyritys keskimaarainen Palkka
-      muuttuja: kuljetusHloPalkka
-      tyyppi: float
-  formula: (kuntaLkm * kuntaPalkka) + (kouluHloLkm * kouluHloPalkka) + (kuljetusHloLkm * kuljetusHloPalkka)
-
-
-- title: Kolmas indeksi
-  fields:
-    - nimi: paino
-      muuttuja: a
-      control-type: type
-      tyyppi: float
-    - nimi: pituus
-      muuttuja: b
-      control-type: type
-      tyyppi: float
-  formula: a - b
+    - name: Kunnalta
+      variable: kuntaLkm
+      type: integer
+      controlType: type
+    - name: Koululta
+      variable: kouluHloLkm
+      type: integer
+      controlType: type
+    - name: Kuljetusyritykseltä
+      variable: kuljetusHloLkm
+      type: integer
+      controlType: type
+  formula: kuntaLkm + kouluHloLkm + kuljetusHloLkm
   result:
-    nimi: painoindeksi
-    tyyppi: float
+    id: henkilot
+    name: Henkilöt
+    type: float
+    ending: henkilöä
+
+
+- title: Palkkakulut
+  fields:
+    - name: Kuntahenkilön palkka
+      variable: kuntaPalkka
+      type: float
+      controlType: slider
+      min: 0
+      max: 10000
+      marks:
+        - value: 0
+          label: "0€"
+        - value: 10000
+          label: "10 000€"
+    - name: Kouluhenkilön palkka
+      variable: kouluHloPalkka
+      type: float
+      controlType: slider
+      min: 0
+      max: 10000
+      marks:
+        - value: 0
+          label: "0€"
+        - value: 10000
+          label: "10 000€"
+    - name: Kuljetusyrityshenkilön palkka
+      variable: kuljetusHloPalkka
+      type: float
+      controlType: slider
+      min: 0
+      max: 10000
+      marks:
+        - value: 0
+          label: "0€"
+        - value: 10000
+          label: "10 000€"
+  formula: kuntaPalkka + kouluHloPalkka + kuljetusHloPalkka
+  result:
+    id: palkka
+    name: Palkka
+    type: float
+    ending: euroa
+    
+
+
+- title: Kuinka kauan menee yhdessä peruutuksessa?
+  fields:
+    - name: Reitin uudelleenjärjestely
+      variable: uj
+      controlType: slider
+      min: 0
+      max: 60
+      marks:
+        - value: 0
+          label: "0min"
+        - value: 60
+          label: "60min"
+      type: float
+    - name: Kunnan viestittely
+      variable: kuv
+      controlType: slider
+      min: 0
+      max: 60
+      marks:
+        - value: 0
+          label: "0min"
+        - value: 60
+          label: "60min"
+      type: float
+    - name: Koulun viestittely
+      variable: kov
+      controlType: slider
+      min: 0
+      max: 60
+      marks:
+        - value: 0
+          label: "0min"
+        - value: 60
+          label: "60min"
+      type: float
+    - name: Kuljetusyrityksen viestittely
+      variable: kyv
+      controlType: slider
+      min: 0
+      max: 60
+      marks:
+        - value: 0
+          label: "0min"
+        - value: 60
+          label: "60min"
+      type: float
+  formula: uj+kuv+kov+kyv
+  result:
+      id: peruutukset
+      name: Yksi peruutus
+      type: float
+      ending: minuuttia
+
+
+# - title: Total
+#   fields:
+#     - name: Kustannukset euroina
+#       variable: 
+#       controlType: slider
+#       min: 0
+#       max: 60
+#       type: float
+#   formula: uj+kuv+kov+kyv
+#   result:
+#     name: Yksi peruutus
+#     type: float

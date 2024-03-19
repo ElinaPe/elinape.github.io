@@ -12,9 +12,10 @@ html {
 }
 
 body {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   line-height: 1.618;
-  max-width: 38em;
+  // max-width: 38em;
+  max-width: 95%;
   margin: auto;
   color: #4a4a4a;
   background-color: #f9f9f9;
@@ -260,20 +261,49 @@ fieldset {
   font-weight: 600;
 }
 
-.calculate_container {
-  border: 1px solid gray;
-  border-radius: 30px;
-  box-shadow: 5px 10px;
+.motherOfContainers {
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.calculatorContent {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.calculcatejuttu {
-  padding: 10px;
+.slider {
+  width: 50%;
+  margin-left: 10px;
 }
 
-.calculatebox {
-  margin: 5px;
-  border: 1px solid rgb(193, 193, 193);
+.inputTextField {
+  min-width: 20%;
+}
+
+.oneCalculatorContainer{
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  // border: 1px solid gray;
+  // padding: 10px;
+
+}
+
+.inputFields {
+  display: flex;
+  flex-direction: row;
+  gap: 10%;
+  flex-wrap: wrap;
+  margin-left: 10px;
+  margin-right: 10px;
+
+}
+
+
+
+.calculatorResult {
+  margin-left: 10px
 }
