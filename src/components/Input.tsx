@@ -17,8 +17,8 @@ import { Field } from '../types';
  */
 
 interface CustomInputProps {
-  field: Field;
-  onChange: (variable: string, value: string | number) => void;
+    field: Field;
+    onChange: (variable: string, value: string | number) => void;
 }
 const CustomInput: React.FC<CustomInputProps> = ({ field, onChange }) => {
     const handleSliderChange = (event: Event, newValue: number | number[]) => {

@@ -6,27 +6,23 @@ interface LaskuriKomponenttiProps {
     calculator: Calculator;
     handleInputChange: (formulaName: string, variable: string, value: string | number) => void;
     result: number | string;
+    cssClasses?: string[]
 }
 
-const Laskuri: React.FC<LaskuriKomponenttiProps> = ({ calculator, handleInputChange, result }) => {
+const Laskuri: React.FC<LaskuriKomponenttiProps> = ({ calculator, handleInputChange, result, cssClasses }) => {
 
-    const [totals, setTotals] = useState({
-        kuljetettavatLapset: null,
-        henkilot: null,
-        yksiPeruutus: null
-      });   
-       
     const hasResult = result !== "Ei tulosta";
 
     return (
         <div className="oneCalculatorContainer">
             <h4>{calculator.title}</h4>
-            <div className='inputFields'>
-                {calculator.fields.map((field: Field, index: number) => (
+            <div className={cssClasses ? cssClasses.join(" ") : ""}>
+                {calculator.fields?.map((field: Field, index: number) => (
                     <CustomInput
                         key={index}
                         field={field}
                         onChange={(variable, value) => handleInputChange(calculator.title, variable, value)}
+                        
                     />
                 ))}
             </div>

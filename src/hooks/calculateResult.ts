@@ -5,26 +5,34 @@ import { InputValues, Results, Calculator } from '../types';
 const useCalculateResult = (validatedCalculators: Calculator[]) => {
     const [results, setResults] = useState<Results>({});
 
+
     const calculateResult = (currentInputValues: InputValues) => {
-        const newResults: Results = validatedCalculators.reduce((acc: Results, formula: Calculator) => { //valitadetCalculators on zodvalidoitu lista laskureita, joista luodaan uusi Results -tyyppinen objekti, joka sisältää kaikkien laskureiden tulokset
+        const newResults: Results = validatedCalculators.reduce((acc: Results, calculator: Calculator) => { //valitadetCalculators on zodvalidoitu lista laskureita, joista luodaan uusi Results -tyyppinen objekti, joka sisältää kaikkien laskureiden tulokset
             const scope: Record<string, number> = {}; // scope-objekti, johon tallentuu string tyyppinen key ja arvo on numeerinen, aluksi tyhjä. Se säilyttää muuttujien (variable kentät laskurissa) arvoja, jotka välitetään calculateFormula-funktiolle
-            formula.fields.forEach((field) => { 
-                const value = currentInputValues[formula.title]?.[field.variable]; //Value, yrittää hakea arvon currentInputValues-objektista käyttäen nykyisen laskurin otsikkoa ja muuttujan nimeä avaimina. (Käyttämällä ?, koodi varmistaa, että ei yritetä lukea field.variable-arvoa, jos currentInputValues[formula.title] on undefined. Ei tuu TypeError.
+           
+            // const mergedArrays = [...(calculator.fields || []), ...(calculator.variables || [])];
+
+            calculator.fields?.forEach((field) => { 
+                const value = currentInputValues[calculator.title]?.[field.variable]; //Value, yrittää hakea arvon currentInputValues-objektista käyttäen nykyisen laskurin otsikkoa ja muuttujan nimeä avaimina. (Käyttämällä ?, koodi varmistaa, että ei yritetä lukea field.variable-arvoa, jos currentInputValues[formula.title] on undefined. Ei tuu TypeError.
                 if (value !== undefined) {
                     scope[field.variable] = value; 
 
                 } else {
-                    console.error(`Value for ${field.variable} in formula ${formula.title} is undefined.`);
+                    console.error(`Value for ${field.variable} in formula ${calculator.title} is undefined.`);
                     scope[field.variable] = 0;
                 }
             });
 
+            // calculator.variables?.forEach(variable => {
+            //     scope[variable.variable] = variable.defaultValue;
+            //   });
+
             try {
-                const result = calculateFormula(formula.formula, scope); //lähetetään formula ja tallennettu scope -objekti calculateFormulalle
-                acc[formula.title] = result;
+                const result = calculateFormula(calculator.formula, scope); //lähetetään formula ja tallennettu scope -objekti calculateFormulalle
+                acc[calculator.title] = result;
             } catch (error) {
-                console.error(`Error calculating formula for ${formula.title}:`, error);
-                acc[formula.title] = -1;
+                console.error(`Error calculating formula for ${calculator.title}:`, error);
+                acc[calculator.title] = -1;
             }
 
             return acc; // acc on akkumulaattori, joka kerää yhteen kaikkien laskureiden tulokset.

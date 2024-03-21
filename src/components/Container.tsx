@@ -14,9 +14,7 @@ function CalculatorContainer() {
     const validatedContainer = validatedData.Container
     const validatedCalculators = validatedData.Laskurit;
     
-
-
-    const { results, calculateResult } = useCalculateResult(validatedCalculators);
+    const { results, calculateResult } = useCalculateResult(validatedCalculators, inputValues);
 
     const handleInputChange = (formulaName: string, variable: string, value: string | number) => {
         const inputValue = typeof value === 'string' ? parseFloat(value) || 0 : value;
