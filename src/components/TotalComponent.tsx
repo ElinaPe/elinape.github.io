@@ -6,10 +6,10 @@ interface TotalResultsProps {
 
 const TotalResults: React.FC<TotalResultsProps> = ({ results }) => {
 
-    const totalLapset = results['Montako kuljetettavaa lasta?']
-    const totalHenkilot = results['Kuinka monta henkilöä osallistuu kuljetusmuutoksiin?'];
-    const totalPalkat = results['Palkkakulut'];
-    const totalPeruutukset = results['Kuinka kauan menee yhdessä peruutuksessa?'];
+    const totalLapset = results['lapset']
+    const totalHenkilot = results['henkilot'];
+    const totalPalkat = results['palkat'];
+    const totalPeruutukset = results['peruutukset'];
   
     const peruutukset = totalLapset * totalPeruutukset
   

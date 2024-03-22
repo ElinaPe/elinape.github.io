@@ -21,17 +21,14 @@ interface CustomInputProps {
     onChange: (variable: string, value: string | number) => void;
 }
 const CustomInput: React.FC<CustomInputProps> = ({ field, onChange }) => {
-    const handleSliderChange = (event: Event, newValue: number | number[]) => {
-        onChange(field.variable, Array.isArray(newValue) ? newValue[0] : newValue);
-    };
 
     switch (field.controlType) {
         case 'type':
             // Render a TextField for numeric input with debounce feature (not implemented in this code snippet).
             return (
               <div className='inputTextField'>
-                <label>{field.name}</label>
-                <TextField
+                <label htmlFor="inputId">{field.name}</label>
+                <TextField id="inputId"
                 type="number"
                 onChange={(e) => onChange(field.variable, e.target.value)}
                 InputLabelProps={{
@@ -47,11 +44,11 @@ const CustomInput: React.FC<CustomInputProps> = ({ field, onChange }) => {
               <div className='slider'>
                 <label>{field.name}</label>
                 <Slider
-                    defaultValue={typeof field.min === 'number' ? field.min : 0}
+                    defaultValue={field.defaultValue}
                     step={1}
                     min={field.min}
                     max={field.max}
-                    onChange={handleSliderChange}
+                    onChange={(event, newValue) => onChange(field.variable, Array.isArray(newValue) ? newValue[0] : newValue)}
                     valueLabelDisplay="auto"
                     aria-labelledby="input-slider"
                     marks={field.marks}

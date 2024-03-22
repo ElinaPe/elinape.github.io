@@ -6,27 +6,27 @@ Laskurit:
   - id: lapset
     title: Montako kuljetettavaa lasta?
     description: 
+    type: separate
     fields:
       - name: Lasten lkm
         variable: a
-        type: float
         controlType: type
+        defaultValue: 0
       - name: Poissaoloprosentti
         variable: b
-        type: float
         controlType: slider
         marks:
           - value: 0
             label: "0%"
           - value: 100
             label: "100%"
+        defaultValue: 0
     # variables:
     #     variable: lapsetCount
     #     value: count
     formula: b/100*a
     result:
       name: Määrä
-      type: int
       ending: lasta pois
     cssClasses:
       - ekanimi
@@ -34,26 +34,26 @@ Laskurit:
 
   - id: henkilot
     title: Kuinka monta henkilöä osallistuu kuljetusmuutoksiin?
+    type: separate
     fields:
       - name: Kunnalta
         variable: kuntaLkm
-        type: integer
         controlType: type
+        defaultValue: 0
       - name: Koululta
         variable: kouluHloLkm
-        type: integer
         controlType: type
+        defaultValue: 0
       - name: Kuljetusyritykseltä
         variable: kuljetusHloLkm
-        type: integer
         controlType: type
+        defaultValue: 0
     # variables:
     #     variable: henkilot
     #     value: hlo
     formula: kuntaLkm + kouluHloLkm + kuljetusHloLkm
     result:
       name: Henkilöt
-      type: float
       ending: henkilöä
     cssClasses:
       - ekanimi
@@ -61,10 +61,10 @@ Laskurit:
 
   - id: palkat
     title: Palkkakulut
+    type: separate
     fields:
       - name: Kuntahenkilön palkka
         variable: kuntaPalkka
-        type: float
         controlType: slider
         min: 0
         max: 10000
@@ -73,9 +73,9 @@ Laskurit:
             label: "0€"
           - value: 10000
             label: "10 000€"
+        defaultValue: 0
       - name: Kouluhenkilön palkka
         variable: kouluHloPalkka
-        type: float
         controlType: slider
         min: 0
         max: 10000
@@ -84,9 +84,9 @@ Laskurit:
             label: "0€"
           - value: 10000
             label: "10 000€"
+        defaultValue: 0
       - name: Kuljetusyrityshenkilön palkka
         variable: kuljetusHloPalkka
-        type: float
         controlType: slider
         min: 0
         max: 10000
@@ -95,13 +95,13 @@ Laskurit:
             label: "0€"
           - value: 10000
             label: "10 000€"
+        defaultValue: 0
     # variables:
     #     variable: palkat
     #     value: euro
     formula: kuntaPalkka + kouluHloPalkka + kuljetusHloPalkka
     result:
       name: Palkka
-      type: float
       ending: euroa
     cssClasses:
       - ekanimi
@@ -109,6 +109,7 @@ Laskurit:
 
   - id: peruutukset
     title: Kuinka kauan menee yhdessä peruutuksessa?
+    type: separate
     fields:
       - name: Reitin uudelleenjärjestely
         variable: uj
@@ -120,7 +121,7 @@ Laskurit:
             label: "0min"
           - value: 60
             label: "60min"
-        type: float
+        defaultValue: 0
       - name: Kunnan viestittely
         variable: kuv
         controlType: slider
@@ -132,6 +133,7 @@ Laskurit:
           - value: 60
             label: "60min"
         type: float
+        defaultValue: 0
       - name: Koulun viestittely
         variable: kov
         controlType: slider
@@ -142,7 +144,7 @@ Laskurit:
             label: "0min"
           - value: 60
             label: "60min"
-        type: float
+        defaultValue: 0
       - name: Kuljetusyrityksen viestittely
         variable: kyv
         controlType: slider
@@ -153,30 +155,29 @@ Laskurit:
             label: "0min"
           - value: 60
             label: "60min"
-        type: float
+        defaultValue: 0
     # variables:
     #     variable: peruutukset
     #     value: per
     formula: uj+kuv+kov+kyv
     result:
-        name: Yksi peruutus
-        type: float
-        ending: minuuttia
+      name: Yksi peruutus
+      ending: minuuttia
     cssClasses:
       - ekanimi
       - peruutusLaskuri
 
-  # - id: total
-  #   title: Peruutusten kesto yhteensä
-  #   variables:
-  #     - variable: lapsetTotal
-  #       value: Määrä
-  #       defaultValue: 0
-  #     - variable: peruutuksetMin
-  #       value: Yksi peruutus
-  #       defaultValue: 0
-  #   formula: lapsetCount * peruutukset
-  #   result: 
-  #       name: Peruutusten kesto yhteensä
-  #       type: float
-  #       ending: minuuttia
+  - id: peruutusYht
+    title: Peruutusten kesto yhteensä
+    type: total
+    variables:
+      - variable: lapset
+        value: result
+        defaultValue: 0
+      - variable: peruutukset
+        value: result
+        defaultValue: 0
+    formula: lapset * peruutukset
+    result: 
+        name: Peruutusten kesto yhteensä
+        ending: minuuttia
