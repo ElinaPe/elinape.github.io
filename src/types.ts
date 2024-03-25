@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+
 const ContainerSchema = z.object({
 	title: z.string().optional()
 });
@@ -35,7 +36,8 @@ export const CalculatorSchema = z.object({
 	formula: z.string(),
 	result: z.object({
 		name: z.string(),
-		ending: z.string(),
+		unit: z.string(),
+		value: z.number()
 	}),
 	cssClasses: z.array(z.string()).optional(),
 });
@@ -49,9 +51,9 @@ export const CalculatorsSchema = z.array(CalculatorSchema)
 
 const InputValues = z.record(z.string(), z.record(z.string(), z.number()));
 
-const Results = z.record(z.string(), z.number());
+const Result = z.record(z.string(), z.number());
 
 export type Field = z.infer<typeof Field>;
 export type Calculator = z.infer<typeof CalculatorSchema>;
 export type InputValues = z.infer<typeof InputValues>;
-export type Results = z.infer<typeof Results>;
+export type Result = z.infer<typeof Result>;

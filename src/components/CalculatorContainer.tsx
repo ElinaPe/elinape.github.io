@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import yamlData from '../laskuri.yaml';
-import { RootSchema, Results, Calculator } from '../types';
+import { RootSchema, Calculator, Result } from '../types';
 import Laskuri from '../components/Calculator';
 import { parser } from 'mathjs';
 // import TotalResults from './TotalComponent';
@@ -8,74 +8,57 @@ import { parser } from 'mathjs';
 
 function CalculatorContainer() {
     const validatedData = RootSchema.parse(yamlData)
-    // const validatedCalculators = CalculatorsSchema.parse(yamlData);
     const validatedContainer = validatedData.Container
     const validatedCalculators = validatedData.Laskurit;
     
     const [calculators, setCalculators] = useState(validatedCalculators.map(calculator => ({
-        ...calculator,
-        result: 0, 
+        ...calculator 
       })));
 
-      const handleCalculatorChange = (calculatorId: string, result: number) => {
-        setCalculators((prevCalculators) =>
-        prevCalculators.map((calculator) =>
-        calculator.id === calculatorId ? { ...calculator, result } : calculator
-        )
-      )
+    const handleCalculatorChange = (calculatorId: string, result: string | number) => {
+        const newValue = typeof result === 'number' ? result : parseFloat(result);
+        setCalculators(prevCalculators =>
+            prevCalculators.map(calculator =>
+                calculator.id === calculatorId ? { ...calculator, result: { ...calculator.result, value: newValue }} : calculator
+            )
+        );
     };
     
     const calculateTotalResults = (calculator: Calculator, calculators: Calculator[]) => {
         const p = parser();
         calculator.variables?.forEach(varDependency => {
             const dependentCalculator = calculators.find(c => c.id === varDependency.variable);
-            if (dependentCalculator) {
-                p.set(varDependency.variable, dependentCalculator.result);
+            if (dependentCalculator && dependentCalculator.result && typeof dependentCalculator.result.value === 'number') {
+                p.set(varDependency.variable, dependentCalculator.result.value);
             }
         });
         try {
-            return p.evaluate(calculator.formula);
+            const result = p.evaluate(calculator.formula);
+            return typeof result === 'number' ? result : 0;
         } catch (error) {
             console.error('Kaavan arviointivirhe:', error);
             return 0;
         }
     };
 
+   useEffect(() => {
+  let isUpdated = false;
+  const updatedCalculators = calculators.map(calculator => {
+    if (calculator.type === "total") {
+      const newResult = calculateTotalResults(calculator, calculators);
+      if (calculator.result.value !== newResult) {
+        isUpdated = true; 
+        return { ...calculator, result: { ...calculator.result, value: newResult }};
+    }
+    }
+    return calculator;
+  });
 
-    // useEffect(() => {
-    //     // Lasketaan "total" tyyppisten laskureiden tulokset ilman suoraa tilan päivitystä
-    //     const totals = calculators.filter(calculator => calculator.type === "total").map(calculator => {
-    //         return calculateTotalResults(calculator, calculators);
-    //     });
-
-    //     // Oletetaan, että sinulla on jokin logiikka käsittelemään näitä "totals"-arvoja
-    //     console.log(totals);
-
-    //     // Voit myös harkita tilan päivittämistä täällä, mutta varmista, että se ei aiheuta loputonta silmukkaa
-    //     // Esimerkiksi, voit verrata, ovatko uudet "total" tulokset erilaiset kuin nykyiset ennen päivittämistä
-    // }, [calculators]);
-    useEffect(() => {
-        let isUpdated = false;
-        const updatedCalculators = calculators.map(calculator => {
-          if (calculator.type === "total") {
-            // Laske uusi tulos
-            const newResult = calculateTotalResults(calculator, calculators);
-            console.log(newResult)
-
-            // Vertaa, onko uusi tulos eri kuin nykyinen
-            if (calculator.result !== newResult) {
-              isUpdated = true; // Merkitään, että päivitys on tarpeellinen
-              return { ...calculator, result: newResult };
-            }
-          }
-          return calculator;
-        });
-      
-        // Päivitä tila vain, jos päivitys on tarpeellinen
-        if (isUpdated) {
-          setCalculators(updatedCalculators);
-        }
-      }, [calculators]); 
+  // Päivitä tila vain, jos päivitys on tarpeellinen
+  if (isUpdated) {
+    setCalculators(updatedCalculators);
+  }
+}, [calculators]); 
 
 
     return (
@@ -88,18 +71,17 @@ function CalculatorContainer() {
                     calculator={calculator}
                     // result={results[calculator.id] || 'Ei tulosta'} ei täällä resultsia vaan yhteenveto
                     onCalculatorChange={handleCalculatorChange} 
-                    result={''}                    // cssClasses={calculator.cssClasses}
                 />
             ))}
         </div>
         <div>
         {calculators.map((calculator, index) => (
             <div key={index}>
-            {`Laskuri ${calculator.id}: ${calculator.result}`}
+            {`Laskuri ${calculator.id}: ${calculator.result.value}`}
             </div>
         ))}
         <div>
-            {`Yhteensä: ${calculators.reduce((acc, { result }) => acc + result, 0)}`}
+            {`Yhteensä: ${calculators.reduce((acc, { result }) => acc + result.value, 0)}`}
         </div>
         </div>        {/* <div className='calculatorResults'>
             <p>Ekatulos: </p>

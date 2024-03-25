@@ -1,7 +1,7 @@
-import { Results } from "../types";
+import { Result } from "../types";
 
 interface TotalResultsProps {
-    results: Results;
+    results: Result;
 }
 
 const TotalResults: React.FC<TotalResultsProps> = ({ results }) => {
