@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Calculator, Field } from '../types';
 import CustomInput from './Input';
-// import calculateResult from '../hooks/calculateResult';
+import Tex2SVG from "react-hook-mathjax"
 import { parser } from "mathjs"
 
 interface CalculatorProps {
@@ -58,7 +58,12 @@ const handleFieldChange = (variable: string, value: string) => {
 };
 
     
-    const hasResult = result.value.toString() !== "Ei tulosta";
+    const hasResult = result.value !== 0;
+    const resultValue = hasResult
+    ? calculator.isInteger
+    ? Math.round(result.value)
+    : Number(result.value).toFixed(2)
+  : 'Ei tulosta';
 
     return (
         <div className="oneCalculatorContainer">
@@ -73,8 +78,9 @@ const handleFieldChange = (variable: string, value: string) => {
                     />
                 ))}
             </div>
-            {hasResult ? (<p className='calculatorResult'>{calculator.result.name}: {result.value} {calculator.result.unit} </p>)
-            : (<p className='calculatorResult'>{calculator.result.name}: {result.value} </p>)}
+            <Tex2SVG display="inline" latex={calculator.formula} />
+            {hasResult ? (<p className='calculatorResult'>{calculator.result.name}: {resultValue} {calculator.result.unit} </p>)
+            : (<p className='calculatorResult'>{calculator.result.name}:</p>)}
         </div>
     );
 };

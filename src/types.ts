@@ -29,7 +29,7 @@ export const CalculatorSchema = z.object({
 	id: z.string(),
 	title: z.string(),
 	description: z.string().optional().nullable(),
-	type: z.string(),
+	isInteger: z.boolean(),
 	fields: z.array(Field).optional(),
 	variables: z.array(Variable).optional(),
 	formula: z.string(),

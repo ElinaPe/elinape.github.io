@@ -6,7 +6,7 @@ Laskurit:
   - id: lapset
     title: Montako kuljetettavaa lasta?
     description: 
-    type: separate
+    isInteger: true
     fields:
       - name: Lasten lkm
         variable: a
@@ -21,9 +21,6 @@ Laskurit:
           - value: 100
             label: "100%"
         defaultValue: 0
-    # variables:
-    #     variable: lapsetCount
-    #     value: count
     formula: b/100*a
     result:
       name: Määrä
@@ -35,7 +32,7 @@ Laskurit:
 
   - id: henkilot
     title: Kuinka monta henkilöä osallistuu kuljetusmuutoksiin?
-    type: separate
+    isInteger: true
     fields:
       - name: Kunnalta
         variable: kuntaLkm
@@ -49,9 +46,6 @@ Laskurit:
         variable: kuljetusHloLkm
         controlType: type
         defaultValue: 0
-    # variables:
-    #     variable: henkilot
-    #     value: hlo
     formula: kuntaLkm + kouluHloLkm + kuljetusHloLkm
     result:
       name: Henkilöt
@@ -63,7 +57,7 @@ Laskurit:
 
   - id: palkat
     title: Palkkakulut
-    type: separate
+    isInteger: false
     fields:
       - name: Kuntahenkilön palkka
         variable: kuntaPalkka
@@ -98,9 +92,6 @@ Laskurit:
           - value: 10000
             label: "10 000€"
         defaultValue: 0
-    # variables:
-    #     variable: palkat
-    #     value: euro
     formula: kuntaPalkka + kouluHloPalkka + kuljetusHloPalkka
     result:
       name: Palkka
@@ -112,7 +103,7 @@ Laskurit:
 
   - id: peruutukset
     title: Kuinka kauan menee yhdessä peruutuksessa?
-    type: separate
+    isInteger: true
     fields:
       - name: Reitin uudelleenjärjestely
         variable: uj
@@ -159,9 +150,6 @@ Laskurit:
           - value: 30
             label: "30min"
         defaultValue: 0
-    # variables:
-    #     variable: peruutukset
-    #     value: per
     formula: uj+kuv+kov+kyv
     result:
       name: Yksi peruutus
@@ -173,13 +161,13 @@ Laskurit:
 
   - id: peruutusYht
     title: Peruutusten kesto yhteensä
-    type: total
+    isInteger: false
     variables:
       - name: result_lapset
         value: 0
       - name: result_peruutukset
         value: 0
-    formula: result_lapset * result_peruutukset / 60
+    formula: result_lapset * result_peruutukset / 60 
     result: 
         name: Peruutusten kesto yhteensä
         unit: tuntia päivässä
@@ -187,7 +175,7 @@ Laskurit:
 
   - id: palkatYht
     title: Palkat yhteensä
-    type: total
+    isInteger: true
     variables:
       - name: result_henkilot
         value: 0
@@ -205,7 +193,7 @@ Laskurit:
   #   variables:
   #     - name: result_henkilot
   #       value: 0
-  #     - name: result_palkat
+  #     - name: result_peruutukset
   #       value: 0
   #   formula: result_henkilot * (result_palkat * 1.75)
   #   result: 
