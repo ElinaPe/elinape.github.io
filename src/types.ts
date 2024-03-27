@@ -11,9 +11,8 @@ const Mark = z.object({
 });
 
 const Variable = z.object({
-	variable: z.string(),
-	value: z.string(),
-	defaultValue: z.number()
+	name: z.string(),
+	value: z.number(),
 })
 
 export const Field = z.object({

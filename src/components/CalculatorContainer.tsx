@@ -10,83 +10,99 @@ function CalculatorContainer() {
     const validatedData = RootSchema.parse(yamlData)
     const validatedContainer = validatedData.Container
     const validatedCalculators = validatedData.Laskurit;
-    
-    const [calculators, setCalculators] = useState(validatedCalculators.map(calculator => ({
-        ...calculator 
-      })));
 
-    const handleCalculatorChange = (calculatorId: string, result: string | number) => {
+    const [endResults, setEndResults] = useState<{ name: string; value: number }[]>([])
+    const [calculators, setCalculators] = useState(validatedCalculators.map(calculator => ({
+        ...calculator, variables:endResults
+    })));
+
+
+    const handleCalculatorChange = (calculatorId: string, result: number) => {
         const newValue = typeof result === 'number' ? result : parseFloat(result);
         setCalculators(prevCalculators =>
             prevCalculators.map(calculator =>
-                calculator.id === calculatorId ? { ...calculator, result: { ...calculator.result, value: newValue }} : calculator
+                calculator.id === calculatorId ? { ...calculator, result: { ...calculator.result, value: newValue } } : calculator
+                
             )
         );
+        console.log('uus arvo :' ,newValue)
     };
-    
-    const calculateTotalResults = (calculator: Calculator, calculators: Calculator[]) => {
-        const p = parser();
-        calculator.variables?.forEach(varDependency => {
-            const dependentCalculator = calculators.find(c => c.id === varDependency.variable);
-            if (dependentCalculator && dependentCalculator.result && typeof dependentCalculator.result.value === 'number') {
-                p.set(varDependency.variable, dependentCalculator.result.value);
-            }
-        });
-        try {
-            const result = p.evaluate(calculator.formula);
-            return typeof result === 'number' ? result : 0;
-        } catch (error) {
-            console.error('Kaavan arviointivirhe:', error);
-            return 0;
+
+    useEffect(() => {
+        const newResults: {
+            name: string
+            value: number
+        }[] = []
+        for (const calculator of calculators){
+            newResults.push({
+                name: `result_${calculator.id}`,
+                value: calculator.result.value,
+            })
         }
-    };
+        setEndResults(newResults)
+        console.log('uuudet arvot',newResults)
+    }, [calculators])
 
-   useEffect(() => {
-  let isUpdated = false;
-  const updatedCalculators = calculators.map(calculator => {
-    if (calculator.type === "total") {
-      const newResult = calculateTotalResults(calculator, calculators);
-      if (calculator.result.value !== newResult) {
-        isUpdated = true; 
-        return { ...calculator, result: { ...calculator.result, value: newResult }};
-    }
-    }
-    return calculator;
-  });
 
-  // Päivitä tila vain, jos päivitys on tarpeellinen
-  if (isUpdated) {
-    setCalculators(updatedCalculators);
-  }
-}, [calculators]); 
+    // const calculateTotalResults = (calculator: Calculator, calculators: Calculator[]) => {
+    //     const p = parser();
+    //     calculator.variables?.forEach(varDependency => {
+    //         const dependentCalculator = calculators.find(c => c.id === varDependency.variable);
+    //         if (dependentCalculator && dependentCalculator.result && typeof dependentCalculator.result.value === 'number') {
+    //             p.set(varDependency.variable, dependentCalculator.result.value);
+    //         }
+    //     });
+    //     try {
+    //         const result = p.evaluate(calculator.formula);
+    //         return typeof result === 'number' ? result : 0;
+    //     } catch (error) {
+    //         console.error('Kaavan arviointivirhe:', error);
+    //         return 0;
+    //     }
+    // };
+
+    // useEffect(() => {
+    //     const updatedCalculators = calculators.map(calculator => {
+    //         if (calculator.type === "total") {
+    //             const newResult = calculateTotalResults(calculator, calculators);
+    //             if (calculator.result.value !== newResult) {
+    //                 return { ...calculator, result: { ...calculator.result, value: newResult } };
+    //             }
+    //         }
+    //         return calculator;
+    //     });
+
+
+    //     setCalculators(updatedCalculators);
+
+    // }, [calculators]);
 
 
     return (
-    <div className='calculatorContainer'>
-        <h2>{validatedContainer.title}</h2>
-        <div className='calculatorContent'>
-            {validatedCalculators.map((calculator) => (
-                <Laskuri
-                    key={calculator.id}
-                    calculator={calculator}
-                    // result={results[calculator.id] || 'Ei tulosta'} ei täällä resultsia vaan yhteenveto
-                    onCalculatorChange={handleCalculatorChange} 
-                />
-            ))}
-        </div>
-        <div>
-        {calculators.map((calculator, index) => (
-            <div key={index}>
-            {`Laskuri ${calculator.id}: ${calculator.result.value}`}
+        <div className='calculatorContainer'>
+            <h2>{validatedContainer.title}</h2>
+            <div className='calculatorContent'>
+                {validatedCalculators.map((calculator) => (
+                    <Laskuri
+                        key={calculator.id}
+                        calculator={{...calculator, variables: endResults}}
+                        onCalculatorChange={handleCalculatorChange}
+                    />
+                ))}
+                
             </div>
-        ))}
-        <div>
-            {`Yhteensä: ${calculators.reduce((acc, { result }) => acc + result.value, 0)}`}
+
+            <div>
+                {calculators.map((calculator, index) => (
+                    <div key={index}>
+                        {`Laskuri ${calculator.id}: ${calculator.result.value}`}
+                    </div>
+                ))}
+                <div>
+                    {`Yhteensä: ${calculators.reduce((acc, { result }) => acc + result.value, 0)}`}
+                </div>
+            </div>
         </div>
-        </div>        {/* <div className='calculatorResults'>
-            <p>Ekatulos: </p>
-        </div> */}
-    </div>
     );
 }
 

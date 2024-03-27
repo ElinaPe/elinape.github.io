@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Calculator, Field, InputValues } from '../types';
+import { Calculator, Field } from '../types';
 import CustomInput from './Input';
 // import calculateResult from '../hooks/calculateResult';
 import { parser } from "mathjs"
@@ -8,16 +8,14 @@ interface CalculatorProps {
     calculator: Calculator;
     // handleInputChange: (formulaName: string, variable: string, value: string | number) => void;
     // result: number | string;
-    onCalculatorChange: (calculatorId: string, result: number | string) => void;
+    onCalculatorChange: (calculatorId: string, result: number) => void;
     cssClasses?: string[]
 }
 
 const Laskuri: React.FC<CalculatorProps> = ({ calculator, onCalculatorChange }) => {
     // const [result, setResult] = useState(0)
-    const [result, setResult] = useState({value: 0, name: '', unit: ''});
-
-    const { id } = calculator
-
+  const [result, setResult] = useState({value: 0, name: '', unit: ''});
+  const { id, variables } = calculator
   // field names and default values
   const [fields, setFields] = useState(calculator.fields)
 
@@ -28,25 +26,30 @@ const Laskuri: React.FC<CalculatorProps> = ({ calculator, onCalculatorChange }) 
     fields?.forEach(field => {
       p.set(field.variable, field.defaultValue);
     });
-    
+    variables?.forEach(variable => {
+      p.set(variable.name, variable.value);
+    });
+
     try {
       const value = p.evaluate(calculator.formula);
-      setResult(prev => ({...prev, value})); // Päivitä vain value, säilytä muut tiedot
+      setResult(prev => {
+        if (prev.value !== value) {
+          return {...prev, value};
+        }
+        return prev;
+      });
     } catch (error) {
       console.error('Kaavan arviointivirhe:', error);
     }
-  }, [fields, calculator.formula]);
+  }, [fields, calculator.formula, variables]);
   
   useEffect(() => {
     onCalculatorChange(id, result.value)
   }, [result])
 
-//   const handleInputChange = (variable: string, value: string | number) => {
-//     const parsedValue = typeof value === 'string' ? parseFloat(value) || 0 : value;
-//     const inputValue = typeof value === 'string' ? parseFloat(value) || 0 : value;
-   
+
 const handleFieldChange = (variable: string, value: string) => {
-    const parsedValue = parseFloat(value) || 0; // Muunna arvo numeroksi
+    const parsedValue = parseFloat(value) || 0; 
     setFields((prevFields) =>
         prevFields?.map((field) =>
             field.variable === variable ? { ...field, defaultValue: parsedValue } : field
@@ -54,27 +57,8 @@ const handleFieldChange = (variable: string, value: string) => {
     );
 };
 
-
-    // const handleInputChange = (calculatorId: string, variable: string, value: string | number) => {
-    //     const inputValue = typeof value === 'string' ? parseFloat(value) || 0 : value;
-    //     updateInputValues(calculatorId, variable, inputValue);
-    // };
-
-    // const updateInputValues = (calculatorId: string, variable: string, inputValue: number) => {
-    //     setInputValues((prev) => {
-    //         const newInputValues = {
-    //             ...prev,
-    //             [calculatorId]: {
-    //                 ...prev[calculatorId],
-    //                 [variable]: inputValue,
-    //             },
-    //         };
-
-    //         calculateResult(newInputValues);
-    //         return newInputValues;
-    //     });
     
-    const hasResult = result.toString() !== "Ei tulosta";
+    const hasResult = result.value.toString() !== "Ei tulosta";
 
     return (
         <div className="oneCalculatorContainer">
@@ -88,9 +72,8 @@ const handleFieldChange = (variable: string, value: string) => {
                         onChange={(variable, value) => handleFieldChange(variable, value.toString())}
                     />
                 ))}
-                {/* <p>{calculator.result.name}: {result}</p> se onkin tossa alempana */}
             </div>
-            {hasResult ? (<p className='calculatorResult'>{calculator.result.name}: {parseInt(result.value.toString())} {calculator.result.unit} </p>)
+            {hasResult ? (<p className='calculatorResult'>{calculator.result.name}: {result.value} {calculator.result.unit} </p>)
             : (<p className='calculatorResult'>{calculator.result.name}: {result.value} </p>)}
         </div>
     );

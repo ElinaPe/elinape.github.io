@@ -118,46 +118,46 @@ Laskurit:
         variable: uj
         controlType: slider
         min: 0
-        max: 60
+        max: 30
         marks:
           - value: 0
             label: "0min"
-          - value: 60
-            label: "60min"
+          - value: 30
+            label: "30min"
         defaultValue: 0
       - name: Kunnan viestittely
         variable: kuv
         controlType: slider
         min: 0
-        max: 60
+        max: 30
         marks:
           - value: 0
             label: "0min"
-          - value: 60
-            label: "60min"
+          - value: 30
+            label: "30min"
         type: float
         defaultValue: 0
       - name: Koulun viestittely
         variable: kov
         controlType: slider
         min: 0
-        max: 60
+        max: 30
         marks:
           - value: 0
             label: "0min"
-          - value: 60
-            label: "60min"
+          - value: 30
+            label: "30min"
         defaultValue: 0
       - name: Kuljetusyrityksen viestittely
         variable: kyv
         controlType: slider
         min: 0
-        max: 60
+        max: 30
         marks:
           - value: 0
             label: "0min"
-          - value: 60
-            label: "60min"
+          - value: 30
+            label: "30min"
         defaultValue: 0
     # variables:
     #     variable: peruutukset
@@ -175,14 +175,40 @@ Laskurit:
     title: Peruutusten kesto yhteensä
     type: total
     variables:
-      - variable: lapset
-        value: result
-        defaultValue: 0
-      - variable: peruutukset
-        value: result
-        defaultValue: 0
-    formula: lapset * peruutukset
+      - name: result_lapset
+        value: 0
+      - name: result_peruutukset
+        value: 0
+    formula: result_lapset * result_peruutukset / 60
     result: 
         name: Peruutusten kesto yhteensä
-        unit: minuuttia
+        unit: tuntia päivässä
         value: 0
+
+  - id: palkatYht
+    title: Palkat yhteensä
+    type: total
+    variables:
+      - name: result_henkilot
+        value: 0
+      - name: result_palkat
+        value: 0
+    formula: result_henkilot * (result_palkat * 1.75)
+    result: 
+        name: Palkat yhteenlaskettuna kuukaudessa
+        unit: euroa
+        value: 0
+
+  # - id: aikaYht
+  #   title: Aikaa kuluu
+  #   type: total
+  #   variables:
+  #     - name: result_henkilot
+  #       value: 0
+  #     - name: result_palkat
+  #       value: 0
+  #   formula: result_henkilot * (result_palkat * 1.75)
+  #   result: 
+  #       name: Palkat yhteenlaskettuna kuukaudessa
+  #       unit: euroa
+  #       value: 0
