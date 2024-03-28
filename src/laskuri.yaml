@@ -1,5 +1,5 @@
 Container:
-  title: Koulukyytilaskuri
+  title: Ajansäästö päivittäisessä koordinoinnissa
 
 
 Laskurit: 
@@ -27,7 +27,7 @@ Laskurit:
       unit: lasta pois
       value: 0
     cssClasses:
-      - ekanimi
+      - calculators
       - tokanimi
 
   - id: henkilot
@@ -52,7 +52,7 @@ Laskurit:
       unit: henkilöä
       value: 0
     cssClasses:
-      - ekanimi
+      - calculators
       - henkilotLaskuri
 
   - id: palkat
@@ -98,7 +98,7 @@ Laskurit:
       unit: euroa
       value: 0
     cssClasses:
-      - ekanimi
+      - calculators
       - palkatLaskuri
 
   - id: peruutukset
@@ -156,7 +156,7 @@ Laskurit:
       unit: minuuttia
       value: 0
     cssClasses:
-      - ekanimi
+      - calculators
       - peruutusLaskuri
 
   - id: peruutusYht
@@ -172,6 +172,9 @@ Laskurit:
         name: Peruutusten kesto yhteensä
         unit: tuntia päivässä
         value: 0
+    cssClasses:
+      - calculators
+      - peruutusYhtCalculator
 
   - id: palkatYht
     title: Palkat yhteensä
@@ -186,17 +189,50 @@ Laskurit:
         name: Palkat yhteenlaskettuna kuukaudessa
         unit: euroa
         value: 0
+    cssClasses:
+      - calculators
+      - palkatYhtCalculator
 
-  # - id: aikaYht
-  #   title: Aikaa kuluu
-  #   type: total
-  #   variables:
-  #     - name: result_henkilot
-  #       value: 0
-  #     - name: result_peruutukset
-  #       value: 0
-  #   formula: result_henkilot * (result_palkat * 1.75)
-  #   result: 
-  #       name: Palkat yhteenlaskettuna kuukaudessa
-  #       unit: euroa
-  #       value: 0
+
+Pylvasdiagrammit:
+  - id: Kustannukset
+    xAxisDatakey:
+      - name: Vuosi 1
+      - name: Vuosi 2
+      - name: Vuosi 3
+    barDataKey:
+      - id: result_palkatYht
+        name: Kustannukset
+        value: 0
+      - name: Sovelluksen kanssa
+        value: 5000
+    growthRate: 
+      value: 1
+      min: 0
+      max: 30
+      marks:
+        - value: 0
+          label: "0%"
+        - value: 30
+          label: "30%"
+
+  - id: Ajankaytto
+    xAxisDatakey:
+      - name: Vuosi 1
+      - name: Vuosi 2
+      - name: Vuosi 3
+    barDataKey:
+      - id: result_peruutusYht
+        name: Ajankäyttö
+        value: 0
+      - name: Sovelluksen kanssa
+        value: 5
+    growthRate: 
+      value: 1
+      min: 0
+      max: 30
+      marks:
+        - value: 0
+          label: "0%"
+        - value: 30
+          label: "30%"

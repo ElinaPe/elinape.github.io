@@ -40,10 +40,30 @@ export const CalculatorSchema = z.object({
 	}),
 	cssClasses: z.array(z.string()).optional(),
 });
+const barDataKeys = z.object({
+	id: z.string().optional(),
+	name: z.string(),
+	value: z.number(),
+})
+const xAxisdataKeyName = z.object({
+	name: z.string(),
+})
+export const DiagramSchema = z.object({
+	id: z.string(),
+	xAxisDatakey: z.array(xAxisdataKeyName),
+	barDataKey: z.array(barDataKeys),
+	growthRate: z.object({
+		value: z.number(),
+		min: z.number(),
+		max: z.number(),
+		marks: z.array(Mark),
+	})
+})
 
 export const RootSchema = z.object({
 	Container: ContainerSchema,
 	Laskurit: z.array(CalculatorSchema),
+	Pylvasdiagrammit: z.array(DiagramSchema)
 });
 
 export const CalculatorsSchema = z.array(CalculatorSchema)
@@ -56,3 +76,4 @@ export type Field = z.infer<typeof Field>;
 export type Calculator = z.infer<typeof CalculatorSchema>;
 export type InputValues = z.infer<typeof InputValues>;
 export type Result = z.infer<typeof Result>;
+export type Diagram = z.infer<typeof DiagramSchema>;

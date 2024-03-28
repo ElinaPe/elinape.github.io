@@ -13,7 +13,6 @@ interface CalculatorProps {
 }
 
 const Laskuri: React.FC<CalculatorProps> = ({ calculator, onCalculatorChange }) => {
-    // const [result, setResult] = useState(0)
   const [result, setResult] = useState({value: 0, name: '', unit: ''});
   const { id, variables } = calculator
   // field names and default values
@@ -68,8 +67,7 @@ const handleFieldChange = (variable: string, value: string) => {
     return (
         <div className="oneCalculatorContainer">
             <h4>{calculator.title}</h4>
-            {/* <div className={cssClasses ? cssClasses.join(" ") : ""}> */}
-            <div>
+            <div className={calculator.cssClasses ? calculator.cssClasses.join(" ") : ""}>
                 {calculator.fields?.map((field: Field) => (
                     <CustomInput
                         key={field.variable}
