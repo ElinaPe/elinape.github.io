@@ -15,9 +15,7 @@ function CalculatorContainer() {
         ...calculator, variables:endResults
     })));
 
-    const [diagrams, setDiagrams] = useState(validatedDiagrams.map(diagram => ({
-        ...diagram
-    })))
+    const [diagrams, setDiagrams] = useState(validatedDiagrams)
     const [growthRate, setGrowthRate] = useState(0);
 
 
@@ -44,7 +42,7 @@ function CalculatorContainer() {
         }
         setEndResults(newResults)
         console.log('endresults: ', endResults)
-        // const updatedDiagrams = validatedDiagrams.map(diagram => { 
+        // const updatedDiagrams = validatedDiagrams.map(diagram => {
         //     const updatedBarDataKey = diagram.barDataKey.map(key => {
         //       if (key.id) { //noniin tsekataan onko id perhanan kenttiä (kaikilla ei oo)
         //         const correspondingResult = endResults.find(result => result.name === key.id); //jos se perhanan id arvo löytyy ja samalla nimellä löytyy endresult
@@ -55,14 +53,14 @@ function CalculatorContainer() {
         //         return key;
         //       }
         //     });
-        
+
         //     return { ...diagram, barDataKey: updatedBarDataKey }; //tässä palautetaan päivitetty perhanan bardatakey
         //   });
         //   setDiagrams(updatedDiagrams);
         //   console.log('diagramilista containerista', updatedDiagrams) //ja täällähän näkyy päivitetyt arvot
     };
     useEffect(() => {
-        const updatedDiagrams = validatedDiagrams.map(diagram => { 
+        const updatedDiagrams = validatedDiagrams.map(diagram => {
             const updatedBarDataKey = diagram.barDataKey.map(key => {
                 if (key.id) { //noniin tsekataan onko id perhanan kenttiä (kaikilla ei oo)
                 const correspondingResult = endResults.find(result => result.name === key.id); //jos se perhanan id arvo löytyy ja samalla nimellä löytyy endresult
@@ -77,7 +75,7 @@ function CalculatorContainer() {
             });
             setDiagrams(updatedDiagrams);
             console.log('diagramilista containerista', updatedDiagrams) //ja täällähän näkyy päivitetyt arvot      }, [result])
-    
+
       }, [endResults])
 
 console.log('vielä yks diagramlista containerin loppuun:' , diagrams)
@@ -94,17 +92,17 @@ console.log('vielä yks diagramlista containerin loppuun:' , diagrams)
                             onCalculatorChange={handleCalculatorChange}
                         />
                     ))}
-                    
+
                 </div>
                 <div className='calculatorContainerChartBar'>
-                    {validatedDiagrams.map((diagram) => (
-                         <BarChartBar 
-                         key={diagram.id} 
+                    {diagrams.map((diagram) => (
+                         <BarChartBar
+                         key={diagram.id}
                          diagram={{...diagram }}
-                        //  handleGrowthRateChange={(newValue)} 
+                        //  handleGrowthRateChange={(newValue)}
                          />
                     ))}
-                   
+
                 </div>
             </div>
         </div>
