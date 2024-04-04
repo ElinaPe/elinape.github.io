@@ -12,7 +12,6 @@ describe('CustomInput Component', () => {
       name: 'Test Field',
       variable: 'testVariable',
       controlType: 'type',
-      type: 'float',
       defaultValue: 0,
     };
 
@@ -32,7 +31,6 @@ describe('CustomInput Component', () => {
       name: 'Test Slider',
       variable: 'testSlider',
       controlType: 'slider',
-      type: 'number',
       min: 0,
       max: 100,
       marks: [{value: 0, label: '0%'}, {value: 100, label: '100%'}],

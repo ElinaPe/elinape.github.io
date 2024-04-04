@@ -22,7 +22,7 @@ export default function CalculatorInfoModal({ isOpen, handleClose, title, descri
         </Typography>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Close</Button>
+        <Button onClick={handleClose}>Sulje</Button>
       </DialogActions>
     </Dialog>
   );

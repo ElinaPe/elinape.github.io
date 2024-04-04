@@ -1,11 +1,9 @@
 import { Slider } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
-// import { Diagram } from "../types";
 
 
 
-// Määritellään BarItem ja Entry interfaceja
 interface BarItem {
   value: number;
   name: string;
@@ -14,41 +12,68 @@ interface BarItem {
 
 interface Entry {
   name: string;
-  [key: string]: string | number; // Lisätään indeksiallekirjoitus
+  [key: string]: string | number; 
 }
 
-// Oletetaan, että Diagram interface sisältää kaikki tarvittavat kentät
+interface GrowthRate {
+  value: number;
+  min: number;
+  max: number;
+  marks: { value: number; label: string }[];
+}
+
 interface Diagram {
   xAxisDatakey: Array<{ name: string }>;
   barDataKey: BarItem[];
+  growthRate: GrowthRate;
 }
+
 interface BarChartBarProps {
   diagram: Diagram;
 }
 
 const BarChartBar: React.FC<BarChartBarProps> = ({ diagram }) => {
-  console.log('diagram: ', diagram)
+
+  const [growthRate, setGrowthRate] = useState(1);
+
 
   const convertDiagramData = (diagram: Diagram): Entry[] => {
-    return diagram.xAxisDatakey.map((xAxisItem) => {
-      console.log('xAxisItemit',xAxisItem)
+    // Muunnetaan growthRate prosentista kertoimeksi
+    const growthMultiplier = growthRate
+    
+    return diagram.xAxisDatakey.map((xAxisItem, index) => {
       const entry: Entry = { name: xAxisItem.name };
-      console.log('entry: ', entry)
       diagram.barDataKey.forEach((barItem) => {
-        entry[barItem.name] = barItem.value;
-        console.log('bar itemien nimi:', barItem.name, 'bar itemien arvo:', barItem.value);      });
+        switch (index) {
+          case 0: 
+            entry[barItem.name] = barItem.value;
+            break;
+          case 1: 
+            entry[barItem.name] = barItem.value * growthMultiplier;
+            break;
+          case 2: 
+            entry[barItem.name] = barItem.value * growthMultiplier * growthMultiplier;
+            break;
+          default:
+            entry[barItem.name] = barItem.value;
+            break;
+        }
+      });
       return entry;
     });
   };
+  const diagramData = convertDiagramData(diagram);
 
-const diagramData = convertDiagramData(diagram);
-console.log('diagramdata barchartista',diagramData)
-console.log('diagramdata[0]',diagramData[0])
+    
+
+const handleGrowthRateChange = (event: Event, newValue: number | number[]) => {
+  setGrowthRate(Array.isArray(newValue) ? newValue[0] : newValue);
+};
 
 
   return (
     <div>
-      <ResponsiveContainer width="100%" aspect={1.5}>
+      <ResponsiveContainer width="90%" aspect={1.5}>
         <BarChart data={diagramData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
@@ -60,15 +85,16 @@ console.log('diagramdata[0]',diagramData[0])
           ))}
         </BarChart>
       </ResponsiveContainer>
-    {/* <Slider
-      step={1}
-      min={growthRate.min}
-      max={growthRate.max}
-      onChange={(event, newValue) => onGrowthRateChange(growthRate.value, Array.isArray(newValue) ? newValue[0] : newValue)}
-      valueLabelDisplay="auto"
-      aria-labelledby="input-slider"
-      marks={growthRate.marks}
-    /> */}
+      <Slider
+        step={0.1}
+        min={diagram.growthRate.min}
+        max={diagram.growthRate.max}
+        value={growthRate}
+        onChange={handleGrowthRateChange}
+        valueLabelDisplay="auto"
+        aria-labelledby="input-slider"
+        marks={diagram.growthRate.marks}
+      />
     </div>
   );
 }

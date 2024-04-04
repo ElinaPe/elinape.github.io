@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Calculator, Field } from '../types';
 import CustomInput from './Input';
-import Tex2SVG from "react-hook-mathjax"
 import { parser } from "mathjs"
-
+import CalculatorInfoModal from '../modals/calculatorInfo';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInfo } from '@fortawesome/free-solid-svg-icons';
 interface CalculatorProps {
     calculator: Calculator;
     // handleInputChange: (formulaName: string, variable: string, value: string | number) => void;
@@ -17,6 +18,8 @@ const Laskuri: React.FC<CalculatorProps> = ({ calculator, onCalculatorChange }) 
   const { id, variables } = calculator
   // field names and default values
   const [fields, setFields] = useState(calculator.fields)
+  const [open, setOpen] = useState(false);
+
 
   // calculate the result
 
@@ -56,6 +59,8 @@ const handleFieldChange = (variable: string, value: string) => {
     );
 };
 
+const handleOpen = () => setOpen(true);
+const handleClose = () => setOpen(false);
     
     const hasResult = result.value !== 0;
     const resultValue = hasResult
@@ -66,7 +71,17 @@ const handleFieldChange = (variable: string, value: string) => {
 
     return (
         <div className="oneCalculatorContainer">
-            <h4>{calculator.title}</h4>
+            <h4>{calculator.title} <button className='btn' onClick={handleOpen}>
+            <FontAwesomeIcon icon={faInfo} /></button></h4>
+
+            <CalculatorInfoModal 
+            isOpen={open} 
+            handleClose={handleClose}            
+            title={calculator.title}
+            description={calculator.description}
+            formula={calculator.formula}
+            />
+
             <div className={calculator.cssClasses ? calculator.cssClasses.join(" ") : ""}>
                 {calculator.fields?.map((field: Field) => (
                     <CustomInput
@@ -76,7 +91,6 @@ const handleFieldChange = (variable: string, value: string) => {
                     />
                 ))}
             </div>
-            <Tex2SVG display="inline" latex={calculator.formula} />
             {hasResult ? (<p className='calculatorResult'>{calculator.result.name}: {resultValue} {calculator.result.unit} </p>)
             : (<p className='calculatorResult'>{calculator.result.name}:</p>)}
         </div>
