@@ -1,5 +1,5 @@
 import { Slider } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 

@@ -4,6 +4,7 @@ import { RootSchema } from '../types';
 import Laskuri from '../components/Calculator';
 import BarChartBar from './BarChart';
 import Button from '@mui/material/Button';
+import Form from 'react-bootstrap/Form';
 
 function CalculatorContainer() {
     const validatedData = RootSchema.parse(yamlData)
@@ -69,8 +70,11 @@ function CalculatorContainer() {
                             onCalculatorChange={handleCalculatorChange}
                         />
                     ))}
+                    {/* <Form.Label>Range</Form.Label>
+                    <Form.Range /> */}
+
                     <Button className='diagramBtn' variant={'outlined'} onClick={handleDiagram}>Näytä pylväät</Button>
-                    <Button className='diagramBtn' variant={'outlined'} onClick={handleDiagram}>Sovelluksen kanssa tee checkbox</Button>
+                    {/* <Button className='diagramBtn' variant={'outlined'} onClick={handleDiagram}>Sovelluksen kanssa tee checkbox</Button> */}
                 </div>
                 
                 {showDiagram &&
