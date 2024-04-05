@@ -1,4 +1,3 @@
-import BarChart from './components/BarChart';
 import CalculatorContainer from './components/CalculatorContainer';
 
 function App() {
