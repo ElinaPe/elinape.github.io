@@ -42,8 +42,8 @@ h6 {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
   font-weight: 700;
-  margin-top: 3rem;
-  margin-bottom: 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 1.3rem;
   overflow-wrap: break-word;
   word-wrap: break-word;
   -ms-word-break: break-all;
@@ -271,21 +271,29 @@ fieldset {
 .calculatorContent {
   display: flex;
   flex-direction: column;
-  // align-items: center;
   width: 60%;
 }
 
+.calculatorContent.Full{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: start;
+  gap:60px;
+}
+
 .diagramBtn {
-  width: fit-content;
+  width: min-content;
+  height: min-content;
+  display: flex;
 }
 
 .oneCalculatorContainer{
-  width: 90%;
+  width: fit-content;
   display: flex;
   flex-direction: column;
-  // border: 1px solid gray;
-  // padding: 10px;
-
+  padding: 0px 10px;
 }
 
 .inputFields {
@@ -293,26 +301,19 @@ fieldset {
   flex-direction: row;
   gap: 5%;
   flex-wrap: wrap;
-  margin-left: 10px;
-  margin-right: 10px;
 }
 
-.calculatorResult {
-  margin-left: 10px
-}
+
 
 .calculators{
-  // background-color: #1d7484;
   display: flex;
-  margin-left: 10px;
-  // flex-wrap: wrap;
+  padding:10px;
   gap: 20px;
 }
 
 .slider {
   min-width: 40%;
   max-width: 60%;
-  margin-left: 10px;
 }
 
 .inputTextField {
@@ -330,18 +331,19 @@ fieldset {
   flex-wrap: wrap;
 }
 
-.calculatorTesti{
-  display: flex;
-  flex-direction: row;
-}
-
 .calculatorContainerChartBar {
-  width:40%;
+  width:50%;
   position: fixed;
-  bottom: 10px;
+  bottom: 2px;
   right: 1px;
+  justify-items: center;
 }
 
+.barChartDiv{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .btn{
   width: fit-content;
@@ -349,3 +351,4 @@ fieldset {
   background-color: #144f5a;
   border-radius: 20px;
 }
+

@@ -63,6 +63,7 @@ export const DiagramSchema = z.object({
 		min: z.number(),
 		max: z.number(),
 		marks: z.array(Mark),
+		isVisible: z.boolean(),
 	})
 })
 

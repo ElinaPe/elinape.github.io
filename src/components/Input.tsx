@@ -30,6 +30,7 @@ const CustomInput: React.FC<CustomInputProps> = ({ field, onChange }) => {
                 <label htmlFor="inputId">{field.name}</label>
                 <TextField id="inputId"
                 type="number"
+                defaultValue={field.defaultValue}
                 onChange={(e) => onChange(field.variable, e.target.value)}
                 InputLabelProps={{
                   shrink: true,

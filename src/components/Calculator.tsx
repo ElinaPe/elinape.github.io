@@ -71,8 +71,8 @@ const handleClose = () => setOpen(false);
 
     return (
         <div className="oneCalculatorContainer">
-            <h4>{calculator.title} <button className='btn' onClick={handleOpen}>
-            <FontAwesomeIcon icon={faInfo} /></button></h4>
+            <h5>{calculator.title} <button className='btn' onClick={handleOpen}>
+            <FontAwesomeIcon icon={faInfo} /></button></h5>
 
             <CalculatorInfoModal 
             isOpen={open} 

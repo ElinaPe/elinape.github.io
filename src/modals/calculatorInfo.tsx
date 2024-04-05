@@ -6,7 +6,21 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Typography from '@mui/material/Typography'
 
-export default function CalculatorInfoModal({ isOpen, handleClose, title, description, formula }) {
+interface CalculatorInfoModalProps {
+  isOpen: boolean;
+  handleClose: () => void;
+  title: string;
+  description: string | null | undefined;
+  formula: string;
+}
+
+const CalculatorInfoModal: React.FC<CalculatorInfoModalProps> = ({
+  isOpen,
+  handleClose,
+  title,
+  description,
+  formula
+}) => {
   return (
     <Dialog open={isOpen} onClose={handleClose} fullWidth>
       <DialogTitle>{title}</DialogTitle>
@@ -27,3 +41,5 @@ export default function CalculatorInfoModal({ isOpen, handleClose, title, descri
     </Dialog>
   );
 }
+
+export default CalculatorInfoModal;

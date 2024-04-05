@@ -1,10 +1,9 @@
+import Button from '@mui/material/Button';
 import { useEffect, useState } from 'react';
+import Laskuri from '../components/Calculator';
 import yamlData from '../laskuri.yaml';
 import { RootSchema } from '../types';
-import Laskuri from '../components/Calculator';
 import BarChartBar from './BarChart';
-import Button from '@mui/material/Button';
-import Form from 'react-bootstrap/Form';
 
 function CalculatorContainer() {
     const validatedData = RootSchema.parse(yamlData)
@@ -62,7 +61,7 @@ function CalculatorContainer() {
         <div className='calculatorContainer'>
             <h2>{validatedContainer.title}</h2>
             <div className='calculatorTesti'>
-                <div className='calculatorContent'>
+                <div className={`calculatorContent ${showDiagram ? '' : 'Full'}`}>
                     {calculators.map((calculator) => (
                         <Laskuri
                             key={calculator.id}
@@ -70,11 +69,10 @@ function CalculatorContainer() {
                             onCalculatorChange={handleCalculatorChange}
                         />
                     ))}
-                    {/* <Form.Label>Range</Form.Label>
-                    <Form.Range /> */}
-
-                    <Button className='diagramBtn' variant={'outlined'} onClick={handleDiagram}>Näytä pylväät</Button>
-                    {/* <Button className='diagramBtn' variant={'outlined'} onClick={handleDiagram}>Sovelluksen kanssa tee checkbox</Button> */}
+                    <div>
+                        <Button className='diagramBtn' variant={'outlined'} onClick={handleDiagram}>Näytä pylväät</Button>
+                        {/* <Button className='diagramBtn' variant={'outlined'} onClick={handleDiagram}>Sovelluksen kanssa tee checkbox</Button> */}
+                    </div>
                 </div>
                 
                 {showDiagram &&

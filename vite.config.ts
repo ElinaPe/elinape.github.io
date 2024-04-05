@@ -10,7 +10,7 @@ export default defineConfig({
       generateScopedName: '[name]__[local]__[hash:base64:5]',
     },
   },
-  optimizeDeps: {
+/*   optimizeDeps: {
     include: ['@mui/material', '@mui/icons-material'], 
-  },
+  }, */
 });

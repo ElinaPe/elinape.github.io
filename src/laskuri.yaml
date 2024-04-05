@@ -11,7 +11,7 @@ Laskurit:
       - name: Lasten lkm
         variable: a
         controlType: type
-        defaultValue: 200
+        defaultValue: 0
       - name: Poissaoloprosentti
         variable: b
         controlType: slider
@@ -58,7 +58,7 @@ Laskurit:
 
   - id: kuntahenkilo
     title: Kunnan työntekijän tiedot
-    description: 
+    description: Joka
     isInteger: true
     fields:
       - name: Montako henkeä
@@ -87,7 +87,7 @@ Laskurit:
 
   - id: kouluhenkilo
     title: Koulun työntekijän tiedot
-    description: 
+    description: Joka
     isInteger: true
     fields:
       - name: Montako henkeä
@@ -116,7 +116,7 @@ Laskurit:
 
   - id: kuljetushenkilo
     title: Kuljetuspalvelun työntekijän tiedot
-    description: 
+    description: Joka
     isInteger: true
     fields:
       - name: Montako henkeä
@@ -201,6 +201,7 @@ Laskurit:
 
   - id: peruutukset
     title: Kuinka kauan menee yhdessä peruutuksessa?
+    description: Joka
     isInteger: true
     fields:
       - name: Reitin uudelleenjärjestely
@@ -259,6 +260,7 @@ Laskurit:
 
   - id: peruutusYht
     title: Peruutusten kesto yhteensä
+    description: Joka
     isInteger: false
     variables:
       - name: result_lapset
@@ -272,7 +274,6 @@ Laskurit:
         value: 0
     cssClasses:
       - calculators
-      - peruutusYhtCalculator
 
   - id: palkatYht
     title: Palkkakulut yhteensä 
@@ -290,7 +291,6 @@ Laskurit:
         value: 0
     cssClasses:
       - calculators
-      - palkatYhtCalculator
 
 
 Pylvasdiagrammit:
@@ -314,6 +314,7 @@ Pylvasdiagrammit:
           label: "0%"
         - value: 15
           label: "15%"
+      isVisible: false
 
   - id: Kustannukset
     xAxisDatakey:
@@ -335,4 +336,5 @@ Pylvasdiagrammit:
           label: "0%"
         - value: 15
           label: "15%"
+      isVisible: true
 
