@@ -334,6 +334,15 @@ fieldset {
   max-width: 60%;
 }
 
+.sliderValue {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+}
+
+.sliderValue label {
+  width: 45px;
+}
 .inputTextField {
   min-width: 20%;
 }

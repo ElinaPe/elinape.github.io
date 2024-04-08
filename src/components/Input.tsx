@@ -10,6 +10,8 @@ interface CustomInputProps {
 }
 const CustomInput: React.FC<CustomInputProps> = ({ field, onChange }) => {
 
+  const [sliderValue, setSliderValue] = useState(field.defaultValue)
+
     switch (field.controlType) {
         case 'type':
             // Render a TextField for numeric input with debounce feature (not implemented in this code snippet).
@@ -32,16 +34,22 @@ const CustomInput: React.FC<CustomInputProps> = ({ field, onChange }) => {
             return (
               <div className='slider'>
                 <label>{field.name}</label>
+                <div className='sliderValue'>
                 <Slider
                     defaultValue={field.defaultValue}
                     step={field.step}
                     min={field.min}
                     max={field.max}
-                    onChange={(event, newValue) => onChange(field.variable, Array.isArray(newValue) ? newValue[0] : newValue)}
+                    onChange={(event, newValue) => {
+                      onChange(field.variable, Array.isArray(newValue) ? newValue[0] : newValue)
+                      setSliderValue(Array.isArray(newValue) ? newValue[0] : newValue)}
+                    }
                     valueLabelDisplay="auto"
                     aria-labelledby="input-slider"
                     marks={field.marks}
                 />
+                <label>{sliderValue}</label>
+                </div>
               </div>
             );
         default:
