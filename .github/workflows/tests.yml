@@ -30,8 +30,8 @@ jobs:
           node-version: 20
           cache: 'npm'
 
-      - name: Install Dependencies
-        run: npm install
+      # - name: Install Dependencies
+      #   run: npm install
 
       # - name: Cypress run
       #   uses: cypress-io/github-action@v4
