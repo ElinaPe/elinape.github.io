@@ -76,14 +76,13 @@ function CalculatorContainer() {
                 
                 {showDiagram &&
                 <div className='calculatorContainerChartBar'>
-                {diagrams.map((diagram) => (
-                     <BarChartBar
-                     key={diagram.id}
-                     diagram={{...diagram }}
-                     />
-                ))}
-
-            </div>
+                    {diagrams.map((diagram) => (
+                        <BarChartBar
+                        key={diagram.id}
+                        diagram={{...diagram }}
+                        />
+                    ))}
+                </div>
                 }
                 
             </div>

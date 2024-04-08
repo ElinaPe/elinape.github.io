@@ -86,7 +86,7 @@ const handleGrowthRateChange = (event: Event, newValue: number | number[]) => {
 
   return (
     <div className="barChartDiv">
-      <ResponsiveContainer width="70%" aspect={1.5}>
+      <ResponsiveContainer width="70%" aspect={1.4}>
         <BarChart data={diagramData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
@@ -99,8 +99,8 @@ const handleGrowthRateChange = (event: Event, newValue: number | number[]) => {
         </BarChart>
       </ResponsiveContainer>
       {diagram.growthRate.isVisible && (
+        <div className="chartSlider">
       <Slider
-        className="slider"
         step={0.1}
         min={diagram.growthRate.min}
         max={diagram.growthRate.max}
@@ -110,7 +110,9 @@ const handleGrowthRateChange = (event: Event, newValue: number | number[]) => {
         aria-labelledby="input-slider"
         marks={diagram.growthRate.marks}
       />
+      </div>
     )}
+  
     </div>
   );
 }

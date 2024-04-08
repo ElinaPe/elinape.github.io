@@ -14,7 +14,7 @@ interface CalculatorProps {
 }
 
 const Laskuri: React.FC<CalculatorProps> = ({ calculator, onCalculatorChange }) => {
-  const [result, setResult] = useState({value: 0, name: '', unit: ''});
+  const [result, setResult] = useState({value: calculator.result.value, name: '', unit: ''});
   const { id, variables } = calculator
   // field names and default values
   const [fields, setFields] = useState(calculator.fields)
@@ -92,11 +92,9 @@ const parseDuration = (durationMin: number) => {
     }
     return 'Ei tulosta';
   };
-  const hasResult = result.value !== 0;
   const resultValue = displayResult();
 
 
-  const totalMinutes = 47 * 7; 
 
     return (
         <div className="oneCalculatorContainer">
@@ -120,8 +118,7 @@ const parseDuration = (durationMin: number) => {
                     />
                 ))}
             </div>
-            {hasResult ? (<p className='calculatorResult'>{calculator.result.name}: {resultValue} {calculator.result.unit} </p>)
-            : (<p className='calculatorResult'>{calculator.result.name}:</p>)}
+           <p className='calculatorResult'>{calculator.result.name}: {resultValue} {calculator.result.unit} </p>
         </div>
     );
 };

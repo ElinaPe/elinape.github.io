@@ -268,38 +268,27 @@ fieldset {
 //   flex-direction: column;
 // }
 
-// .calculatorContent {
-//   display: flex;
-//   flex-direction: column;
-//   width: 60%;
-// }
+.calculatorContent {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
 
-// .calculatorContent.Full{
-//   display: flex;
-//   flex-direction: row;
-//   flex-wrap: wrap;
-//   width: 100%;
-//   justify-content: start;
-//   gap:60px;
-// }
 
 .calculatorContent.Full {
   width:100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  // grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
   padding: 20px;
 }
-
-@media (min-width: 1024px) {
-  .calculatorContent.Full {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
 .calculatorContent.Full > div:nth-child(5n) {
   grid-column: span 2;
 }
+
+
+
+
 
 .diagramBtn {
   width: min-content;
@@ -308,7 +297,7 @@ fieldset {
 }
 
 .oneCalculatorContainer{
-  width: fit-content;
+  width: auto;
   display: flex;
   flex-direction: column;
   padding: 0px 10px;
@@ -322,16 +311,20 @@ fieldset {
 }
 
 
-
+//yamlissa määritelty
 .calculators{
+  width: auto;
   display: flex;
   padding:10px;
   gap: 20px;
 }
 
 .slider {
-  min-width: 40%;
-  max-width: 60%;
+  width: 65%;
+}
+
+.chartSlider {
+  width: 50%;
 }
 
 .sliderValue {
@@ -379,3 +372,31 @@ fieldset {
   border-radius: 20px;
 }
 
+
+@media (min-width: 1024px) {
+  .calculatorContent.Full {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 800px) {
+  .calculatorContent.Full {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+@media (max-width: 799px) {
+  .calculatorContent{
+    width:100%;
+  }
+  .calculatorContainerChartBar {
+    width: 100%;
+    position: relative;
+  }
+  .calculatorContent.Full {
+    grid-template-columns: 1fr;
+  }
+  .calculatorContent.Full > div:nth-child(5n) {
+    grid-column: span 1;
+  }
+
+
+}
