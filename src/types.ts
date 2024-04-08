@@ -24,6 +24,7 @@ export const Field = z.object({
 	name: z.string(),
 	variable: z.string(),
 	controlType: z.enum(["type", "slider"]),
+	step: z.number().optional(),
 	min: z.number().optional(),
 	max: z.number().optional(),
 	marks: z.array(Mark).optional(),
@@ -34,6 +35,7 @@ export const CalculatorSchema = z.object({
 	id: z.string(),
 	title: z.string(),
 	description: z.string().optional().nullable(),
+	isTime: z.boolean(),
 	isInteger: z.boolean(),
 	dependsOn: z.array(Dependency).optional(),
 	fields: z.array(Field).optional(),
@@ -41,19 +43,23 @@ export const CalculatorSchema = z.object({
 	formula: z.string(),
 	result: z.object({
 		name: z.string(),
-		unit: z.string(),
+		unit: z.string().optional().nullable(),
 		value: z.number()
 	}),
 	cssClasses: z.array(z.string()).optional(),
 });
+
 const barDataKeys = z.object({
 	id: z.string().optional(),
 	name: z.string(),
 	value: z.number(),
+	isTime: z.boolean(),
 })
+
 const xAxisdataKeyName = z.object({
 	name: z.string(),
 })
+
 export const DiagramSchema = z.object({
 	id: z.string(),
 	xAxisDatakey: z.array(xAxisdataKeyName),
@@ -64,7 +70,7 @@ export const DiagramSchema = z.object({
 		max: z.number(),
 		marks: z.array(Mark),
 		isVisible: z.boolean(),
-	})
+	}),
 })
 
 export const RootSchema = z.object({

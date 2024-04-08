@@ -32,7 +32,6 @@ function CalculatorContainer() {
             name: `result_${calculator.id}`,
             value: calculator.result.value,
           }));  
-
         setEndResults(newResults)          
     }
     

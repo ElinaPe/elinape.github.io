@@ -61,13 +61,42 @@ const handleFieldChange = (variable: string, value: string) => {
 
 const handleOpen = () => setOpen(true);
 const handleClose = () => setOpen(false);
+
+const parseDuration = (durationMin: number) => {
+  const m = Number(durationMin);
+  const h = Math.floor(m / 60);
+  const remainingMinutes = m % 60;
+  const hDisplay = h === 0 ? "" : `${h}h `;
+  const mDisplay = remainingMinutes === 0 ? "" : (remainingMinutes < 10 ? `${remainingMinutes}min` : `${remainingMinutes}min`);
+  return hDisplay + mDisplay;
+};
+
+
     
-    const hasResult = result.value !== 0;
-    const resultValue = hasResult
-    ? calculator.isInteger
-    ? Math.round(result.value)
-    : Number(result.value).toFixed(2)
-  : 'Ei tulosta';
+  //   const hasResult = result.value !== 0;
+  //   const resultValue = hasResult
+  //   ? calculator.isInteger
+  //   ? Math.round(result.value)
+  //   : Number(result.value).toFixed(2)
+  // : 'Ei tulosta';
+  const displayResult = () => {
+    if (result.value !== 0) {
+      if (calculator.isTime) {
+        const totalMinutes = Math.round(result.value);
+        return parseDuration(totalMinutes);
+      } else if (calculator.isInteger) {
+        return Math.round(result.value).toString();
+      } else {
+        return Number(result.value).toFixed(2);
+      }
+    }
+    return 'Ei tulosta';
+  };
+  const hasResult = result.value !== 0;
+  const resultValue = displayResult();
+
+
+  const totalMinutes = 47 * 7; 
 
     return (
         <div className="oneCalculatorContainer">

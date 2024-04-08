@@ -2,12 +2,11 @@ import { Slider } from "@mui/material";
 import React, { useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
-
-
 interface BarItem {
-  value: number;
-  name: string;
   id?: string;
+  name: string;
+  value: number;
+  isTime: boolean;
 }
 
 interface Entry {
@@ -35,28 +34,35 @@ interface BarChartBarProps {
 
 const BarChartBar: React.FC<BarChartBarProps> = ({ diagram }) => {
 
-  const [growthRate, setGrowthRate] = useState(1);
-
-
+  const [growthRate, setGrowthRate] = useState(0);
+  
   const convertDiagramData = (diagram: Diagram): Entry[] => {
     // Muunnetaan growthRate prosentista kertoimeksi
-    const growthMultiplier = growthRate
+    const growthMultiplier = 1 + (growthRate / 10)
     
     return diagram.xAxisDatakey.map((xAxisItem, index) => {
       const entry: Entry = { name: xAxisItem.name };
       diagram.barDataKey.forEach((barItem) => {
+        let valueYear
+        if(!barItem.isTime) {
+          valueYear = barItem.value * 12
+        }
+        else{
+          const year = barItem.value / 60 * 22 * 12
+          valueYear = Math.round(year)
+        }
         switch (index) {
           case 0: 
-            entry[barItem.name] = barItem.value;
+            entry[barItem.name] = valueYear;
             break;
           case 1: 
-            entry[barItem.name] = barItem.value * growthMultiplier;
+            entry[barItem.name] = valueYear * growthMultiplier;
             break;
           case 2: 
-            entry[barItem.name] = barItem.value * growthMultiplier * growthMultiplier;
+            entry[barItem.name] = valueYear * growthMultiplier * growthMultiplier;
             break;
           default:
-            entry[barItem.name] = barItem.value;
+            entry[barItem.name] = valueYear;
             break;
         }
       });
@@ -71,6 +77,12 @@ const handleGrowthRateChange = (event: Event, newValue: number | number[]) => {
   setGrowthRate(Array.isArray(newValue) ? newValue[0] : newValue);
 };
 
+// const formatDuration = (value) => {
+
+//   const hours = Math.floor(value / 60);
+//   const mins = Math.round(value % 60);
+//   return `${hours}h ${mins}min`;
+// };
 
   return (
     <div className="barChartDiv">

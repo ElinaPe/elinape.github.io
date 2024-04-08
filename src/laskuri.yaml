@@ -5,7 +5,8 @@ Container:
 Laskurit: 
   - id: lapset
     title: Montako kuljetettavaa lasta?
-    description: Joka päivä on sairaspoissaoloja ja jaada jaada testiteksti
+    description: Joka päivä on prosentuaalinen määrä lapsia poissa.
+    isTime: false
     isInteger: true
     fields:
       - name: Lasten lkm
@@ -15,11 +16,12 @@ Laskurit:
       - name: Poissaoloprosentti
         variable: b
         controlType: slider
+        step: 0.5
         marks:
           - value: 0
             label: "0%"
           - value: 100
-            label: "100%"
+            label: "30%"
         defaultValue: 0
     formula: b/100*a
     result:
@@ -58,7 +60,8 @@ Laskurit:
 
   - id: kuntahenkilo
     title: Kunnan työntekijän tiedot
-    description: Joka
+    description: Kunnan työntekijämäärä ja keskimääräinen palkka
+    isTime: false
     isInteger: true
     fields:
       - name: Montako henkeä
@@ -70,6 +73,7 @@ Laskurit:
         controlType: slider
         min: 0
         max: 10000
+        step: 1
         marks:
           - value: 0
             label: "0€"
@@ -87,7 +91,8 @@ Laskurit:
 
   - id: kouluhenkilo
     title: Koulun työntekijän tiedot
-    description: Joka
+    description: Koulun työntekijämäärä ja keskimääräinen palkka
+    isTime: false
     isInteger: true
     fields:
       - name: Montako henkeä
@@ -99,6 +104,7 @@ Laskurit:
         controlType: slider
         min: 0
         max: 10000
+        step: 1
         marks:
           - value: 0
             label: "0€"
@@ -116,7 +122,8 @@ Laskurit:
 
   - id: kuljetushenkilo
     title: Kuljetuspalvelun työntekijän tiedot
-    description: Joka
+    description: Kuljetuspalvelun työntekijämäärä ja keskimääräinen palkka
+    isTime: false
     isInteger: true
     fields:
       - name: Montako henkeä
@@ -128,6 +135,7 @@ Laskurit:
         controlType: slider
         min: 0
         max: 10000
+        step: 1
         marks:
           - value: 0
             label: "0€"
@@ -201,7 +209,8 @@ Laskurit:
 
   - id: peruutukset
     title: Kuinka kauan menee yhdessä peruutuksessa?
-    description: Joka
+    description: Jokaisen peruutuksen kohdalla tulee viestintää. Huoltaja laittaa viestiä kouluun, koulu laittaa viestiä eteenpäin jne. Sovellusta käyttäessä viestittelyaika nollaantuu, koska tieto välittyy heti kaikille.
+    isTime: false
     isInteger: true
     fields:
       - name: Reitin uudelleenjärjestely
@@ -209,6 +218,7 @@ Laskurit:
         controlType: slider
         min: 0
         max: 30
+        step: 0.5
         marks:
           - value: 0
             label: "0min"
@@ -218,6 +228,7 @@ Laskurit:
       - name: Kunnan viestittely
         variable: kuv
         controlType: slider
+        step: 0.5
         min: 0
         max: 30
         marks:
@@ -230,6 +241,7 @@ Laskurit:
       - name: Koulun viestittely
         variable: kov
         controlType: slider
+        step: 0.5
         min: 0
         max: 30
         marks:
@@ -241,6 +253,7 @@ Laskurit:
       - name: Kuljetusyrityksen viestittely
         variable: kyv
         controlType: slider
+        step: 0.5
         min: 0
         max: 30
         marks:
@@ -259,32 +272,34 @@ Laskurit:
       - peruutusLaskuri
 
   - id: peruutusYht
-    title: Peruutusten kesto yhteensä
-    description: Joka
-    isInteger: false
+    title: Peruutusten kesto päivässä
+    description: Lasten poissaolomäärän ja kaikkien peruutusten keston tulo. 
+    isTime: true
+    isInteger: true
     variables:
       - name: result_lapset
         value: 0
       - name: result_peruutukset
         value: 0
-    formula: result_lapset * result_peruutukset / 60 
+    formula: result_lapset * result_peruutukset 
     result: 
         name: Peruutusten kesto yhteensä
-        unit: tuntia päivässä
+        unit: 
         value: 0
     cssClasses:
       - calculators
 
   - id: palkatYht
     title: Palkkakulut yhteensä 
-    description: Palkkojen lisäksi työntekijöistä maksetaan muitakin kuluja jaada ja siksi kokonaiskustannukset ovat keskimäärin 1.75 kertaiset
+    description: Palkkojen lisäksi työntekijöistä maksetaan muitakin kuluja, kuten työeläkevakuutusmaksu, työttömyysvakuutusmaksu, sairausvakuutusmaksu sekä tapaturma- ja ryhmähenkivakuutusmaksut. Sivukuluihin lasketaan lisäksi esimerkiksi työterveyshuollon ja työpaikkaruokailun kustannukset. Siksi kokonaiskustannukset ovat laskettu 1.75 kertaiseksi. (Luku 22 on keskimääräiset työpäivät/kk ja 7.5 tuntia/pvä).
+    isTime: false
     isInteger: true
     variables:
       - name: result_henkilot
         value: 0
       - name: result_palkat
         value: 0
-    formula: ((result_kuntahenkilo + result_kouluhenkilo + result_kuljetushenkilo) * 1.75 / 22) * (result_peruutusYht * 22 / 7.5)
+    formula: ((result_kuntahenkilo + result_kouluhenkilo + result_kuljetushenkilo) * 1.75 / 22 / 7.5) * (result_peruutusYht / 60) * 22
     result: 
         name: Palkkakulut yhteenlaskettuna kuukaudessa
         unit: euroa
@@ -296,15 +311,17 @@ Laskurit:
 Pylvasdiagrammit:
   - id: Ajankaytto
     xAxisDatakey:
-      - name: Vuosi 1
-      - name: Vuosi 2
-      - name: Vuosi 3
+      - name: Vuosi
+      # - name: Vuosi 2
+      # - name: Vuosi 3
     barDataKey:
       - id: result_peruutusYht
-        name: Ajankäyttö
+        name: Ajankäyttö tunteina
         value: 0
+        isTime: true
       - name: Sovelluksen kanssa
         value: 0
+        isTime: true
     growthRate: 
       value: 1
       min: 1
@@ -325,10 +342,12 @@ Pylvasdiagrammit:
       - id: result_palkatYht
         name: Kustannukset
         value: 0
+        isTime: false
       - name: Sovelluksen kanssa
         value: 0
+        isTime: false
     growthRate: 
-      value: 1
+      value: 0
       min: 0
       max: 15
       marks:
