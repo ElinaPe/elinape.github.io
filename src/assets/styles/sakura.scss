@@ -268,19 +268,37 @@ fieldset {
 //   flex-direction: column;
 // }
 
-.calculatorContent {
-  display: flex;
-  flex-direction: column;
-  width: 60%;
+// .calculatorContent {
+//   display: flex;
+//   flex-direction: column;
+//   width: 60%;
+// }
+
+// .calculatorContent.Full{
+//   display: flex;
+//   flex-direction: row;
+//   flex-wrap: wrap;
+//   width: 100%;
+//   justify-content: start;
+//   gap:60px;
+// }
+
+.calculatorContent.Full {
+  width:100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
 }
 
-.calculatorContent.Full{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%;
-  justify-content: start;
-  gap:60px;
+@media (min-width: 1024px) {
+  .calculatorContent.Full {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.calculatorContent.Full > div:nth-child(5n) {
+  grid-column: span 2;
 }
 
 .diagramBtn {
