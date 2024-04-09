@@ -1,4 +1,5 @@
 import CalculatorContainer from './components/CalculatorContainer';
+import SimpleTabs from './pages/Tabs';
 
 function App() {
 
@@ -6,7 +7,8 @@ function App() {
     return (
         <>
 		<div className='motherOfContainers'>
-			<CalculatorContainer />
+			{/* <CalculatorContainer /> */}
+            <SimpleTabs />
 		</div>
         </>
     );

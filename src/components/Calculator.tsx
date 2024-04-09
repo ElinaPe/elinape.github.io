@@ -21,8 +21,6 @@ const Laskuri: React.FC<CalculatorProps> = ({ calculator, onCalculatorChange }) 
   const [open, setOpen] = useState(false);
 
 
-  // calculate the result
-
   useEffect(() => {
     const p = parser();
     fields?.forEach(field => {

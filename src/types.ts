@@ -14,11 +14,6 @@ const Variable = z.object({
 	name: z.string(),
 	value: z.number(),
 })
-const Dependency = z.object({
-	calculator: z.string(),
-	variable: z.string(),
-	condition: z.string(),
-  });
 
 export const Field = z.object({
 	name: z.string(),
@@ -37,7 +32,6 @@ export const CalculatorSchema = z.object({
 	description: z.string().optional().nullable(),
 	isTime: z.boolean(),
 	isInteger: z.boolean(),
-	dependsOn: z.array(Dependency).optional(),
 	fields: z.array(Field).optional(),
 	variables: z.array(Variable).optional(),
 	formula: z.string(),
@@ -48,6 +42,7 @@ export const CalculatorSchema = z.object({
 	}),
 	cssClasses: z.array(z.string()).optional(),
 });
+
 
 const barDataKeys = z.object({
 	id: z.string().optional(),
