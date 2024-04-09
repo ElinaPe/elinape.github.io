@@ -32,8 +32,15 @@ function CalculatorContainer() {
             name: `result_${calculator.id}`,
             value: calculator.result.value,
           }));  
+          console.log('testiresults' ,newResults)
         setEndResults(newResults)          
     }
+
+    
+
+    // useEffect(() => {
+    //         console.log('useEffectistä' , calculators)
+    // }, [])
     
     useEffect(() => {
         const updatedDiagrams = diagrams.map(diagram => {

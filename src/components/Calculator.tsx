@@ -19,6 +19,7 @@ const Laskuri: React.FC<CalculatorProps> = ({ calculator, onCalculatorChange }) 
   // field names and default values
   const [fields, setFields] = useState(calculator.fields)
   const [open, setOpen] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('')
 
 
   // calculate the result
@@ -42,6 +43,7 @@ const Laskuri: React.FC<CalculatorProps> = ({ calculator, onCalculatorChange }) 
       });
     } catch (error) {
       console.error('Kaavan arviointivirhe:', error);
+      // setErrorMsg('Virhe')
     }
   }, [fields, calculator.formula, variables]);
   
@@ -119,6 +121,7 @@ const parseDuration = (durationMin: number) => {
                 ))}
             </div>
            <p className='calculatorResult'>{calculator.result.name}: {resultValue} {calculator.result.unit} </p>
+          <p id="errorMsg">{errorMsg}</p>
         </div>
     );
 };
