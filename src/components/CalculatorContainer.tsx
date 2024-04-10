@@ -23,19 +23,23 @@ function CalculatorContainer() {
 
     const handleCalculatorChange = (calculatorId: string, result: number) => {
         const newValue = typeof result === 'number' ? result : parseFloat(result);
-        const updatedCalculators = calculators.map(calculator =>
-                calculator.id === calculatorId ? { ...calculator, result: { ...calculator.result, value: newValue } } : calculator
-            )
-        setCalculators(updatedCalculators);
-
-        const newResults = updatedCalculators.map(calculator => ({
-            name: `result_${calculator.id}`,
-            value: calculator.result.value,
-          }));  
-          console.log('testiresults' ,newResults)
-        setEndResults(newResults)          
-    }
-
+        setCalculators(prevCalculators =>
+          prevCalculators.map(calculator =>
+            calculator.id === calculatorId
+              ? { ...calculator, result: { ...calculator.result, value: newValue } }
+              : calculator
+          )
+        );
+      };
+      
+      useEffect(() => {
+        const newResults = calculators.map(calculator => ({
+          name: `result_${calculator.id}`,
+          value: calculator.result.value,
+        }));
+        console.log('testiresults', newResults);
+        setEndResults(newResults);
+      }, [calculators]);
     
 
     // useEffect(() => {

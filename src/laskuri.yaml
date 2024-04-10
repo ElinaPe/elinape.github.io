@@ -371,7 +371,7 @@ Laskurit:
       - name: Montako henkeä
         variable: koordLkm
         controlType: type
-        defaultValue: 2
+        defaultValue: 1
       - name: Koordinointi
         variable: koord
         controlType: slider
@@ -384,11 +384,10 @@ Laskurit:
           - value: 60
             label: "60min"
         defaultValue: 20
-
       - name: Montako henkeä
         variable: kyytLkm
         controlType: type
-        defaultValue: 1
+        defaultValue: 2
       - name: Kyytiavustaja
         variable: kyyt
         controlType: slider
@@ -412,8 +411,8 @@ Laskurit:
 
 
   - id: peruutusYht
-    title: Peruutusten kesto päivässä
-    description: Lasten poissaolomäärän ja kaikkien peruutusten keston tulo. 
+    title: Päivittäinen työmäärä
+    description: Lasten poissaolomäärän ja kaikkien peruutusten ja päivittäisen koordinoinnin kesto. 
     isTime: true
     isInteger: true
     variables:
@@ -425,14 +424,30 @@ Laskurit:
         value: 70
     formula: (result_lapset * result_peruutukset) + result_paivSeuranta
     result: 
-        name: Peruutusten kesto yhteensä
+        name: Työmäärä yhteensä
         unit:
         value: 270
     cssClasses:
       - calculators
 
+  - id: peruutusYhtSovellus
+    title: Päivittäinen työmäärä päivässä sovelluksen kanssa
+    description: Lasten poissaolomäärän ja kaikkien peruutusten ja päivittäisen koordinoinnin kesto sovelluksen kanssa. 
+    isTime: true
+    isInteger: true
+    # variables:
+    #   - name: result_paivSeuranta
+    #     value: 0
+    formula: result_paivSeuranta / 100 * 46
+    result: 
+        name: Työmäärä yhteensä
+        unit:
+        value: 0
+    cssClasses:
+      - calculators
+
   - id: palkatYht
-    title: Kustannukset yhteensä 
+    title: Kustannukset kuukaudessa
     description: Luku 22 on keskimääräiset työpäivät/kk ja 7.5 tuntia/pvä.
     isTime: false
     isInteger: true
@@ -454,6 +469,51 @@ Laskurit:
       - calculators
 
 
+  # - id: palkatYhtVuosi
+  #   title: Kustannukset vuodessa
+  #   description: Luku 22 on keskimääräiset työpäivät/kk ja 7.5 tuntia/pvä.
+  #   isTime: false
+  #   isInteger: true
+  #   variables:
+  #     - name: result_palkkatiedot
+  #       value: 5250
+  #     - name: result_peruutusYht
+  #       value: 270
+  #     # - name: result_kouluhenkilo
+  #     #   value: 2500
+  #     # - name: result_kuljetushenkilo
+  #     #   value: 3000
+  #   formula: (result_palkkatiedot / 22 / 7.5) * (result_peruutusYht / 60) * 22 * 12
+  #   result: 
+  #       name: Kustannukset yhteensä
+  #       unit: euroa
+  #       value: 3150
+  #   cssClasses:
+  #     - calculators
+
+
+  - id: palkatYhtSovellus
+    title: Kustannukset yhteensä sovelluksen kanssa
+    description: Luku 22 on keskimääräiset työpäivät/kk ja 7.5 tuntia/pvä.
+    isTime: false
+    isInteger: true
+    # variables:
+    #   - name: result_palkkatiedot
+    #     value: 0
+    #   - name: result_paivSeuranta
+    #     value: 0
+    formula: (result_palkkatiedot / 22 / 7.5) * (result_paivSeuranta / 60) * 22
+    result: 
+        name: Kustannukset yhteensä
+        unit: euroa
+        value: 0
+    cssClasses:
+      - calculators
+
+      
+
+
+
 
 Pylvasdiagrammit:
   - id: Ajankaytto
@@ -466,7 +526,8 @@ Pylvasdiagrammit:
         name: Ajankäyttö tunteina
         value: 0
         isTime: true
-      - name: Sovelluksen kanssa
+      - id: result_peruutusYhtSovellus
+        name: Sovelluksen kanssa
         value: 0
         isTime: true
     growthRate: 
@@ -490,7 +551,8 @@ Pylvasdiagrammit:
         name: Kustannukset
         value: 0
         isTime: false
-      - name: Sovelluksen kanssa
+      - id: result_palkatYhtSovellus
+        name: Sovelluksen kanssa
         value: 0
         isTime: false
     growthRate: 

@@ -34,7 +34,7 @@ interface BarChartBarProps {
 
 const BarChartBar: React.FC<BarChartBarProps> = ({ diagram }) => {
 
-  const [growthRate, setGrowthRate] = useState(0);
+  const [growthRate, setGrowthRate] = useState(3);
   
   const convertDiagramData = (diagram: Diagram): Entry[] => {
     // Muunnetaan growthRate prosentista kertoimeksi
@@ -82,6 +82,16 @@ const handleGrowthRateChange = (event: Event, newValue: number | number[]) => {
 //   const hours = Math.floor(value / 60);
 //   const mins = Math.round(value % 60);
 //   return `${hours}h ${mins}min`;
+// };
+
+
+// const parseDuration = (durationMin: number) => {
+//   const m = Number(durationMin);
+//   const h = Math.floor(m / 60);
+//   const remainingMinutes = m % 60;
+//   const hDisplay = h === 0 ? "" : `${h}h `;
+//   const mDisplay = remainingMinutes === 0 ? "" : (remainingMinutes < 10 ? `${remainingMinutes}min` : `${remainingMinutes}min`);
+//   return hDisplay + mDisplay;
 // };
 
   return (
