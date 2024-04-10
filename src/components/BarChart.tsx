@@ -1,6 +1,6 @@
 import { Slider } from "@mui/material";
 import React, { useState } from "react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LabelList } from "recharts";
 
 interface BarItem {
   id?: string;
@@ -104,8 +104,10 @@ const handleGrowthRateChange = (event: Event, newValue: number | number[]) => {
           <Tooltip />
           <Legend />
           {Object.keys(diagramData[0] || {}).filter(key => key !== 'name').map((dataKey, index) => (
-            <Bar key={index} dataKey={dataKey} fill={index % 2 === 0 ? "#8884d8" : "#82ca9d"} />
-          ))}
+          <Bar key={index} dataKey={dataKey} fill={index % 2 === 0 ? "#8884d8" : "#82ca9d"}>
+            <LabelList dataKey={dataKey} position="top" />
+          </Bar>
+        ))}
         </BarChart>
       </ResponsiveContainer>
       {diagram.growthRate.isVisible && (
