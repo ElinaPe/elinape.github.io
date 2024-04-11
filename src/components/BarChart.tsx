@@ -3,31 +3,10 @@ import React, { SyntheticEvent, useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LabelList } from "recharts";
 import { Diagram } from "../types";
 
-/* interface BarItem {
-  id?: string;
-  name: string;
-  value: number;
-  isTime: boolean;
-} */
-
 interface Entry {
   name: string;
   [key: string]: string | number;
 }
-
-/* interface GrowthRate {
-  value: number;
-  min: number;
-  max: number;
-  marks: { value: number; label: string }[];
-  isVisible: boolean;
-}
-
-interface Diagram {
-  xAxisDatakey: Array<{ name: string }>;
-  barDataKey: BarItem[];
-  growthRate: GrowthRate;
-} */
 
 interface BarChartBarProps {
   diagram: Diagram;
@@ -49,7 +28,7 @@ const BarChartBar: React.FC<BarChartBarProps> = ({ diagram }) => {
           valueYear = barItem.value * 12
         }
         else{
-          const year = barItem.value / 60 * 22 * 12
+          const year = barItem.value / 60 / 24 * 22 * 12
           valueYear = Math.round(year)
         }
         switch (index) {
@@ -78,21 +57,18 @@ const handleGrowthRateChange = (event: Event | SyntheticEvent<Element, Event>, n
   setGrowthRate(Array.isArray(newValue) ? newValue[0] : newValue);
 };
 
-// const formatDuration = (value) => {
-
-//   const hours = Math.floor(value / 60);
-//   const mins = Math.round(value % 60);
-//   return `${hours}h ${mins}min`;
-// };
-
-
 // const parseDuration = (durationMin: number) => {
-//   const m = Number(durationMin);
-//   const h = Math.floor(m / 60);
-//   const remainingMinutes = m % 60;
-//   const hDisplay = h === 0 ? "" : `${h}h `;
-//   const mDisplay = remainingMinutes === 0 ? "" : (remainingMinutes < 10 ? `${remainingMinutes}min` : `${remainingMinutes}min`);
-//   return hDisplay + mDisplay;
+//   const minutes = Number(durationMin);
+//   const hours = Math.floor(minutes / 60);
+//   const days = Math.floor(hours / 24);
+//   const remainingHours = hours % 24;
+//   const remainingMinutes = minutes % 60;
+
+//   const dDisplay = days === 0 ? "" : `${days}pv `;
+//   const hDisplay = remainingHours === 0 ? "" : `${remainingHours}h `;
+//   const mDisplay = remainingMinutes === 0 ? "" : `${remainingMinutes}min`;
+
+//   return dDisplay + hDisplay + mDisplay;
 // };
 
 const bars = diagram.barDataKey.map((barItem, index) => (

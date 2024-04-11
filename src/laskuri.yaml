@@ -540,7 +540,7 @@ Pylvasdiagrammit:
         - value: 15
           label: "15%"
       isVisible: false
-    unit: h
+    unit: pv
 
   - id: Kustannukset
     xAxisDatakey:
