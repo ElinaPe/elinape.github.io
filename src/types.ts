@@ -1,9 +1,6 @@
 import { z } from 'zod';
 
-
-const ContainerSchema = z.object({
-	title: z.string().optional()
-});
+const OtsikotSchema = z.record(z.string());
 
 const Mark = z.object({
 	value: z.number(),
@@ -12,7 +9,7 @@ const Mark = z.object({
 
 const Variable = z.object({
 	name: z.string(),
-	value: z.number(),
+	value: z.number().nullable(),
 })
 
 export const Field = z.object({
@@ -38,16 +35,16 @@ export const CalculatorSchema = z.object({
 	result: z.object({
 		name: z.string(),
 		unit: z.string().optional().nullable(),
-		value: z.number()
+		value: z.number().nullable()
 	}),
 	cssClasses: z.array(z.string()).optional(),
 });
 
 
 const barDataKeys = z.object({
-	id: z.string().optional(),
+	id: z.string(),
 	name: z.string(),
-	value: z.number(),
+	value: z.number().nullable(),
 	isTime: z.boolean(),
 })
 
@@ -70,7 +67,8 @@ export const DiagramSchema = z.object({
 })
 
 export const RootSchema = z.object({
-	Container: ContainerSchema,
+	Otsikot: OtsikotSchema,
+	LaskuritEtusivu: z.array(CalculatorSchema),
 	Laskurit: z.array(CalculatorSchema),
 	Pylvasdiagrammit: z.array(DiagramSchema)
 });

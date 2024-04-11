@@ -24,13 +24,15 @@ const BarChartBar: React.FC<BarChartBarProps> = ({ diagram }) => {
       const entry: Entry = { name: xAxisItem.name };
       diagram.barDataKey.forEach((barItem) => {
         let valueYear
-        if(!barItem.isTime) {
-          valueYear = barItem.value * 12
-        }
+        if(barItem.value !== null){
+          if(!barItem.isTime) {
+            valueYear = barItem.value * 12
+          }
         else{
           const year = barItem.value / 60 / 24 * 22 * 12
           valueYear = Math.round(year)
         }
+        
         switch (index) {
           case 0:
             entry[barItem.name] = valueYear;
@@ -45,6 +47,7 @@ const BarChartBar: React.FC<BarChartBarProps> = ({ diagram }) => {
             entry[barItem.name] = valueYear;
             break;
         }
+      }
       });
       return entry;
     });

@@ -287,18 +287,15 @@ fieldset {
   gap: 10px;
   padding: 20px;
 }
-.calculatorContent.Full > div:nth-child(3n) {
-  grid-column: span 2;
-}
-.calculatorContent.Full > div:nth-child(4n) {
-  grid-column: span 2;
-}
-.calculatorContent.Full > div:nth-child(6n) {
-  grid-column: span 1;
-}
-
-
-
+// .calculatorContent.Full > div:nth-child(3n) {
+//   grid-column: span 2;
+// }
+// .calculatorContent.Full > div:nth-child(4n) {
+//   grid-column: span 2;
+// }
+// .calculatorContent.Full > div:nth-child(6n) {
+//   grid-column: span 1;
+// }
 
 
 .diagramBtn {
@@ -415,12 +412,12 @@ fieldset {
   .calculatorContent.Full {
     grid-template-columns: 1fr;
   }
-  .calculatorContent.Full > div:nth-child(3n) {
-    grid-column: span 1;
-  }
-  .calculatorContent.Full > div:nth-child(4n) {
-    grid-column: span 1;
-  }
+  // .calculatorContent.Full > div:nth-child(3n) {
+  //   grid-column: span 1;
+  // }
+  // .calculatorContent.Full > div:nth-child(4n) {
+  //   grid-column: span 1;
+  // }
   .peruutusLaskuri{
     flex-wrap: wrap;
   }

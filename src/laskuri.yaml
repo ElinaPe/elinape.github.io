@@ -1,7 +1,7 @@
-Container:
-  title1: Esitiedot
-  title2: Ajansäästö päivittäisessä koordinoinnissa
-  title3: Ajansäästö suunnittelussa
+Otsikot:
+  LaskuritEtusivu: Esitiedot
+  Laskurit: Ajansäästö päivittäisessä koordinoinnissa
+  Suunnittelu: Ajansäästö suunnittelussa
 
 LaskuritEtusivu:
   - id: esitiedot
@@ -13,12 +13,12 @@ LaskuritEtusivu:
       - name: Koulut
         variable: koulu
         controlType: type
-        defaultValue: 3
+        defaultValue: 1
     formula: koulu
     result:
       name: Määrä
       unit: koulua
-      value: 10
+      value: 0
     cssClasses:
       - calculators
 
@@ -46,85 +46,19 @@ LaskuritEtusivu:
     result:
       name: Määrä
       unit: lasta pois
-      value: 10
+      value: 0
     cssClasses:
       - calculators
       - tokanimi
 
-  - id: kuntahenkilo
-    title: Kunnan työntekijän tiedot
-    description: Kunnan työntekijämäärä ja keskimääräinen palkka
+  - id: palkkatiedot
+    title: Palkkatiedot
+    description: Työntekijöiden keskimääräiset palkkakustannukset. Palkkojen lisäksi työntekijöistä maksetaan muitakin kuluja, kuten työeläkevakuutusmaksu, työttömyysvakuutusmaksu, sairausvakuutusmaksu sekä tapaturma- ja ryhmähenkivakuutusmaksut. Sivukuluihin lasketaan lisäksi esimerkiksi työterveyshuollon ja työpaikkaruokailun kustannukset. Siksi kokonaiskustannukset ovat laskettu 1.75 kertaiseksi.
     isTime: false
     isInteger: true
     fields:
-      - name: Montako henkeä
-        variable: kuntaLkm
-        controlType: type
-        defaultValue: 1
       - name: Keskimääräinen palkka
-        variable: kuntaPalkka
-        controlType: slider
-        min: 0
-        max: 10000
-        step: 1
-        marks:
-          - value: 0
-            label: "0€"
-          - value: 10000
-            label: "10 000€"
-        defaultValue: 2500
-    formula: kuntaLkm * kuntaPalkka
-    result:
-      name: Yhteensä
-      unit: euroa
-      value: 2500
-    cssClasses:
-      - calculators
-      - henkilotLaskuri
-
-  - id: kouluhenkilo
-    title: Koulun työntekijän tiedot
-    description: Koulun työntekijämäärä ja keskimääräinen palkka
-    isTime: false
-    isInteger: true
-    fields:
-      - name: Montako henkeä
-        variable: kouluLkm
-        controlType: type
-        defaultValue: 1
-      - name: Keskimääräinen palkka
-        variable: kouluPalkka
-        controlType: slider
-        min: 0
-        max: 10000
-        step: 1
-        marks:
-          - value: 0
-            label: "0€"
-          - value: 10000
-            label: "10 000€"
-        defaultValue: 2500
-    formula: kouluLkm * kouluPalkka
-    result:
-      name: Yhteensä
-      unit: euroa
-      value: 2500
-    cssClasses:
-      - calculators
-      - henkilotLaskuri
-
-  - id: kuljetushenkilo
-    title: Kuljetuspalvelun työntekijän tiedot
-    description: Kuljetuspalvelun työntekijämäärä ja keskimääräinen palkka
-    isTime: false
-    isInteger: true
-    fields:
-      - name: Montako henkeä
-        variable: kuljetusHloLkm
-        controlType: type
-        defaultValue: 1
-      - name: Keskimääräinen palkka
-        variable: kuljetusPalkka
+        variable: palkka
         controlType: slider
         min: 0
         max: 10000
@@ -135,11 +69,11 @@ LaskuritEtusivu:
           - value: 10000
             label: "10 000€"
         defaultValue: 3000
-    formula: kuljetusHlöLkm * kuljetusPalkka
+    formula: palkka * 1.75
     result:
-      name: Yhteensä
+      name: Palkkakulut
       unit: euroa
-      value: 3000
+      value: 0
     cssClasses:
       - calculators
       - henkilotLaskuri
@@ -173,61 +107,61 @@ LaskuritEtusivu:
 
 
 Laskurit:
-  - id: lapset
-    title: Montako kuljetettavaa lasta?
-    description: Joka päivä on prosentuaalinen määrä lapsia poissa.
-    isTime: false
-    isInteger: true
-    fields:
-      - name: Lasten lkm
-        variable: a
-        controlType: type
-        defaultValue: 1000
-      - name: Poissaoloprosentti
-        variable: b
-        controlType: slider
-        step: 0.5
-        marks:
-          - value: 0
-            label: "0%"
-          - value: 100
-            label: "30%"
-        defaultValue: 5
-    formula: b/100*a
-    result:
-      name: Määrä
-      unit: lasta pois
-      value: 50
-    cssClasses:
-      - calculators
-      - tokanimi
+  # - id: lapset
+  #   title: Montako kuljetettavaa lasta?
+  #   description: Joka päivä on prosentuaalinen määrä lapsia poissa.
+  #   isTime: false
+  #   isInteger: true
+  #   fields:
+  #     - name: Lasten lkm
+  #       variable: a
+  #       controlType: type
+  #       defaultValue: 1000
+  #     - name: Poissaoloprosentti
+  #       variable: b
+  #       controlType: slider
+  #       step: 0.5
+  #       marks:
+  #         - value: 0
+  #           label: "0%"
+  #         - value: 100
+  #           label: "30%"
+  #       defaultValue: 5
+  #   formula: b/100*a
+  #   result:
+  #     name: Määrä
+  #     unit: lasta pois
+  #     value: 50
+  #   cssClasses:
+  #     - calculators
+  #     - tokanimi
 
-  - id: palkkatiedot
-    title: Palkkatiedot
-    description: Työntekijöiden keskimääräiset palkkakustannukset. Palkkojen lisäksi työntekijöistä maksetaan muitakin kuluja, kuten työeläkevakuutusmaksu, työttömyysvakuutusmaksu, sairausvakuutusmaksu sekä tapaturma- ja ryhmähenkivakuutusmaksut. Sivukuluihin lasketaan lisäksi esimerkiksi työterveyshuollon ja työpaikkaruokailun kustannukset. Siksi kokonaiskustannukset ovat laskettu 1.75 kertaiseksi.
-    isTime: false
-    isInteger: true
-    fields:
-      - name: Keskimääräinen palkka
-        variable: palkka
-        controlType: slider
-        min: 0
-        max: 10000
-        step: 1
-        marks:
-          - value: 0
-            label: "0€"
-          - value: 10000
-            label: "10 000€"
-        defaultValue: 3000
-    formula: palkka * 1.75
-    result:
-      name: Palkkakulut
-      unit: euroa
-      value: 5250
-    cssClasses:
-      - calculators
-      - henkilotLaskuri
+  # # # - id: palkkatiedot
+  # # #   title: Palkkatiedot
+  # # #   description: Työntekijöiden keskimääräiset palkkakustannukset. Palkkojen lisäksi työntekijöistä maksetaan muitakin kuluja, kuten työeläkevakuutusmaksu, työttömyysvakuutusmaksu, sairausvakuutusmaksu sekä tapaturma- ja ryhmähenkivakuutusmaksut. Sivukuluihin lasketaan lisäksi esimerkiksi työterveyshuollon ja työpaikkaruokailun kustannukset. Siksi kokonaiskustannukset ovat laskettu 1.75 kertaiseksi.
+  # # #   isTime: false
+  # # #   isInteger: true
+  # # #   fields:
+  # # #     - name: Keskimääräinen palkka
+  # # #       variable: palkka
+  # # #       controlType: slider
+  # # #       min: 0
+  # # #       max: 10000
+  # # #       step: 1
+  # # #       marks:
+  # # #         - value: 0
+  # # #           label: "0€"
+  # # #         - value: 10000
+  # # #           label: "10 000€"
+  # # #       defaultValue: 3000
+  # # #   formula: palkka * 1.75
+  # # #   result:
+  # # #     name: Palkkakulut
+  # # #     unit: euroa
+  # # #     value: 5250
+  # # #   cssClasses:
+  # # #     - calculators
+  # # #     - henkilotLaskuri
 
   # - id: henkilot
   #   title: Kuinka monta henkilöä osallistuu kuljetusmuutoksiin?
@@ -254,8 +188,6 @@ Laskurit:
   #   cssClasses:
   #     - calculators
   #     - henkilotLaskuri
-
-  #siirrä pelkät palkat tekijöille ja lisää työntekijöiden määrä koordinointiin ym
 
   # - id: kuntahenkilo
   #   title: Kunnan työntekijän tiedot
@@ -587,11 +519,11 @@ Laskurit:
     isInteger: true
     variables:
       - name: result_lapset
-        value: 50
+        value: 
       - name: result_peruutukset
-        value: 4
+        value: 
       - name: result_paivSeuranta
-        value: 70
+        value: 
     formula: (result_lapset * result_peruutukset) + result_paivSeuranta
     result:
         name: Työmäärä yhteensä
@@ -612,7 +544,7 @@ Laskurit:
     result:
         name: Työmäärä yhteensä
         unit:
-        value: 0
+        value:
     cssClasses:
       - calculators
 
@@ -623,18 +555,14 @@ Laskurit:
     isInteger: true
     variables:
       - name: result_palkkatiedot
-        value: 5250
+        value: 
       - name: result_peruutusYht
-        value: 270
-      # - name: result_kouluhenkilo
-      #   value: 2500
-      # - name: result_kuljetushenkilo
-      #   value: 3000
+        value: 
     formula: (result_palkkatiedot / 22 / 7.5) * (result_peruutusYht / 60) * 22
     result:
         name: Kustannukset yhteensä
         unit: euroa
-        value: 3150
+        value: 
     cssClasses:
       - calculators
 
@@ -667,11 +595,11 @@ Laskurit:
     description: Luku 22 on keskimääräiset työpäivät/kk ja 7.5 tuntia/pvä.
     isTime: false
     isInteger: true
-    # variables:
-    #   - name: result_palkkatiedot
-    #     value: 0
-    #   - name: result_paivSeuranta
-    #     value: 0
+    variables:
+      - name: result_palkkatiedot
+        value: 0
+      - name: result_paivSeuranta
+        value: 0
     formula: (result_palkkatiedot / 22 / 7.5) * (result_paivSeuranta / 60) * 22
     result:
         name: Kustannukset yhteensä

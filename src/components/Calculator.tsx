@@ -9,7 +9,7 @@ interface CalculatorProps {
     calculator: Calculator;
     // handleInputChange: (formulaName: string, variable: string, value: string | number) => void;
     // result: number | string;
-    onCalculatorChange: (calculatorId: string, result: number) => void;
+    onCalculatorChange: (calculatorId: string, result: number|null) => void;
     cssClasses?: string[]
 }
 
@@ -45,7 +45,9 @@ const Laskuri: React.FC<CalculatorProps> = ({ calculator, onCalculatorChange }) 
     }
   }, [fields, calculator.formula, variables]);
   
+  
   useEffect(() => {
+    if(result.value != null)
     onCalculatorChange(id, result.value)
   }, [result])
 
@@ -58,6 +60,7 @@ const handleFieldChange = (variable: string, value: string) => {
         )
     );
 };
+
 
 const handleOpen = () => setOpen(true);
 const handleClose = () => setOpen(false);
@@ -80,6 +83,7 @@ const parseDuration = (durationMin: number) => {
   //   : Number(result.value).toFixed(2)
   // : 'Ei tulosta';
   const displayResult = () => {
+    if (result.value !== null) 
     if (result.value !== 0) {
       if (calculator.isTime) {
         const totalMinutes = Math.round(result.value);
@@ -93,7 +97,6 @@ const parseDuration = (durationMin: number) => {
     return 'Ei tulosta';
   };
   const resultValue = displayResult();
-
 
 
     return (
@@ -120,6 +123,7 @@ const parseDuration = (durationMin: number) => {
             </div>
            <p className='calculatorResult'>{calculator.result.name}: {resultValue} {calculator.result.unit} </p>
           <p id="errorMsg">{errorMsg}</p>
+          <p></p>
         </div>
     );
 };
