@@ -31,7 +31,7 @@ function CalculatorContainer() {
           )
         );
       };
-      
+
       useEffect(() => {
         const newResults = calculators.map(calculator => ({
           name: `result_${calculator.id}`,
@@ -40,23 +40,23 @@ function CalculatorContainer() {
         console.log('testiresults', newResults);
         setEndResults(newResults);
       }, [calculators]);
-    
+
 
     // useEffect(() => {
     //         console.log('useEffectistä' , calculators)
     // }, [])
-    
+
     useEffect(() => {
         const updatedDiagrams = diagrams.map(diagram => {
             const updatedBarDataKey = diagram.barDataKey.map(key => {
-                if (key.id) { 
-                const correspondingResult = endResults.find(result => result.name === key.id); 
-                return correspondingResult ? { ...key, value: correspondingResult.value } : key; 
+                if (key.id) {
+                const correspondingResult = endResults.find(result => result.name === key.id);
+                return correspondingResult ? { ...key, value: correspondingResult.value } : key;
                 } else {
                 return key;
                 }
             });
-            return { ...diagram, barDataKey: updatedBarDataKey }; 
+            return { ...diagram, barDataKey: updatedBarDataKey };
             });
             setDiagrams(updatedDiagrams);
 
@@ -84,18 +84,18 @@ function CalculatorContainer() {
                         {/* <Button className='diagramBtn' variant={'outlined'} onClick={handleDiagram}>Sovelluksen kanssa tee checkbox</Button> */}
                     </div>
                 </div>
-                
+
                 {showDiagram &&
                 <div className='calculatorContainerChartBar'>
                     {diagrams.map((diagram) => (
                         <BarChartBar
                         key={diagram.id}
-                        diagram={{...diagram }}
+                        diagram={diagram}
                         />
                     ))}
                 </div>
                 }
-                
+
             </div>
         </div>
     );

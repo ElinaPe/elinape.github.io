@@ -2,7 +2,7 @@ Container:
   title: Ajansäästö päivittäisessä koordinoinnissa
 
 
-Laskurit: 
+Laskurit:
   - id: lapset
     title: Montako kuljetettavaa lasta?
     description: Joka päivä on prosentuaalinen määrä lapsia poissa.
@@ -171,7 +171,7 @@ Laskurit:
   #         - value: 10000
   #           label: "10 000€"
   #       defaultValue: 3000
-  #   formula: kuljetusPalkka # * kuljetusHlöLkm 
+  #   formula: kuljetusPalkka # * kuljetusHlöLkm
   #   result:
   #     name: Yhteensä
   #     unit: euroa
@@ -183,9 +183,9 @@ Laskurit:
   # - id: palkat
   #   title: Palkkakulut
   #   isInteger: false
-  #   dependsOn: 
+  #   dependsOn:
   #   - calculator: henkilot
-  #     variable: kuntaPalkka        
+  #     variable: kuntaPalkka
   #     condition: "x > 0"
   #   - calculator: henkilot
   #     variable: kouluHloPalkka
@@ -403,7 +403,7 @@ Laskurit:
     formula: (koordLkm * koord) + (kyytLkm * kyyt)
     result:
       name: Yhteensä
-      unit: 
+      unit:
       value: 70
     cssClasses:
       - calculators
@@ -412,7 +412,7 @@ Laskurit:
 
   - id: peruutusYht
     title: Päivittäinen työmäärä
-    description: Lasten poissaolomäärän ja kaikkien peruutusten ja päivittäisen koordinoinnin kesto. 
+    description: Lasten poissaolomäärän ja kaikkien peruutusten ja päivittäisen koordinoinnin kesto.
     isTime: true
     isInteger: true
     variables:
@@ -423,7 +423,7 @@ Laskurit:
       - name: result_paivSeuranta
         value: 70
     formula: (result_lapset * result_peruutukset) + result_paivSeuranta
-    result: 
+    result:
         name: Työmäärä yhteensä
         unit:
         value: 270
@@ -432,14 +432,14 @@ Laskurit:
 
   - id: peruutusYhtSovellus
     title: Päivittäinen työmäärä päivässä sovelluksen kanssa
-    description: Lasten poissaolomäärän ja kaikkien peruutusten ja päivittäisen koordinoinnin kesto sovelluksen kanssa. 
+    description: Lasten poissaolomäärän ja kaikkien peruutusten ja päivittäisen koordinoinnin kesto sovelluksen kanssa.
     isTime: true
     isInteger: true
     # variables:
     #   - name: result_paivSeuranta
     #     value: 0
     formula: result_paivSeuranta / 100 * 46
-    result: 
+    result:
         name: Työmäärä yhteensä
         unit:
         value: 0
@@ -461,7 +461,7 @@ Laskurit:
       # - name: result_kuljetushenkilo
       #   value: 3000
     formula: (result_palkkatiedot / 22 / 7.5) * (result_peruutusYht / 60) * 22
-    result: 
+    result:
         name: Kustannukset yhteensä
         unit: euroa
         value: 3150
@@ -484,7 +484,7 @@ Laskurit:
   #     # - name: result_kuljetushenkilo
   #     #   value: 3000
   #   formula: (result_palkkatiedot / 22 / 7.5) * (result_peruutusYht / 60) * 22 * 12
-  #   result: 
+  #   result:
   #       name: Kustannukset yhteensä
   #       unit: euroa
   #       value: 3150
@@ -503,14 +503,14 @@ Laskurit:
     #   - name: result_paivSeuranta
     #     value: 0
     formula: (result_palkkatiedot / 22 / 7.5) * (result_paivSeuranta / 60) * 22
-    result: 
+    result:
         name: Kustannukset yhteensä
         unit: euroa
         value: 0
     cssClasses:
       - calculators
 
-      
+
 
 
 
@@ -530,7 +530,7 @@ Pylvasdiagrammit:
         name: Sovelluksen kanssa
         value: 0
         isTime: true
-    growthRate: 
+    growthRate:
       value: 1
       min: 1
       max: 15
@@ -540,6 +540,7 @@ Pylvasdiagrammit:
         - value: 15
           label: "15%"
       isVisible: false
+    unit: h
 
   - id: Kustannukset
     xAxisDatakey:
@@ -555,7 +556,7 @@ Pylvasdiagrammit:
         name: Sovelluksen kanssa
         value: 0
         isTime: false
-    growthRate: 
+    growthRate:
       value: 0
       min: 0
       max: 15
@@ -567,4 +568,4 @@ Pylvasdiagrammit:
         - value: 15
           label: "15%"
       isVisible: true
-
+    unit: €
