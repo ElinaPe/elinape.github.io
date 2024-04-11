@@ -523,7 +523,7 @@ Pylvasdiagrammit:
       # - name: Vuosi 3
     barDataKey:
       - id: result_peruutusYht
-        name: Ajankäyttö tunteina
+        name: Ajankäyttö
         value: 0
         isTime: true
       - id: result_peruutusYhtSovellus
