@@ -28,7 +28,7 @@ const CustomInput: React.FC<CustomInputProps> = ({ field, onChange }) => {
                 />
               </div>
             );
-            
+
         case 'slider':
             // Render a Slider component configured according to the field properties.
             return (
@@ -40,7 +40,8 @@ const CustomInput: React.FC<CustomInputProps> = ({ field, onChange }) => {
                     step={field.step}
                     min={field.min}
                     max={field.max}
-                    onChange={(event, newValue) => {
+
+                    onChangeCommitted={(event, newValue) => {
                       onChange(field.variable, Array.isArray(newValue) ? newValue[0] : newValue)
                       setSliderValue(Array.isArray(newValue) ? newValue[0] : newValue)}
                     }
@@ -54,7 +55,7 @@ const CustomInput: React.FC<CustomInputProps> = ({ field, onChange }) => {
             );
         default:
             // Return null for unrecognized control types.
-            return null; 
+            return null;
     }
   };
 

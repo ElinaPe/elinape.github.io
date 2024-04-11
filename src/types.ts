@@ -66,6 +66,7 @@ export const DiagramSchema = z.object({
 		marks: z.array(Mark),
 		isVisible: z.boolean(),
 	}),
+	unit: z.string().optional(),
 })
 
 export const RootSchema = z.object({
