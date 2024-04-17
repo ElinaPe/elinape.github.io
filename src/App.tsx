@@ -6,10 +6,7 @@ function App() {
 
     return (
         <>
-		<div className='motherOfContainers'>
-			{/* <CalculatorContainer /> */}
             <SimpleTabs />
-		</div>
         </>
     );
 }

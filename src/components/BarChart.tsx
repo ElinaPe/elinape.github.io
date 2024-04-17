@@ -103,25 +103,24 @@ const bars = diagram.barDataKey.map((barItem, index) => (
           {bars}
         </BarChart>
       </ResponsiveContainer>
-      {diagram.growthRate.isVisible && (
-        <div className="chartSlider">
-      <Slider
-        step={0.1}
-        min={diagram.growthRate.min}
-        max={diagram.growthRate.max}
-        defaultValue={3}
-        onChangeCommitted={(event: Event | SyntheticEvent<Element, Event>, newValue: number | number[]) => {
-          if(event instanceof Event){
-            handleGrowthRateChange(event, newValue)
-          }
-        }}
-        valueLabelDisplay="auto"
-        aria-labelledby="input-slider"
-        marks={diagram.growthRate.marks}
-      />
-      </div>
-    )}
-
+        {diagram.growthRate.isVisible && (
+          <div className="chartSlider">
+            <Slider
+              step={0.1}
+              min={diagram.growthRate.min}
+              max={diagram.growthRate.max}
+              defaultValue={3}
+              onChangeCommitted={(event: Event | SyntheticEvent<Element, Event>, newValue: number | number[]) => {
+                if(event instanceof Event){
+                  handleGrowthRateChange(event, newValue)
+                }
+              }}
+              valueLabelDisplay="auto"
+              aria-labelledby="input-slider"
+              marks={diagram.growthRate.marks}
+            />
+          </div>
+        )}
     </div>
   );
 }

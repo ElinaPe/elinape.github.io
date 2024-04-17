@@ -274,11 +274,16 @@ fieldset {
 
 
 .calculatorContent {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   width: 60%;
 }
 
+#inputId {
+  width: 4em;
+  height: 20px;
+  padding: 5px;
+}
 
 .calculatorContent.Full {
   width:100%;
@@ -287,15 +292,6 @@ fieldset {
   gap: 10px;
   padding: 20px;
 }
-// .calculatorContent.Full > div:nth-child(3n) {
-//   grid-column: span 2;
-// }
-// .calculatorContent.Full > div:nth-child(4n) {
-//   grid-column: span 2;
-// }
-// .calculatorContent.Full > div:nth-child(6n) {
-//   grid-column: span 1;
-// }
 
 
 .diagramBtn {
@@ -323,12 +319,23 @@ fieldset {
 .calculators{
   width: auto;
   display: flex;
+  flex-wrap: wrap;
   padding:10px;
-  gap: 20px;
+  gap: 10px;
 }
 
+.peruutusLaskuri{
+  display: grid;
+  grid-template-columns: repeat(2, 50% [ col-start ]);
+  gap: 10px;
+}
+
+// .paivCalculator {
+//   flex-wrap: wrap;
+// }
+
 .slider {
-  width: 65%;
+  min-width: 65%;
 }
 
 .chartSlider {
@@ -338,12 +345,13 @@ fieldset {
 .sliderValue {
   width: 100%;
   display: flex;
-  gap: 10px;
+  gap: 5px;
 }
 
 .sliderValue label {
   width: 45px;
 }
+
 .inputTextField {
   min-width: 20%;
 }
@@ -353,11 +361,6 @@ fieldset {
   flex-direction: column;
 }
 
-.peruutusLaskuri {
-  display: flex;
-  flex-direction: row;
-  // flex-wrap: wrap;
-}
 
 .peruutusLaskuri label {
   min-height: 50px;
@@ -370,7 +373,7 @@ fieldset {
 .calculatorContainerChartBar {
   width:45%;
   position: fixed;
-  bottom: 2px;
+  bottom: 7vh;
   right: 1px;
   justify-items: center;
 }
@@ -418,13 +421,8 @@ fieldset {
   // .calculatorContent.Full > div:nth-child(4n) {
   //   grid-column: span 1;
   // }
-  .peruutusLaskuri{
-    flex-wrap: wrap;
-  }
 
-  .paivCalculator {
-    flex-wrap: wrap;
-  }
+
 
 
 }

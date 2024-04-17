@@ -23,6 +23,7 @@ export const Field = z.object({
 	defaultValue: z.number(),
 });
 
+
 export const CalculatorSchema = z.object({
 	id: z.string(),
 	title: z.string(),
@@ -54,6 +55,7 @@ const xAxisdataKeyName = z.object({
 
 export const DiagramSchema = z.object({
 	id: z.string(),
+	section: z.string(),
 	xAxisDatakey: z.array(xAxisdataKeyName),
 	barDataKey: z.array(barDataKeys),
 	growthRate: z.object({
@@ -66,18 +68,24 @@ export const DiagramSchema = z.object({
 	unit: z.string().optional(),
 })
 
+
+
 export const RootSchema = z.object({
 	Otsikot: OtsikotSchema,
 	LaskuritEtusivu: z.array(CalculatorSchema),
 	Laskurit: z.array(CalculatorSchema),
-	Pylvasdiagrammit: z.array(DiagramSchema)
+	Suunnittelu: z.array(CalculatorSchema),
+	Kuljetuskustannukset: z.array(CalculatorSchema),
+	Pylvasdiagrammit: z.array(DiagramSchema),
 });
 
-export const CalculatorsSchema = z.array(CalculatorSchema)
 
 const InputValues = z.record(z.string(), z.record(z.string(), z.number()));
 
 const Result = z.record(z.string(), z.number());
+
+export const CalculatorsSchema = z.array(CalculatorSchema)
+
 
 export type Field = z.infer<typeof Field>;
 export type Calculator = z.infer<typeof CalculatorSchema>;

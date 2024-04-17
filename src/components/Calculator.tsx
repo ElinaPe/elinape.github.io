@@ -19,7 +19,6 @@ const Laskuri: React.FC<CalculatorProps> = ({ calculator, onCalculatorChange }) 
   // field names and default values
   const [fields, setFields] = useState(calculator.fields)
   const [open, setOpen] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('')
 
 
   useEffect(() => {
@@ -121,9 +120,9 @@ const parseDuration = (durationMin: number) => {
                     />
                 ))}
             </div>
-           <p className='calculatorResult'>{calculator.result.name}: {resultValue} {calculator.result.unit} </p>
-          <p id="errorMsg">{errorMsg}</p>
-          <p></p>
+            <div>
+              <p className='calculatorResult'>{calculator.result.name}: {resultValue} {calculator.result.unit} </p>
+           </div>
         </div>
     );
 };

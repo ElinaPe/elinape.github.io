@@ -1,26 +1,178 @@
 Otsikot:
   LaskuritEtusivu: Esitiedot
   Laskurit: Ajansäästö päivittäisessä koordinoinnissa
-  Suunnittelu: Ajansäästö suunnittelussa
+  Suunnittelu: Ajansäästö kuljetussuunnittelussa
+  Kuljetuskustannukset: Kuljetuskustannukset ja säästö
 
 LaskuritEtusivu:
-  - id: esitiedot
-    title: Montako koulua?
+  # - id: esitiedot
+  #   title: Montako koulua?
+  #   description: Joka päivä
+  #   isTime: false
+  #   isInteger: true
+  #   fields:
+  #     - name: Koulut
+  #       variable: koulu
+  #       controlType: type
+  #       defaultValue: 1
+  #   formula: koulu
+  #   result:
+  #     name: Määrä
+  #     unit: koulua
+  #     value: 0
+  #   cssClasses:
+  #     - calculators
+
+  - id: kuljetuskustannukset
+    title: Kuljestuskustannukset vuodessa?
     description: Joka päivä
     isTime: false
     isInteger: true
     fields:
-      - name: Koulut
-        variable: koulu
+      - name: Kustannukset
+        variable: kuljetuskustannus
         controlType: type
-        defaultValue: 1
-    formula: koulu
+        defaultValue: 500000
+    formula: kuljetuskustannus
     result:
       name: Määrä
-      unit: koulua
-      value: 0
+      unit: e
+      value: 500000
     cssClasses:
       - calculators
+
+  - id: taksitLkm
+    title: Taksien määrä
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    fields:
+      - name: Takseja
+        variable: taksiLkm
+        controlType: type
+        defaultValue: 8
+    formula: taksiLkm
+    result:
+      name: Taksien määrä
+      unit: 
+      value: 8
+    cssClasses:
+      - calculators
+
+  - id: minibussitLkm
+    title: Minibussien määrä
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    fields:
+      - name: Minibusseja
+        variable: minibussiLkm
+        controlType: type
+        defaultValue: 4
+    formula: minibussiLkm
+    result:
+      name: Minibussien määrä
+      unit: 
+      value: 4
+    cssClasses:
+      - calculators
+
+  - id: bussitLkm
+    title: Bussien määrä
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    fields:
+      - name: Busseja
+        variable: bussiLkm
+        controlType: type
+        defaultValue: 2
+    formula: bussiLkm
+    result:
+      name: Bussien määrä
+      unit: 
+      value: 2
+    cssClasses:
+      - calculators
+
+  - id: taksitEuro
+    title: Taksien osuus
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    formula: (result_taksitLkm * 6.5 * 1.5) / ((result_taksitLkm * 6.5 * 1.5) + (result_minibussitLkm * 22 * 1.0) + (result_bussitLkm * 40 * 0.6)) * result_kuljetuskustannukset
+    result:
+      name: Taksien osuus
+      unit: euroa
+      value:
+    cssClasses:
+      - calculators
+
+  - id: minibussitEuro
+    title: Minibussien osuus
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    formula: (result_minibussitLkm * 22 * 1.0) / ((result_taksitLkm * 6.5 * 1.5) + (result_minibussitLkm * 22 * 1.0) + (result_bussitLkm * 40 * 0.6)) * result_kuljetuskustannukset
+    result:
+      name: Minibussien osuus
+      unit: euroa
+      value:
+    cssClasses:
+      - calculators
+
+  - id: bussitEuro
+    title: Bussien osuus
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    formula: (result_bussitLkm * 40 * 0.6) / ((result_taksitLkm * 6.5 * 1.5) + (result_minibussitLkm * 22 * 1.0) + (result_bussitLkm * 40 * 0.6)) * result_kuljetuskustannukset
+    result:
+      name: Bussien osuus
+      unit: euroa
+      value:
+    cssClasses:
+      - calculators
+
+  - id: taksitYksi
+    title: Taksien yksi osa
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    formula: result_taksitEuro / result_taksitLkm
+    result:
+      name: Taksien yksi osa
+      unit: euroa
+      value:
+    cssClasses:
+      - calculators
+
+  - id: minibussitYksi
+    title: Minibussien yksi osa
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    formula: result_minibussitEuro / result_minibussitLkm
+    result:
+      name: Minibussien yksi osa
+      unit: euroa
+      value:
+    cssClasses:
+      - calculators
+
+  - id: bussitYksi
+    title: Bussien yksi osa
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    formula: result_bussitEuro / result_bussitLkm
+    result:
+      name: Bussien yksi osa
+      unit: euroa
+      value:
+    cssClasses:
+      - calculators
+ 
 
   - id: lapset
     title: Montako kuljetettavaa lasta?
@@ -399,7 +551,6 @@ Laskurit:
       unit: minuuttia
       value: 4
     cssClasses:
-      - calculators
       - peruutusLaskuri
 
   # - id: kuntahenkilo
@@ -542,7 +693,7 @@ Laskurit:
     #     value: 0
     formula: result_paivSeuranta / 100 * 46
     result:
-        name: Työmäärä yhteensä
+        name: Työmäärä sovelluksen kanssa
         unit:
         value:
     cssClasses:
@@ -602,19 +753,252 @@ Laskurit:
         value: 0
     formula: (result_palkkatiedot / 22 / 7.5) * (result_paivSeuranta / 60) * 22
     result:
-        name: Kustannukset yhteensä
+        name: Kustannukset sovelluksen kanssa
         unit: euroa
         value: 0
     cssClasses:
       - calculators
 
+Suunnittelu:
 
+  - id: lukujarj
+    title: Lukujäjestysten muutoskerrat vuodessa
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    fields:
+      - name: Kunnan suunnitteluaika
+        variable: kuntasuunnittelu
+        controlType: slider
+        step: 1
+        min: 0
+        max: 30
+        marks:
+          - value: 0
+            label: "0 päivää"
+          - value: 30
+            label: "30 päivää"
+        defaultValue: 5
+      - name: Lyhyempi suunnitteluaika, esim. jakson muutos
+        variable: kuntasuunnittelulyhyt
+        controlType: slider
+        step: 1
+        min: 0
+        max: 30
+        marks:
+          - value: 0
+            label: "0 päivää"
+          - value: 30
+            label: "30 päivää"
+        defaultValue: 5
 
+      - name: Liikennöitsijän suunnitteluaika
+        variable: liikensuunnittelu
+        controlType: slider
+        step: 1
+        min: 0
+        max: 30
+        marks:
+          - value: 0
+            label: "0 päivää"
+          - value: 30
+            label: "30 päivää"
+        defaultValue: 5
+      - name: Lyhyempi suunnitteluaika, esim. jakson muutos
+        variable: liikensuunnittelulyhyt
+        controlType: slider
+        step: 1
+        min: 0
+        max: 30
+        marks:
+          - value: 0
+            label: "0 päivää"
+          - value: 30
+            label: "30 päivää"
+        defaultValue: 5
+    formula: (result_palkkatiedot / 22) * (kuntasuunnittelu + kuntasuunnittelulyhyt + liikensuunnittelu + liikensuunnittelulyhyt)
+    result:
+      name: Määrä
+      unit: €
+      value:
+    cssClasses:
+      - calculators
 
+  - id: kustannuksetYhtUusiKK
+    title: Kuukausikustannukset uudelleenlaskettuna
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    formula:  (result_lukujarj / 12)
+    result:
+      name: Yhteensä
+      unit: 
+      value: 
+    cssClasses:
+      - calculators
+
+  - id: kustannuksetYhtUusiKKSovellus
+    title: Kuukausikustannukset uudelleenlaskettuna sovelluksen kanssa
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    formula: ((result_lukujarj / 12) / 100 * 50)
+    result:
+      name: Yhteensä
+      unit: 
+      value: 
+    cssClasses:
+      - calculators
+
+Kuljetuskustannukset:
+  - id: taksitUusi
+    title: Taksien määrän vaikutus kustannuksiin
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    fields:
+      - name: Takseja
+        variable: taksiUusi
+        controlType: slider
+        step: 1
+        min: 0
+        max: 30
+        marks:
+          - value: 0
+            label: "0 autoa"
+          - value: 30
+            label: "30 autoa"
+        defaultValue: 8
+    formula: result_taksitYksi * taksiUusi
+    result:
+      name: Uusi osuus
+      unit: 
+      value: 
+    cssClasses:
+      - calculators
+
+  - id: minibussitUusi
+    title: Minibussien määrän vaikutus kustannuksiin
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    fields:
+      - name: Minibusseja
+        variable: minibussiUusi
+        controlType: slider
+        step: 1
+        min: 0
+        max: 30
+        marks:
+          - value: 0
+            label: "0 autoa"
+          - value: 30
+            label: "30 autoa"
+        defaultValue: 4
+    formula: result_minibussitYksi * minibussiUusi
+    result:
+      name: Minibussien osuus
+      unit: 
+      value: 
+    cssClasses:
+      - calculators
+
+  - id: bussitUusi
+    title: Bussien määrän vaikutus kustannuksiin
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    fields:
+      - name: Busseja
+        variable: bussiUusi
+        controlType: slider
+        step: 1
+        min: 0
+        max: 30
+        marks:
+          - value: 0
+            label: "0 autoa"
+          - value: 30
+            label: "30 autoa"
+        defaultValue: 2
+    formula: result_bussitYksi * bussiUusi
+    result:
+      name: Bussien osuus
+      unit: 
+      value: 2
+    cssClasses:
+      - calculators
+
+  - id: kustannuksetYhtUusi
+    title: Vuosikustannukset uudelleenlaskettuna
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    formula: result_taksitUusi + result_minibussitUusi + result_bussitUusi
+    result:
+      name: Yhteensä
+      unit: 
+      value: 
+    cssClasses:
+      - calculators
+
+  - id: kilometrit
+    title: Keskimääräinen kilometrimäärä lapsille
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    fields:
+      - name: Kilometrit
+        variable: km
+        controlType: slider
+        step: 0.5
+        min: 0
+        max: 20
+        marks:
+          - value: 0
+            label: "0km"
+          - value: 20
+            label: "30km"
+        defaultValue: 0.5
+    formula: result_lapset * km
+    result:
+      name: Säästetyt kilometrit
+      unit: km
+      value: 
+    cssClasses:
+      - calculators
+
+  - id: kilometrihinta
+    title: Keskimääräinen hinta kilometreille
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    fields:
+      - name: Hinta per kilometri
+        variable: eurotKm
+        controlType: slider
+        step: 0.5
+        min: 0
+        max: 5
+        marks:
+          - value: 0
+            label: "0€"
+          - value: 5
+            label: "5€"
+        defaultValue: 1
+    formula: result_kilometrit * eurotKm
+    result:
+      name: Säästetyt eurot
+      unit: €
+      value: 
+    cssClasses:
+      - calculators
+    
 
 
 Pylvasdiagrammit:
   - id: Ajankaytto
+    section: Laskurit
     xAxisDatakey:
       - name: Vuosi
       # - name: Vuosi 2
@@ -641,6 +1025,7 @@ Pylvasdiagrammit:
     unit: pv
 
   - id: Kustannukset
+    section: Laskurit
     xAxisDatakey:
       - name: Vuosi 1
       - name: Vuosi 2
@@ -667,3 +1052,48 @@ Pylvasdiagrammit:
           label: "15%"
       isVisible: true
     unit: €
+
+  - id: kokonais
+    section: Suunnittelu
+    xAxisDatakey:
+      - name: Vuosi 1
+      - name: Vuosi 2
+      - name: Vuosi 3
+    barDataKey:
+      - id: result_kustannuksetYhtUusiKK
+        name: Kokonaiskustannus
+        value: 0
+        isTime: false
+      - id: result_kustannuksetYhtUusiKKSovellus
+        name: Sovelluksen kanssa
+        value: 0
+        isTime: false
+    growthRate:
+      value: 1
+      min: 1
+      max: 15
+      marks:
+        - value: 0
+          label: "0%"
+        - value: 15
+          label: "15%"
+      isVisible: true
+    unit: €
+
+# Piirakkadiagrammit:
+#   - id: Saasto
+#     section: Kuljetuskustannukset
+#     data:
+#       - name: result_kustannuksetYhtUusi
+#         value:
+#       - name: Säästetty
+#         value: 1000
+#     unit: €
+  # - id: Toinen
+  #   section: Kuljetuskustannukset
+  #   data:
+  #     - name: Testi
+  #       value: 30
+  #     - name: Säästetty
+  #       value: 3
+  #   unit: €

@@ -26,17 +26,25 @@ function TabPanel(props: { [x: string]: any; children: any; value: any; index: a
   );
 } 
 
+const BottomAppBar = styled(AppBar)({
+  top: 'auto',
+  bottom: 0,
+  background: '#fff',
+});
+
+const CustomTab = styled(Tab)({
+  fontSize: '1.3rem'
+});
+
 export default function SimpleTabs() {
-    const BottomAppBar = styled(AppBar)({
-        top: 'auto',
-        bottom: 0,
-        background: '#fff',
-      });
+    
 
   const [value, setValue] = useState(0);
   const [tabData, setTabData] = useState<TabData>({
     LaskuritEtusivu: {},
     Laskurit: {},
+    Suunnittelu: {},
+    Kuljetuskustannukset: {},
 });
 
   const handleChange = (_event: unknown, newValue: number) => {
@@ -52,15 +60,16 @@ export default function SimpleTabs() {
         },
     }));
 };
-const tabNames=['LaskuritEtusivu', 'Laskurit', 'Suunnittelu'];
+const tabNames=['LaskuritEtusivu', 'Laskurit', 'Suunnittelu', 'Kuljetuskustannukset'];
 
 return (
     <div>
       <BottomAppBar position="fixed">
         <Tabs value={value} onChange={handleChange} aria-label="tabs" centered>
-          <Tab label="Esitiedot" />
-          <Tab label="Peruutukset" />
-          <Tab label="Suunnittelu" />
+          <CustomTab label="Esitiedot" />
+          <CustomTab label="Peruutukset" />
+          <CustomTab label="Suunnittelu" />
+          <CustomTab label="Kuljetuskustannukset" />
         </Tabs>
       </BottomAppBar>
       <TabPanel value={value} index={0}>
@@ -70,7 +79,10 @@ return (
       <CalculatorContainer activeSection={tabNames[1]} updateTabData={updateTabData} tabData={tabData} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Suunnittelu sisältö...
+      <CalculatorContainer activeSection={tabNames[2]} updateTabData={updateTabData} tabData={tabData} />
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+      <CalculatorContainer activeSection={tabNames[3]} updateTabData={updateTabData} tabData={tabData} />
       </TabPanel>
     </div>
   );

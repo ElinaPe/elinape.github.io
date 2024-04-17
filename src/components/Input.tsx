@@ -1,16 +1,28 @@
 import React, { useState } from 'react';
-import { TextField, Slider } from '@mui/material';
+import { TextField, Slider, Input, styled } from '@mui/material';
 import { Field } from '../types';
-
+// import MuiInput from '@mui/material/Input';
 
 
 interface CustomInputProps {
     field: Field;
     onChange: (variable: string, value: string | number) => void;
 }
+
+
+const InputBox = styled(Input)({
+  width: '6em',
+  height: '1.5em',
+  alignItems: 'center',
+  fontSize:'15px',
+  fontWeight: 'bold',
+})
+  
+
 const CustomInput: React.FC<CustomInputProps> = ({ field, onChange }) => {
 
   const [sliderValue, setSliderValue] = useState(field.defaultValue)
+
 
     switch (field.controlType) {
         case 'type':
@@ -49,7 +61,27 @@ const CustomInput: React.FC<CustomInputProps> = ({ field, onChange }) => {
                     aria-labelledby="input-slider"
                     marks={field.marks}
                 />
-                <label>{sliderValue}</label>
+                <InputBox
+                    type="number"
+                    value={sliderValue || ''}
+                    onChange={(e) => {
+                        const newValue = parseFloat(e.target.value);
+                        setSliderValue(isNaN(newValue) ? 0 : newValue);
+                        onChange(field.variable, isNaN(newValue) ? 0 : newValue);
+                    }}
+                    onBlur={() => {
+                      if (field && field.min !== undefined && field.max !== undefined) {
+                        if (sliderValue < field.min) {
+                            setSliderValue(field.min);
+                            onChange(field.variable, field.min);
+                        } else if (sliderValue > field.max) {
+                            setSliderValue(field.max);
+                            onChange(field.variable, field.max);
+                        }
+                      }
+                    }}
+                />
+                {/* <label>{sliderValue}</label> */}
                 </div>
               </div>
             );
