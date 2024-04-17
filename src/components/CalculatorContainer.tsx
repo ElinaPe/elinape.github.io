@@ -2,8 +2,9 @@ import Button from '@mui/material/Button';
 import { useEffect, useState } from 'react';
 import Laskuri from '../components/Calculator';
 import yamlData from '../laskuri.yaml';
-import { Calculator, Diagram, RootSchema } from '../types';
+import { Calculator, Diagram, PieDiagram, RootSchema } from '../types';
 import BarChartBar from './BarChart';
+import PieChartComponent from './PieChart';
 
 
 interface TabData {
@@ -24,9 +25,11 @@ type ValidatedDataKey = 'LaskuritEtusivu' | 'Laskurit' | 'Suunnittelu' | 'Kuljet
     const validatedOtsikot = validatedData.Otsikot;
     // const validatedCalculators = validatedData.Laskurit;
     const validatedDiagrams = validatedData.Pylvasdiagrammit;
+    const validatedPieDiagrams = validatedData.Piirakkadiagrammit;
 
     const [calculators, setCalculators] = useState<Calculator[]>([]);
     const [diagrams, setDiagrams] = useState<Diagram[]>([]);
+    const [pieDiagrams, setPieDiagrams] = useState<PieDiagram[]>([]);
 
     const [endResults, setEndResults] = useState<{ name: string; value: number|null }[]>([]);
     // const [calculators, setCalculators] = useState(validatedCalculators.map(calculator => ({
@@ -46,20 +49,28 @@ type ValidatedDataKey = 'LaskuritEtusivu' | 'Laskurit' | 'Suunnittelu' | 'Kuljet
       const sectionTitle = validatedOtsikot[activeSection];
 
       useEffect(() => {
-        const sectionDiagrams = validatedDiagrams.filter(diagram => diagram.section === activeSection);
+        const sectionBarDiagrams = validatedDiagrams.filter(diagram => diagram.section === activeSection);
+        const needsUpdateBar = diagrams.length !== sectionBarDiagrams.length || diagrams.some((diag, index) => diag.id !== sectionBarDiagrams[index]?.id);
     
-        const needsUpdate = diagrams.length !== sectionDiagrams.length || diagrams.some((diag, index) => diag.id !== sectionDiagrams[index]?.id);
-    
-        if (needsUpdate) {
-            setDiagrams(sectionDiagrams);
-            console.log("Päivitetään diagrammit, koska tiedoissa on eroja.");
+        if (needsUpdateBar) {
+            setDiagrams(sectionBarDiagrams);
+            console.log("Päivitetään pylväsdiagrammit, koska tiedoissa on eroja.");
         }
-        console.log("Hook suoritettu aktiivisen osion muutoksessa.");
-    }, [activeSection, validatedDiagrams]);
-
     
-    console.log('tabdata ', tabData)
+        const sectionPieDiagrams = validatedPieDiagrams.filter(diagram => diagram.section === activeSection);
+        const needsUpdatePie = pieDiagrams.length !== sectionPieDiagrams.length || pieDiagrams.some((diag, index) => diag.id !== sectionPieDiagrams[index]?.id);
+    
+        if (needsUpdatePie) {
+            setPieDiagrams(sectionPieDiagrams);
+            console.log("Päivitetään piirakkadiagrammit, koska tiedoissa on eroja.");
+        }
+    
+    }, [activeSection, validatedDiagrams, validatedPieDiagrams, diagrams, pieDiagrams]);
 
+      useEffect(() => {
+        console.log('päevitys piirakkaan', pieDiagrams)
+      }, [pieDiagrams])
+    
       useEffect(() => {
         const newResults: { name: string; value: number | null }[] = [];
       
@@ -115,9 +126,28 @@ type ValidatedDataKey = 'LaskuritEtusivu' | 'Laskurit' | 'Suunnittelu' | 'Kuljet
 
       }, [endResults])
 
+      useEffect(() => {
+        const updatedPieData = pieDiagrams.map(pieDiagram => {
+          // Päivitä jokainen data-objekti pieDiagrammissa
+          const updatedData = pieDiagram.data.map(dataItem => {
+            // Etsi vastaava tulos endResults-tilasta käyttäen dataItem.id
+            const result = endResults.find(result => result.name === dataItem.id);
+            console.log('Searching for:', dataItem.id, 'Found:', result);
+            // Palauta päivitetty data-objekti, jos löytyy vastaava tulos
+            return result ? { ...dataItem, value: result.value } : dataItem;
+          });
+      
+          // Palauta päivitetty pieDiagram objekti uudella datalla
+          return { ...pieDiagram, data: updatedData };
+        });
+        setPieDiagrams(updatedPieData);
+      }, [endResults]);
+
+
       const handleDiagram = () => {
         setShowDiagram(!showDiagram)
       }
+  
 
 
     return (
@@ -132,6 +162,7 @@ type ValidatedDataKey = 'LaskuritEtusivu' | 'Laskurit' | 'Suunnittelu' | 'Kuljet
                             onCalculatorChange={handleCalculatorChange}
                         />
                     ))}
+                  
                     {activeSection !== 'LaskuritEtusivu' &&
                     <div>
                         <Button className='diagramBtn' variant={'outlined'} onClick={handleDiagram}>Näytä pylväät</Button>
@@ -145,6 +176,16 @@ type ValidatedDataKey = 'LaskuritEtusivu' | 'Laskurit' | 'Suunnittelu' | 'Kuljet
                         <BarChartBar
                         key={diagram.id}
                         diagram={diagram}
+                        />
+                    ))}
+                </div>
+                }
+                {showDiagram &&
+                <div className='calculatorContainerChartPie'>
+                  {pieDiagrams.map((diagram) => (
+                        <PieChartComponent 
+                        key={diagram.id}
+                        data={diagram.data}
                         />
                     ))}
                 </div>

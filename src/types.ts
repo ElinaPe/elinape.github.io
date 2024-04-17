@@ -68,7 +68,18 @@ export const DiagramSchema = z.object({
 	section: z.string(),
 })
 
+const PieData = z.object({
+	id: z.string(),
+	name: z.string(),
+	value: z.number().nullable()
+})
 
+export const PieDiagramSchema = z.object({
+	id: z.string(),
+	section: z.string(),
+	data: z.array(PieData),
+	unit: z.string().optional(),
+})
 
 export const RootSchema = z.object({
 	Otsikot: OtsikotSchema,
@@ -77,6 +88,7 @@ export const RootSchema = z.object({
 	Suunnittelu: z.array(CalculatorSchema),
 	Kuljetuskustannukset: z.array(CalculatorSchema),
 	Pylvasdiagrammit: z.array(DiagramSchema),
+	Piirakkadiagrammit: z.array(PieDiagramSchema),
 });
 
 
@@ -92,3 +104,4 @@ export type Calculator = z.infer<typeof CalculatorSchema>;
 export type InputValues = z.infer<typeof InputValues>;
 export type Result = z.infer<typeof Result>;
 export type Diagram = z.infer<typeof DiagramSchema>;
+export type PieDiagram = z.infer<typeof PieDiagramSchema>;

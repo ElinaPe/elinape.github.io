@@ -230,266 +230,11 @@ LaskuritEtusivu:
       - calculators
       - henkilotLaskuri
 
-  # - id: paivHenkilot
-  #   title: Kuinka monta henkeä osallistuu päivittäisiin muutoksiin?
-  #   description: Muutokset
-  #   isTime: false
-  #   isInteger: true
-  #   fields:
-  #     - name: Kunnalta
-  #       variable: kuntaHlo
-  #       controlType: type
-  #       defaultValue: 1
-  #     - name: Koululta
-  #       variable: kouluHlo
-  #       controlType: type
-  #       defaultValue: 1
-  #     - name: Kuljetusyritykeltä
-  #       variable: kuljetusHlo
-  #       controlType: type
-  #       defaultValue: 1
-  #   formula: (kuntaHlo * kuntaPalkka) + (kouluHlo * kouluPalkka) + (kuljetusHlo * kuljetusPalkka)
-  #   result:
-  #     name: Yhteensä
-  #     unit: euroa
-  #     value: 3
-  #   cssClasses:
-  #     - calculators
-    
+  
 
 
 Laskurit:
-  # - id: lapset
-  #   title: Montako kuljetettavaa lasta?
-  #   description: Joka päivä on prosentuaalinen määrä lapsia poissa.
-  #   isTime: false
-  #   isInteger: true
-  #   fields:
-  #     - name: Lasten lkm
-  #       variable: a
-  #       controlType: type
-  #       defaultValue: 1000
-  #     - name: Poissaoloprosentti
-  #       variable: b
-  #       controlType: slider
-  #       step: 0.5
-  #       marks:
-  #         - value: 0
-  #           label: "0%"
-  #         - value: 100
-  #           label: "30%"
-  #       defaultValue: 5
-  #   formula: b/100*a
-  #   result:
-  #     name: Määrä
-  #     unit: lasta pois
-  #     value: 50
-  #   cssClasses:
-  #     - calculators
-  #     - tokanimi
-
-  # # # - id: palkkatiedot
-  # # #   title: Palkkatiedot
-  # # #   description: Työntekijöiden keskimääräiset palkkakustannukset. Palkkojen lisäksi työntekijöistä maksetaan muitakin kuluja, kuten työeläkevakuutusmaksu, työttömyysvakuutusmaksu, sairausvakuutusmaksu sekä tapaturma- ja ryhmähenkivakuutusmaksut. Sivukuluihin lasketaan lisäksi esimerkiksi työterveyshuollon ja työpaikkaruokailun kustannukset. Siksi kokonaiskustannukset ovat laskettu 1.75 kertaiseksi.
-  # # #   isTime: false
-  # # #   isInteger: true
-  # # #   fields:
-  # # #     - name: Keskimääräinen palkka
-  # # #       variable: palkka
-  # # #       controlType: slider
-  # # #       min: 0
-  # # #       max: 10000
-  # # #       step: 1
-  # # #       marks:
-  # # #         - value: 0
-  # # #           label: "0€"
-  # # #         - value: 10000
-  # # #           label: "10 000€"
-  # # #       defaultValue: 3000
-  # # #   formula: palkka * 1.75
-  # # #   result:
-  # # #     name: Palkkakulut
-  # # #     unit: euroa
-  # # #     value: 5250
-  # # #   cssClasses:
-  # # #     - calculators
-  # # #     - henkilotLaskuri
-
-  # - id: henkilot
-  #   title: Kuinka monta henkilöä osallistuu kuljetusmuutoksiin?
-  #   description: Ilman sovellustamme, kuljetusmuutoksiin osallistuu todennäköisesti useampi henkilö jaada jaada
-  #   isInteger: true
-  #   fields:
-  #     - name: Kunnalta
-  #       variable: kuntaLkm
-  #       controlType: type
-  #       defaultValue: 0
-  #     - name: Koululta
-  #       variable: kouluHloLkm
-  #       controlType: type
-  #       defaultValue: 0
-  #     - name: Kuljetusyritykseltä
-  #       variable: kuljetusHloLkm
-  #       controlType: type
-  #       defaultValue: 0
-  #   formula: kuntaLkm + kouluHloLkm + kuljetusHloLkm
-  #   result:
-  #     name: Henkilöt
-  #     unit: henkilöä
-  #     value: 0
-  #   cssClasses:
-  #     - calculators
-  #     - henkilotLaskuri
-
-  # - id: kuntahenkilo
-  #   title: Kunnan työntekijän tiedot
-  #   description: Kunnan työntekijän keskimääräinen palkka
-  #   isTime: false
-  #   isInteger: true
-  #   fields:
-  #     # - name: Montako henkeä
-  #     #   variable: kuntaLkm
-  #     #   controlType: type
-  #     #   defaultValue: 1
-  #     - name: Keskimääräinen palkka
-  #       variable: kuntaPalkka
-  #       controlType: slider
-  #       min: 0
-  #       max: 10000
-  #       step: 1
-  #       marks:
-  #         - value: 0
-  #           label: "0€"
-  #         - value: 10000
-  #           label: "10 000€"
-  #       defaultValue: 2500
-  #   formula: kuntaPalkka
-  #   result:
-  #     name: Yhteensä
-  #     unit: euroa
-  #     value: 2500
-  #   cssClasses:
-  #     - calculators
-  #     - henkilotLaskuri
-
-  # - id: kouluhenkilo
-  #   title: Koulun työntekijän tiedot
-  #   description: Koulun työntekijän keskimääräinen palkka
-  #   isTime: false
-  #   isInteger: true
-  #   fields:
-  #     # - name: Montako henkeä
-  #     #   variable: kouluLkm
-  #     #   controlType: type
-  #     #   defaultValue: 1
-  #     - name: Keskimääräinen palkka
-  #       variable: kouluPalkka
-  #       controlType: slider
-  #       min: 0
-  #       max: 10000
-  #       step: 1
-  #       marks:
-  #         - value: 0
-  #           label: "0€"
-  #         - value: 10000
-  #           label: "10 000€"
-  #       defaultValue: 2500
-  #   formula: kouluPalkka # * kouluLkm
-  #   result:
-  #     name: Yhteensä
-  #     unit: euroa
-  #     value: 2500
-  #   cssClasses:
-  #     - calculators
-  #     - henkilotLaskuri
-
-  # - id: kuljetushenkilo
-  #   title: Kuljetuspalvelun työntekijän tiedot
-  #   description: Kuljetuspalvelun työntekijän keskimääräinen palkka
-  #   isTime: false
-  #   isInteger: true
-  #   fields:
-  #     # - name: Montako henkeä
-  #     #   variable: kuljetusHlöLkm
-  #     #   controlType: type
-  #     #   defaultValue: 1
-  #     - name: Keskimääräinen palkka
-  #       variable: kuljetusPalkka
-  #       controlType: slider
-  #       min: 0
-  #       max: 10000
-  #       step: 1
-  #       marks:
-  #         - value: 0
-  #           label: "0€"
-  #         - value: 10000
-  #           label: "10 000€"
-  #       defaultValue: 3000
-  #   formula: kuljetusPalkka # * kuljetusHlöLkm
-  #   result:
-  #     name: Yhteensä
-  #     unit: euroa
-  #     value: 3000
-  #   cssClasses:
-  #     - calculators
-  #     - henkilotLaskuri
-
-  # - id: palkat
-  #   title: Palkkakulut
-  #   isInteger: false
-  #   dependsOn:
-  #   - calculator: henkilot
-  #     variable: kuntaPalkka
-  #     condition: "x > 0"
-  #   - calculator: henkilot
-  #     variable: kouluHloPalkka
-  #     condition: "x > 0"
-  #   - calculator: henkilot
-  #     variable: kuljetusHloPalkka
-  #     condition: "x > 0"
-  #   fields:
-  #     - name: Kuntahenkilön palkka
-  #       variable: kuntaPalkka
-  #       controlType: slider
-  #       min: 0
-  #       max: 10000
-  #       marks:
-  #         - value: 0
-  #           label: "0€"
-  #         - value: 10000
-  #           label: "10 000€"
-  #       defaultValue: 0
-  #     - name: Kouluhenkilön palkka
-  #       variable: kouluHloPalkka
-  #       controlType: slider
-  #       min: 0
-  #       max: 10000
-  #       marks:
-  #         - value: 0
-  #           label: "0€"
-  #         - value: 10000
-  #           label: "10 000€"
-  #       defaultValue: 0
-  #     - name: Kuljetusyrityshenkilön palkka
-  #       variable: kuljetusHloPalkka
-  #       controlType: slider
-  #       min: 0
-  #       max: 10000
-  #       marks:
-  #         - value: 0
-  #           label: "0€"
-  #         - value: 10000
-  #           label: "10 000€"
-  #       defaultValue: 0
-  #   formula: kuntaPalkka + kouluHloPalkka + kuljetusHloPalkka
-  #   result:
-  #     name: Palkka
-  #     unit: euroa
-  #     value: 0
-  #   cssClasses:
-  #     - calculators
-  #     - palkatLaskuri
-
+ 
   - id: peruutukset
     title: Kuinka kauan menee yhdessä peruutuksessa?
     description: Jokaisen peruutuksen kohdalla tulee viestintää. Huoltaja laittaa viestiä kouluun tai kujettajalle, koulu laittaa viestiä eteenpäin jne. Sovellusta käyttäessä viestittelyaika nollaantuu, koska tieto välittyy heti kaikille.
@@ -552,68 +297,6 @@ Laskurit:
       value: 4
     cssClasses:
       - peruutusLaskuri
-
-  # - id: kuntahenkilo
-  #   title: Työntekijän tiedot
-  #   description: Työntekijän keskimääräinen palkka
-  #   isTime: false
-  #   isInteger: true
-  #   fields:
-  #     # - name: Montako henkeä
-  #     #   variable: kuntaLkm
-  #     #   controlType: type
-  #     #   defaultValue: 1
-  #     - name: Keskimääräinen palkka
-  #       variable: kuntaPalkka
-  #       controlType: slider
-  #       min: 0
-  #       max: 10000
-  #       step: 1
-  #       marks:
-  #         - value: 0
-  #           label: "0€"
-  #         - value: 10000
-  #           label: "10 000€"
-  #       defaultValue: 2500
-  #   formula: kuntaPalkka
-  #   result:
-  #     name: Yhteensä
-  #     unit: euroa
-  #     value: 2500
-  #   cssClasses:
-  #     - calculators
-  #     - henkilotLaskuri
-
-  # - id: kouluhenkilo
-  #   title: Koulun työntekijän tiedot
-  #   description: Koulun työntekijän keskimääräinen palkka
-  #   isTime: false
-  #   isInteger: true
-  #   fields:
-  #     # - name: Montako henkeä
-  #     #   variable: kouluLkm
-  #     #   controlType: type
-  #     #   defaultValue: 1
-  #     - name: Keskimääräinen palkka
-  #       variable: kouluPalkka
-  #       controlType: slider
-  #       min: 0
-  #       max: 10000
-  #       step: 1
-  #       marks:
-  #         - value: 0
-  #           label: "0€"
-  #         - value: 10000
-  #           label: "10 000€"
-  #       defaultValue: 2500
-  #   formula: kouluPalkka # * kouluLkm
-  #   result:
-  #     name: Yhteensä
-  #     unit: euroa
-  #     value: 2500
-  #   cssClasses:
-  #     - calculators
-  #     - henkilotLaskuri
 
   - id: paivSeuranta
     title: Päivittäinen seuranta / operointi
@@ -688,9 +371,6 @@ Laskurit:
     description: Lasten poissaolomäärän ja kaikkien peruutusten ja päivittäisen koordinoinnin kesto sovelluksen kanssa.
     isTime: true
     isInteger: true
-    # variables:
-    #   - name: result_paivSeuranta
-    #     value: 0
     formula: result_paivSeuranta / 100 * 46
     result:
         name: Työmäärä sovelluksen kanssa
@@ -718,29 +398,6 @@ Laskurit:
       - calculators
 
 
-  # - id: palkatYhtVuosi
-  #   title: Kustannukset vuodessa
-  #   description: Luku 22 on keskimääräiset työpäivät/kk ja 7.5 tuntia/pvä.
-  #   isTime: false
-  #   isInteger: true
-  #   variables:
-  #     - name: result_palkkatiedot
-  #       value: 5250
-  #     - name: result_peruutusYht
-  #       value: 270
-  #     # - name: result_kouluhenkilo
-  #     #   value: 2500
-  #     # - name: result_kuljetushenkilo
-  #     #   value: 3000
-  #   formula: (result_palkkatiedot / 22 / 7.5) * (result_peruutusYht / 60) * 22 * 12
-  #   result:
-  #       name: Kustannukset yhteensä
-  #       unit: euroa
-  #       value: 3150
-  #   cssClasses:
-  #     - calculators
-
-
   - id: palkatYhtSovellus
     title: Kustannukset yhteensä sovelluksen kanssa
     description: Luku 22 on keskimääräiset työpäivät/kk ja 7.5 tuntia/pvä.
@@ -754,6 +411,19 @@ Laskurit:
     formula: (result_palkkatiedot / 22 / 7.5) * (result_paivSeuranta / 60) * 22
     result:
         name: Kustannukset sovelluksen kanssa
+        unit: euroa
+        value: 0
+    cssClasses:
+      - calculators
+
+  - id: paivittainenSaasto
+    title: Säästö
+    description: Luku 22 on keskimääräiset työpäivät/kk ja 7.5 tuntia/pvä.
+    isTime: false
+    isInteger: true
+    formula: (result_palkatYht - result_palkatYhtSovellus) * 12
+    result:
+        name: Vuosisäästö sovelluksen kanssa
         unit: euroa
         value: 0
     cssClasses:
@@ -850,6 +520,19 @@ Suunnittelu:
     cssClasses:
       - calculators
 
+  - id: vuosisaastoLukuj
+    title: Säästö vuodessa sovelluksen kanssa
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    formula: result_lukujarj - (result_lukujarj / 100 * 40)
+    result:
+      name: Yhteensä
+      unit: 
+      value: 
+    cssClasses:
+      - calculators
+
 Kuljetuskustannukset:
   - id: taksitUusi
     title: Taksien määrän vaikutus kustannuksiin
@@ -930,11 +613,11 @@ Kuljetuskustannukset:
       - calculators
 
   - id: kustannuksetYhtUusi
-    title: Vuosikustannukset uudelleenlaskettuna
+    title: Vuosikustannukset sovelluksen kanssa
     description: Joka päivä
     isTime: false
     isInteger: true
-    formula: result_taksitUusi + result_minibussitUusi + result_bussitUusi - ( result_saastohintaKm * 12)
+    formula: result_taksitUusi + result_minibussitUusi + result_bussitUusi - ( result_saastohintaKm * 12 )
     result:
       name: Yhteensä
       unit: 
@@ -999,9 +682,48 @@ Kuljetuskustannukset:
     description: Joka päivä
     isTime: false
     isInteger: true
-    formula: result_kilometrit * result_kilometrihinta * 22
+    formula: result_kilometrihinta * 22
     result:
-      name: Säästetyt eurot kuukaudessa
+      name: Säästetyt eurot kuukaudessa kilometreillä
+      unit: €
+      value: 
+    cssClasses:
+      - calculators
+
+  - id: saastotVuosi
+    title: Säästöt Vuodessa
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    formula: result_kuljetuskustannukset - result_kustannuksetYhtUusi
+    result:
+      name: Säästetyt eurot vuodessa
+      unit: €
+      value: 
+    cssClasses:
+      - calculators
+
+  - id: kokonaiskustannuksetYht
+    title: Oma arvio + työmäärä vuosikustannus
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    formula: result_kuljetuskustannukset + (result_palkatYht * 12) + result_lukujarj
+    result:
+      name: Yhteensä
+      unit: €
+      value: 
+    cssClasses:
+      - calculators
+
+  - id: kokonaissäästötYht
+    title: Sovelluksen käyttöönotonjälkeinen vuosittainen säästö
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    formula: result_paivittainenSaasto + result_vuosisaastoLukuj + result_saastotVuosi
+    result:
+      name: Yhteensä
       unit: €
       value: 
     cssClasses:
@@ -1096,20 +818,24 @@ Pylvasdiagrammit:
     section: Suunnittelu
 
 
-# Piirakkadiagrammit:
-#   - id: Saasto
-#     section: Kuljetuskustannukset
-#     data:
-#       - name: result_kustannuksetYhtUusi
-#         value:
-#       - name: Säästetty
-#         value: 1000
-#     unit: €
-  # - id: Toinen
-  #   section: Kuljetuskustannukset
-  #   data:
-  #     - name: Testi
-  #       value: 30
-  #     - name: Säästetty
-  #       value: 3
-  #   unit: €
+Piirakkadiagrammit:
+  - id: Saasto
+    section: Kuljetuskustannukset
+    data:
+      - id: result_kustannuksetYhtUusi
+        name: Kustannukset
+        value: 10
+      - id: result_saastotVuosi
+        name: Säästetty
+        value: 9
+    unit: €
+  - id: Toinen
+    section: Kuljetuskustannukset
+    data:
+      - id: result_kustannuksetYhtUusi
+        name: Kustannukset
+        value: 10
+      - id: result_saastotVuosi
+        name: Säästetty
+        value: 9
+    unit: €
