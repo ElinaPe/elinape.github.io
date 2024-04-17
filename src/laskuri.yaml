@@ -183,7 +183,7 @@ LaskuritEtusivu:
       - name: Lasten lkm
         variable: a
         controlType: type
-        defaultValue: 200
+        defaultValue: 600
       - name: Poissaoloprosentti
         variable: b
         controlType: slider
@@ -934,7 +934,7 @@ Kuljetuskustannukset:
     description: Joka päivä
     isTime: false
     isInteger: true
-    formula: result_taksitUusi + result_minibussitUusi + result_bussitUusi
+    formula: result_taksitUusi + result_minibussitUusi + result_bussitUusi - ( result_saastohintaKm * 12)
     result:
       name: Yhteensä
       unit: 
@@ -989,6 +989,19 @@ Kuljetuskustannukset:
     formula: result_kilometrit * eurotKm
     result:
       name: Säästetyt eurot
+      unit: €
+      value: 
+    cssClasses:
+      - calculators
+
+  - id: saastohintaKm
+    title: Säästöt kuukaudessa
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    formula: result_kilometrit * result_kilometrihinta * 22
+    result:
+      name: Säästetyt eurot kuukaudessa
       unit: €
       value: 
     cssClasses:
