@@ -55,7 +55,6 @@ const xAxisdataKeyName = z.object({
 
 export const DiagramSchema = z.object({
 	id: z.string(),
-	section: z.string(),
 	xAxisDatakey: z.array(xAxisdataKeyName),
 	barDataKey: z.array(barDataKeys),
 	growthRate: z.object({
@@ -66,6 +65,7 @@ export const DiagramSchema = z.object({
 		isVisible: z.boolean(),
 	}),
 	unit: z.string().optional(),
+	section: z.string(),
 })
 
 

@@ -998,7 +998,6 @@ Kuljetuskustannukset:
 
 Pylvasdiagrammit:
   - id: Ajankaytto
-    section: Laskurit
     xAxisDatakey:
       - name: Vuosi
       # - name: Vuosi 2
@@ -1006,11 +1005,11 @@ Pylvasdiagrammit:
     barDataKey:
       - id: result_peruutusYht
         name: Ajankäyttö
-        value: 0
+        value: 
         isTime: true
       - id: result_peruutusYhtSovellus
         name: Sovelluksen kanssa
-        value: 0
+        value: 
         isTime: true
     growthRate:
       value: 1
@@ -1023,9 +1022,10 @@ Pylvasdiagrammit:
           label: "15%"
       isVisible: false
     unit: pv
+    section: Laskurit
+
 
   - id: Kustannukset
-    section: Laskurit
     xAxisDatakey:
       - name: Vuosi 1
       - name: Vuosi 2
@@ -1033,11 +1033,11 @@ Pylvasdiagrammit:
     barDataKey:
       - id: result_palkatYht
         name: Kustannukset
-        value: 0
+        value: 
         isTime: false
       - id: result_palkatYhtSovellus
         name: Sovelluksen kanssa
-        value: 0
+        value: 
         isTime: false
     growthRate:
       value: 0
@@ -1052,9 +1052,10 @@ Pylvasdiagrammit:
           label: "15%"
       isVisible: true
     unit: €
+    section: Laskurit
+
 
   - id: kokonais
-    section: Suunnittelu
     xAxisDatakey:
       - name: Vuosi 1
       - name: Vuosi 2
@@ -1062,11 +1063,11 @@ Pylvasdiagrammit:
     barDataKey:
       - id: result_kustannuksetYhtUusiKK
         name: Kokonaiskustannus
-        value: 0
+        value: 100000
         isTime: false
       - id: result_kustannuksetYhtUusiKKSovellus
         name: Sovelluksen kanssa
-        value: 0
+        value: 100
         isTime: false
     growthRate:
       value: 1
@@ -1079,6 +1080,8 @@ Pylvasdiagrammit:
           label: "15%"
       isVisible: true
     unit: €
+    section: Suunnittelu
+
 
 # Piirakkadiagrammit:
 #   - id: Saasto
