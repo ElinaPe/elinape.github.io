@@ -40,6 +40,7 @@ LaskuritEtusivu:
       value: 500000
     cssClasses:
       - calculators
+    isVisible: true
 
   - id: taksitLkm
     title: Taksien määrä
@@ -58,6 +59,7 @@ LaskuritEtusivu:
       value: 8
     cssClasses:
       - calculators
+    isVisible: true
 
   - id: minibussitLkm
     title: Minibussien määrä
@@ -76,6 +78,7 @@ LaskuritEtusivu:
       value: 4
     cssClasses:
       - calculators
+    isVisible: true
 
   - id: bussitLkm
     title: Bussien määrä
@@ -94,6 +97,7 @@ LaskuritEtusivu:
       value: 2
     cssClasses:
       - calculators
+    isVisible: true
 
   - id: taksitEuro
     title: Taksien osuus
@@ -107,6 +111,7 @@ LaskuritEtusivu:
       value:
     cssClasses:
       - calculators
+    isVisible: false
 
   - id: minibussitEuro
     title: Minibussien osuus
@@ -120,6 +125,7 @@ LaskuritEtusivu:
       value:
     cssClasses:
       - calculators
+    isVisible: false
 
   - id: bussitEuro
     title: Bussien osuus
@@ -133,6 +139,7 @@ LaskuritEtusivu:
       value:
     cssClasses:
       - calculators
+    isVisible: false
 
   - id: taksitYksi
     title: Taksien yksi osa
@@ -146,6 +153,7 @@ LaskuritEtusivu:
       value:
     cssClasses:
       - calculators
+    isVisible: false
 
   - id: minibussitYksi
     title: Minibussien yksi osa
@@ -159,6 +167,7 @@ LaskuritEtusivu:
       value:
     cssClasses:
       - calculators
+    isVisible: false
 
   - id: bussitYksi
     title: Bussien yksi osa
@@ -172,6 +181,7 @@ LaskuritEtusivu:
       value:
     cssClasses:
       - calculators
+    isVisible: false
  
 
   - id: lapset
@@ -202,6 +212,7 @@ LaskuritEtusivu:
     cssClasses:
       - calculators
       - tokanimi
+    isVisible: true
 
   - id: palkkatiedot
     title: Palkkatiedot
@@ -229,6 +240,7 @@ LaskuritEtusivu:
     cssClasses:
       - calculators
       - henkilotLaskuri
+    isVisible: true
 
   
 
@@ -297,6 +309,7 @@ Laskurit:
       value: 4
     cssClasses:
       - peruutusLaskuri
+    isVisible: true
 
   - id: paivSeuranta
     title: Päivittäinen seuranta / operointi
@@ -344,6 +357,7 @@ Laskurit:
     cssClasses:
       - calculators
       - paivCalculator
+    isVisible: true
 
 
   - id: peruutusYht
@@ -353,11 +367,11 @@ Laskurit:
     isInteger: true
     variables:
       - name: result_lapset
-        value: 
+        value: 0
       - name: result_peruutukset
-        value: 
+        value: 0
       - name: result_paivSeuranta
-        value: 
+        value: 0
     formula: (result_lapset * result_peruutukset) + result_paivSeuranta
     result:
         name: Työmäärä yhteensä
@@ -365,19 +379,24 @@ Laskurit:
         value: 270
     cssClasses:
       - calculators
+    isVisible: true
 
   - id: peruutusYhtSovellus
     title: Päivittäinen työmäärä päivässä sovelluksen kanssa
     description: Lasten poissaolomäärän ja kaikkien peruutusten ja päivittäisen koordinoinnin kesto sovelluksen kanssa.
     isTime: true
     isInteger: true
+    variables:
+      - name: result_paivSeuranta
+        value: 
     formula: result_paivSeuranta / 100 * 46
     result:
         name: Työmäärä sovelluksen kanssa
         unit:
-        value:
+        value: 0
     cssClasses:
       - calculators
+    isVisible: true
 
   - id: palkatYht
     title: Kustannukset kuukaudessa
@@ -396,6 +415,7 @@ Laskurit:
         value: 
     cssClasses:
       - calculators
+    isVisible: true
 
 
   - id: palkatYhtSovellus
@@ -415,12 +435,18 @@ Laskurit:
         value: 0
     cssClasses:
       - calculators
+    isVisible: true
 
   - id: paivittainenSaasto
     title: Säästö
     description: Luku 22 on keskimääräiset työpäivät/kk ja 7.5 tuntia/pvä.
     isTime: false
     isInteger: true
+    variables:
+      - name: result_palkatYht
+        value: 0
+      - name: result_palkatYhtSovellus
+        value: 0
     formula: (result_palkatYht - result_palkatYhtSovellus) * 12
     result:
         name: Vuosisäästö sovelluksen kanssa
@@ -428,9 +454,9 @@ Laskurit:
         value: 0
     cssClasses:
       - calculators
+    isVisible: true
 
 Suunnittelu:
-
   - id: lukujarj
     title: Lukujäjestysten muutoskerrat vuodessa
     description: Joka päivä
@@ -493,6 +519,7 @@ Suunnittelu:
       value:
     cssClasses:
       - calculators
+    isVisible: true
 
   - id: kustannuksetYhtUusiKK
     title: Kuukausikustannukset uudelleenlaskettuna
@@ -506,6 +533,7 @@ Suunnittelu:
       value: 
     cssClasses:
       - calculators
+    isVisible: true
 
   - id: kustannuksetYhtUusiKKSovellus
     title: Kuukausikustannukset uudelleenlaskettuna sovelluksen kanssa
@@ -519,6 +547,7 @@ Suunnittelu:
       value: 
     cssClasses:
       - calculators
+    isVisible: true
 
   - id: vuosisaastoLukuj
     title: Säästö vuodessa sovelluksen kanssa
@@ -532,6 +561,7 @@ Suunnittelu:
       value: 
     cssClasses:
       - calculators
+    isVisible: true
 
 Kuljetuskustannukset:
   - id: taksitUusi
@@ -559,6 +589,7 @@ Kuljetuskustannukset:
       value: 
     cssClasses:
       - calculators
+    isVisible: true
 
   - id: minibussitUusi
     title: Minibussien määrän vaikutus kustannuksiin
@@ -585,6 +616,7 @@ Kuljetuskustannukset:
       value: 
     cssClasses:
       - calculators
+    isVisible: true
 
   - id: bussitUusi
     title: Bussien määrän vaikutus kustannuksiin
@@ -611,6 +643,7 @@ Kuljetuskustannukset:
       value: 2
     cssClasses:
       - calculators
+    isVisible: true
 
   - id: kustannuksetYhtUusi
     title: Vuosikustannukset sovelluksen kanssa
@@ -624,6 +657,7 @@ Kuljetuskustannukset:
       value: 
     cssClasses:
       - calculators
+    isVisible: true
 
   - id: kilometrit
     title: Keskimääräinen kilometrimäärä lapsille
@@ -650,6 +684,7 @@ Kuljetuskustannukset:
       value: 
     cssClasses:
       - calculators
+    isVisible: true
 
   - id: kilometrihinta
     title: Keskimääräinen hinta kilometreille
@@ -676,6 +711,7 @@ Kuljetuskustannukset:
       value: 
     cssClasses:
       - calculators
+    isVisible: true
 
   - id: saastohintaKm
     title: Säästöt kuukaudessa
@@ -689,6 +725,7 @@ Kuljetuskustannukset:
       value: 
     cssClasses:
       - calculators
+    isVisible: true
 
   - id: saastotVuosi
     title: Säästöt Vuodessa
@@ -702,6 +739,7 @@ Kuljetuskustannukset:
       value: 
     cssClasses:
       - calculators
+    isVisible: true
 
   - id: kokonaiskustannuksetYht
     title: Oma arvio + työmäärä vuosikustannus
@@ -715,6 +753,7 @@ Kuljetuskustannukset:
       value: 
     cssClasses:
       - calculators
+    isVisible: true
 
   - id: kokonaissäästötYht
     title: Sovelluksen käyttöönotonjälkeinen vuosittainen säästö
@@ -728,6 +767,7 @@ Kuljetuskustannukset:
       value: 
     cssClasses:
       - calculators
+    isVisible: true
     
 
 

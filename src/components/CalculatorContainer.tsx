@@ -54,7 +54,6 @@ type ValidatedDataKey = 'LaskuritEtusivu' | 'Laskurit' | 'Suunnittelu' | 'Kuljet
     
         if (needsUpdateBar) {
             setDiagrams(sectionBarDiagrams);
-            console.log("Päivitetään pylväsdiagrammit, koska tiedoissa on eroja.");
         }
     
         const sectionPieDiagrams = validatedPieDiagrams.filter(diagram => diagram.section === activeSection);
@@ -62,14 +61,9 @@ type ValidatedDataKey = 'LaskuritEtusivu' | 'Laskurit' | 'Suunnittelu' | 'Kuljet
     
         if (needsUpdatePie) {
             setPieDiagrams(sectionPieDiagrams);
-            console.log("Päivitetään piirakkadiagrammit, koska tiedoissa on eroja.");
         }
     
     }, [activeSection, validatedDiagrams, validatedPieDiagrams, diagrams, pieDiagrams]);
-
-      useEffect(() => {
-        console.log('päevitys piirakkaan', pieDiagrams)
-      }, [pieDiagrams])
     
       useEffect(() => {
         const newResults: { name: string; value: number | null }[] = [];
@@ -155,7 +149,10 @@ type ValidatedDataKey = 'LaskuritEtusivu' | 'Laskurit' | 'Suunnittelu' | 'Kuljet
             <h2>{sectionTitle}</h2>
             <div className='calculatorTesti'>
                 <div className={`calculatorContent ${showDiagram ? '' : 'Full'}`}>
-                    {calculators.map((calculator) => (
+                    
+                
+                    
+                {calculators.filter(calc => calc.isVisible).map((calculator) => (
                         <Laskuri
                             key={calculator.id}
                             calculator={{...calculator, variables: endResults}}

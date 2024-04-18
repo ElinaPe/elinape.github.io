@@ -23,26 +23,42 @@ const Laskuri: React.FC<CalculatorProps> = ({ calculator, onCalculatorChange }) 
 
   useEffect(() => {
     const p = parser();
-    fields?.forEach(field => {
-      p.set(field.variable, field.defaultValue);
-    });
-    variables?.forEach(variable => {
-      p.set(variable.name, variable.value);
-    });
+    let allFieldsValid = true;
 
-    try {
-      const value = p.evaluate(calculator.formula);
-      setResult(prev => {
-        if (prev.value !== value) {
-          return {...prev, value};
+    fields?.forEach(field => {
+        const value = field.defaultValue;
+        if (isNaN(value)) { // Tarkistaa, että kaikki kentät ovat numeerisia
+            allFieldsValid = false;
+        } else {
+            p.set(field.variable, value);
         }
-        return prev;
+    });
+      variables?.forEach(variable => {
+        const varValue = variable.value
+        if (varValue === null || isNaN(varValue)) { // Tarkistaa, että kaikki kentät ovat numeerisia
+          allFieldsValid = false;
+        }else {
+          p.set(variable.name, variable.value);
+        }
       });
-    } catch (error) {
-      console.error('Kaavan arviointivirhe:', error);
-      // setErrorMsg('Virhe')
+
+      if (allFieldsValid) {
+        try {
+            const value = p.evaluate(calculator.formula);
+            setResult(prev => {
+                if (prev.value !== value) {
+                    return {...prev, value};
+                }
+                return prev;
+            });
+        } catch (error) {
+            console.error('Kaavan arviointivirhe:', error);
+            // setErrorMsg('Virhe')
+        }
+    } else {
+        console.error('Kaikki kentät eivät ole kelvollisia.');
     }
-  }, [fields, calculator.formula, variables]);
+}, [fields, calculator.formula, variables]);
   
   
   useEffect(() => {
@@ -74,13 +90,6 @@ const parseDuration = (durationMin: number) => {
 };
 
 
-    
-  //   const hasResult = result.value !== 0;
-  //   const resultValue = hasResult
-  //   ? calculator.isInteger
-  //   ? Math.round(result.value)
-  //   : Number(result.value).toFixed(2)
-  // : 'Ei tulosta';
   const displayResult = () => {
     if (result.value !== null) 
     if (result.value !== 0) {

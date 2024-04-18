@@ -19,7 +19,7 @@ function TabPanel(props: { [x: string]: any; children: any; value: any; index: a
     >
       {value === index && (
         <Box sx={{ p: 3, borderColor: 'divider'}}>
-          <Typography>{children}</Typography>
+          <Typography component="div">{children}</Typography>
         </Box>
       )}
     </div>

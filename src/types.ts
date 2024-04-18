@@ -39,6 +39,7 @@ export const CalculatorSchema = z.object({
 		value: z.number().nullable()
 	}),
 	cssClasses: z.array(z.string()).optional(),
+	isVisible: z.boolean(),
 });
 
 
