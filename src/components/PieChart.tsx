@@ -1,17 +1,21 @@
-import React, { useCallback, useState } from "react";
-import { PieChart, Pie, Cell } from "recharts";
+import React from "react";
+import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import { PieDiagram } from "../types";
 
 
+const CustomTooltip = ({ active, payload }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="custom-tooltip" style={{ backgroundColor: '#fff', padding: '5px', border: '1px solid #ccc', borderRadius: '10px', justifyItems: 'center', alignItems: 'center' }}>
+        <p className="label">{`${payload[0].name}: ${payload[0].value.toFixed(0)} €`}</p>
+      </div>
+    );
+  }
 
-// const data = [
-//   { name: "Group A", value: 400 },
-//   { name: "Group B", value: 300 },
-//   { name: "Group C", value: 300 },
-//   { name: "Group D", value: 200 }
-// ];
+  return null;
+};
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = ["#0088FE", "#FFBB28", "#00C49F", "#FF8042"];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
@@ -46,7 +50,6 @@ interface PieChartComponentProps {
 const PieChartComponent: React.FC<PieChartComponentProps> = ({ data }) => {
     
   
-    console.log('piirakkaan tuleva data:', data)
     return (
     <PieChart width={400} height={400}>
       <Pie
@@ -63,6 +66,8 @@ const PieChartComponent: React.FC<PieChartComponentProps> = ({ data }) => {
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
         ))}
       </Pie>
+      <Tooltip content={<CustomTooltip active={undefined} payload={undefined} />} />
+      <Legend align="right" verticalAlign="middle" layout="vertical" />
     </PieChart>
   );
 }

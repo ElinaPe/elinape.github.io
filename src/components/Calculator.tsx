@@ -23,42 +23,25 @@ const Laskuri: React.FC<CalculatorProps> = ({ calculator, onCalculatorChange }) 
 
   useEffect(() => {
     const p = parser();
-    let allFieldsValid = true;
-
     fields?.forEach(field => {
-        const value = field.defaultValue;
-        if (isNaN(value)) { // Tarkistaa, että kaikki kentät ovat numeerisia
-            allFieldsValid = false;
-        } else {
-            p.set(field.variable, value);
-        }
+      p.set(field.variable, field.defaultValue);
     });
-      variables?.forEach(variable => {
-        const varValue = variable.value
-        if (varValue === null || isNaN(varValue)) { // Tarkistaa, että kaikki kentät ovat numeerisia
-          allFieldsValid = false;
-        }else {
-          p.set(variable.name, variable.value);
-        }
-      });
+    variables?.forEach(variable => {
+      p.set(variable.name, variable.value);
+    });
 
-      if (allFieldsValid) {
-        try {
-            const value = p.evaluate(calculator.formula);
-            setResult(prev => {
-                if (prev.value !== value) {
-                    return {...prev, value};
-                }
-                return prev;
-            });
-        } catch (error) {
-            console.error('Kaavan arviointivirhe:', error);
-            // setErrorMsg('Virhe')
+    try {
+      const value = p.evaluate(calculator.formula);
+      setResult(prev => {
+        if (prev.value !== value) {
+          return {...prev, value};
         }
-    } else {
-        console.error('Kaikki kentät eivät ole kelvollisia.');
+        return prev;
+      });
+    } catch (error) {
+      console.error('Kaavan arviointivirhe:', error);
     }
-}, [fields, calculator.formula, variables]);
+  }, [fields, calculator.formula, variables]);
   
   
   useEffect(() => {

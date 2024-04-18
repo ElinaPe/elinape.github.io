@@ -111,7 +111,7 @@ LaskuritEtusivu:
       value:
     cssClasses:
       - calculators
-    isVisible: false
+    isVisible: true
 
   - id: minibussitEuro
     title: Minibussien osuus
@@ -125,7 +125,7 @@ LaskuritEtusivu:
       value:
     cssClasses:
       - calculators
-    isVisible: false
+    isVisible: true
 
   - id: bussitEuro
     title: Bussien osuus
@@ -139,9 +139,9 @@ LaskuritEtusivu:
       value:
     cssClasses:
       - calculators
-    isVisible: false
+    isVisible: true
 
-  - id: taksitYksi
+  - id: taksitYksiOsuus
     title: Taksien yksi osa
     description: Joka päivä
     isTime: false
@@ -153,9 +153,9 @@ LaskuritEtusivu:
       value:
     cssClasses:
       - calculators
-    isVisible: false
+    isVisible: true
 
-  - id: minibussitYksi
+  - id: minibussitYksiOsuus
     title: Minibussien yksi osa
     description: Joka päivä
     isTime: false
@@ -167,9 +167,9 @@ LaskuritEtusivu:
       value:
     cssClasses:
       - calculators
-    isVisible: false
+    isVisible: true
 
-  - id: bussitYksi
+  - id: bussitYksiOsuus
     title: Bussien yksi osa
     description: Joka päivä
     isTime: false
@@ -181,10 +181,10 @@ LaskuritEtusivu:
       value:
     cssClasses:
       - calculators
-    isVisible: false
+    isVisible: true
  
 
-  - id: lapset
+  - id: lastenPoissaoloLkm
     title: Montako kuljetettavaa lasta?
     description: Joka päivä on prosentuaalinen määrä lapsia poissa.
     isTime: false
@@ -247,7 +247,7 @@ LaskuritEtusivu:
 
 Laskurit:
  
-  - id: peruutukset
+  - id: peruutusViestiAika
     title: Kuinka kauan menee yhdessä peruutuksessa?
     description: Jokaisen peruutuksen kohdalla tulee viestintää. Huoltaja laittaa viestiä kouluun tai kujettajalle, koulu laittaa viestiä eteenpäin jne. Sovellusta käyttäessä viestittelyaika nollaantuu, koska tieto välittyy heti kaikille.
     isTime: false
@@ -311,7 +311,7 @@ Laskurit:
       - peruutusLaskuri
     isVisible: true
 
-  - id: paivSeuranta
+  - id: peruutusPaivaSeuranta
     title: Päivittäinen seuranta / operointi
     description: Päivittäin joku seuraa, että kyytitiedot ovat ajantasalla. Sekä esim. kyytiavustajan rooli (mm. taksin odotusaika).
     isTime: true
@@ -360,19 +360,19 @@ Laskurit:
     isVisible: true
 
 
-  - id: peruutusYht
+  - id: peruutusYhtAika
     title: Päivittäinen työmäärä
     description: Lasten poissaolomäärän ja kaikkien peruutusten ja päivittäisen koordinoinnin kesto.
     isTime: true
     isInteger: true
     variables:
-      - name: result_lapset
+      - name: result_lastenPoissaoloLkm
         value: 0
-      - name: result_peruutukset
+      - name: result_peruutusViestiAika
         value: 0
-      - name: result_paivSeuranta
+      - name: result_peruutusPaivaSeuranta
         value: 0
-    formula: (result_lapset * result_peruutukset) + result_paivSeuranta
+    formula: (result_lastenPoissaoloLkm * result_peruutusViestiAika) + result_peruutusPaivaSeuranta
     result:
         name: Työmäärä yhteensä
         unit:
@@ -381,15 +381,15 @@ Laskurit:
       - calculators
     isVisible: true
 
-  - id: peruutusYhtSovellus
+  - id: peruutusYhtAikaSovellus
     title: Päivittäinen työmäärä päivässä sovelluksen kanssa
     description: Lasten poissaolomäärän ja kaikkien peruutusten ja päivittäisen koordinoinnin kesto sovelluksen kanssa.
     isTime: true
     isInteger: true
     variables:
-      - name: result_paivSeuranta
+      - name: result_peruutusPaivaSeuranta
         value: 
-    formula: result_paivSeuranta / 100 * 46
+    formula: result_peruutusPaivaSeuranta / 100 * 46
     result:
         name: Työmäärä sovelluksen kanssa
         unit:
@@ -398,7 +398,7 @@ Laskurit:
       - calculators
     isVisible: true
 
-  - id: palkatYht
+  - id: peruutusYhtPalkat
     title: Kustannukset kuukaudessa
     description: Luku 22 on keskimääräiset työpäivät/kk ja 7.5 tuntia/pvä.
     isTime: false
@@ -406,9 +406,9 @@ Laskurit:
     variables:
       - name: result_palkkatiedot
         value: 
-      - name: result_peruutusYht
+      - name: result_peruutusYhtAika
         value: 
-    formula: (result_palkkatiedot / 22 / 7.5) * (result_peruutusYht / 60) * 22
+    formula: (result_palkkatiedot / 22 / 7.5) * (result_peruutusYhtAika / 60) * 22
     result:
         name: Kustannukset yhteensä
         unit: euroa
@@ -418,7 +418,7 @@ Laskurit:
     isVisible: true
 
 
-  - id: palkatYhtSovellus
+  - id: peruutusYhtPalkatSovellus
     title: Kustannukset yhteensä sovelluksen kanssa
     description: Luku 22 on keskimääräiset työpäivät/kk ja 7.5 tuntia/pvä.
     isTime: false
@@ -426,9 +426,9 @@ Laskurit:
     variables:
       - name: result_palkkatiedot
         value: 0
-      - name: result_paivSeuranta
+      - name: result_peruutusPaivaSeuranta
         value: 0
-    formula: (result_palkkatiedot / 22 / 7.5) * (result_paivSeuranta / 60) * 22
+    formula: (result_palkkatiedot / 22 / 7.5) * (result_peruutusPaivaSeuranta / 60) * 22
     result:
         name: Kustannukset sovelluksen kanssa
         unit: euroa
@@ -437,17 +437,17 @@ Laskurit:
       - calculators
     isVisible: true
 
-  - id: paivittainenSaasto
+  - id: peruutusPaivittainenSaasto
     title: Säästö
     description: Luku 22 on keskimääräiset työpäivät/kk ja 7.5 tuntia/pvä.
     isTime: false
     isInteger: true
     variables:
-      - name: result_palkatYht
+      - name: result_peruutusYhtPalkat
         value: 0
-      - name: result_palkatYhtSovellus
+      - name: result_peruutusYhtPalkatSovellus
         value: 0
-    formula: (result_palkatYht - result_palkatYhtSovellus) * 12
+    formula: (result_peruutusYhtPalkat - result_peruutusYhtPalkatSovellus) * 12
     result:
         name: Vuosisäästö sovelluksen kanssa
         unit: euroa
@@ -456,8 +456,9 @@ Laskurit:
       - calculators
     isVisible: true
 
+
 Suunnittelu:
-  - id: lukujarj
+  - id: lukujarjMuutosAika
     title: Lukujäjestysten muutoskerrat vuodessa
     description: Joka päivä
     isTime: false
@@ -512,21 +513,64 @@ Suunnittelu:
           - value: 30
             label: "30 päivää"
         defaultValue: 5
-    formula: (result_palkkatiedot / 22) * (kuntasuunnittelu + kuntasuunnittelulyhyt + liikensuunnittelu + liikensuunnittelulyhyt)
+    formula: kuntasuunnittelu + kuntasuunnittelulyhyt + liikensuunnittelu + liikensuunnittelulyhyt
     result:
       name: Määrä
-      unit: €
+      unit: päivää
       value:
     cssClasses:
       - calculators
     isVisible: true
 
-  - id: kustannuksetYhtUusiKK
+  - id: lukujarjMuutosPylvasAika
+    title: Pylväspäiväluku
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    formula: result_lukujarjMuutosAika / 12
+    result:
+      name: Yhteensä
+      unit: 
+      value: 
+    cssClasses:
+      - calculators
+    isVisible: true
+
+  - id: lukujarjMuutosPylvasSovellus
+    title: Pylväspäiväluku sovelluksen kanssa
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    formula: result_lukujarjMuutosPylvasAika / 100 * 40
+    result:
+      name: Yhteensä
+      unit: 
+      value: 
+    cssClasses:
+      - calculators
+    isVisible: true
+
+  - id: lukujarjMuutosEurotVuosi
+    title: Aika euroina (vuosi)
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    formula:  (result_palkkatiedot / 22) * result_lukujarjMuutosAika
+    result:
+      name: Yhteensä
+      unit: 
+      value: 
+    cssClasses:
+      - calculators
+    isVisible: true
+
+
+  - id: lukujarjMuutosEurotKK
     title: Kuukausikustannukset uudelleenlaskettuna
     description: Joka päivä
     isTime: false
     isInteger: true
-    formula:  (result_lukujarj / 12)
+    formula:  (result_lukujarjMuutosEurotVuosi / 12)
     result:
       name: Yhteensä
       unit: 
@@ -535,12 +579,12 @@ Suunnittelu:
       - calculators
     isVisible: true
 
-  - id: kustannuksetYhtUusiKKSovellus
+  - id: lukujarjMuutosEurotKKSovellus
     title: Kuukausikustannukset uudelleenlaskettuna sovelluksen kanssa
     description: Joka päivä
     isTime: false
     isInteger: true
-    formula: ((result_lukujarj / 12) / 100 * 50)
+    formula: ((result_lukujarjMuutosEurotVuosi / 12) / 100 * 50)
     result:
       name: Yhteensä
       unit: 
@@ -549,12 +593,12 @@ Suunnittelu:
       - calculators
     isVisible: true
 
-  - id: vuosisaastoLukuj
+  - id: lukujarjMuutosSaastoEurot
     title: Säästö vuodessa sovelluksen kanssa
     description: Joka päivä
     isTime: false
     isInteger: true
-    formula: result_lukujarj - (result_lukujarj / 100 * 40)
+    formula: result_lukujarjMuutosEurotVuosi - (result_lukujarjMuutosEurotVuosi / 100 * 40)
     result:
       name: Yhteensä
       unit: 
@@ -582,7 +626,7 @@ Kuljetuskustannukset:
           - value: 30
             label: "30 autoa"
         defaultValue: 8
-    formula: result_taksitYksi * taksiUusi
+    formula: result_taksitYksiOsuus * taksiUusi
     result:
       name: Uusi osuus
       unit: 
@@ -609,7 +653,7 @@ Kuljetuskustannukset:
           - value: 30
             label: "30 autoa"
         defaultValue: 4
-    formula: result_minibussitYksi * minibussiUusi
+    formula: result_minibussitYksiOsuus * minibussiUusi
     result:
       name: Minibussien osuus
       unit: 
@@ -636,25 +680,11 @@ Kuljetuskustannukset:
           - value: 30
             label: "30 autoa"
         defaultValue: 2
-    formula: result_bussitYksi * bussiUusi
+    formula: result_bussitYksiOsuus * bussiUusi
     result:
       name: Bussien osuus
       unit: 
       value: 2
-    cssClasses:
-      - calculators
-    isVisible: true
-
-  - id: kustannuksetYhtUusi
-    title: Vuosikustannukset sovelluksen kanssa
-    description: Joka päivä
-    isTime: false
-    isInteger: true
-    formula: result_taksitUusi + result_minibussitUusi + result_bussitUusi - ( result_saastohintaKm * 12 )
-    result:
-      name: Yhteensä
-      unit: 
-      value: 
     cssClasses:
       - calculators
     isVisible: true
@@ -677,7 +707,7 @@ Kuljetuskustannukset:
           - value: 20
             label: "30km"
         defaultValue: 0.5
-    formula: result_lapset * km
+    formula: result_lastenPoissaoloLkm * km
     result:
       name: Säästetyt kilometrit
       unit: km
@@ -727,12 +757,26 @@ Kuljetuskustannukset:
       - calculators
     isVisible: true
 
+  - id: kustannuksetYhtUusi
+    title: Vuosikustannukset sovelluksen kanssa
+    description: Joka päivä
+    isTime: false
+    isInteger: true
+    formula: ((result_peruutusYhtPalkatSovellus * 12) + (result_lukujarjMuutosEurotKKSovellus * 12)) + result_taksitUusi + result_minibussitUusi + result_bussitUusi - ( result_saastohintaKm * 12 )
+    result:
+      name: Yhteensä
+      unit: 
+      value: 
+    cssClasses:
+      - calculators
+    isVisible: true
+
   - id: saastotVuosi
     title: Säästöt Vuodessa
     description: Joka päivä
     isTime: false
     isInteger: true
-    formula: result_kuljetuskustannukset - result_kustannuksetYhtUusi
+    formula: ((result_peruutusYhtPalkat * 12) + result_lukujarjMuutosEurotVuosi) + result_kuljetuskustannukset - result_kustannuksetYhtUusi
     result:
       name: Säästetyt eurot vuodessa
       unit: €
@@ -746,7 +790,7 @@ Kuljetuskustannukset:
     description: Joka päivä
     isTime: false
     isInteger: true
-    formula: result_kuljetuskustannukset + (result_palkatYht * 12) + result_lukujarj
+    formula: result_kuljetuskustannukset + (result_peruutusYhtPalkat * 12) + result_lukujarjMuutosEurotVuosi
     result:
       name: Yhteensä
       unit: €
@@ -755,20 +799,21 @@ Kuljetuskustannukset:
       - calculators
     isVisible: true
 
-  - id: kokonaissäästötYht
-    title: Sovelluksen käyttöönotonjälkeinen vuosittainen säästö
-    description: Joka päivä
-    isTime: false
-    isInteger: true
-    formula: result_paivittainenSaasto + result_vuosisaastoLukuj + result_saastotVuosi
-    result:
-      name: Yhteensä
-      unit: €
-      value: 
-    cssClasses:
-      - calculators
-    isVisible: true
-    
+  # - id: kokonaiskustannuksetYht
+  #   title: Oma arvio + työmäärä vuosikustannus sovelluksen kanssa
+  #   description: Joka päivä
+  #   isTime: false
+  #   isInteger: true
+  #   formula: result_kuljetuskustannukset + (result_peruutusYhtPalkat * 12) + result_lukujarjMuutosAika
+  #   result:
+  #     name: Yhteensä
+  #     unit: €
+  #     value: 
+  #   cssClasses:
+  #     - calculators
+  #   isVisible: true
+
+
 
 
 Pylvasdiagrammit:
@@ -778,11 +823,11 @@ Pylvasdiagrammit:
       # - name: Vuosi 2
       # - name: Vuosi 3
     barDataKey:
-      - id: result_peruutusYht
+      - id: result_peruutusYhtAika
         name: Ajankäyttö
         value: 
         isTime: true
-      - id: result_peruutusYhtSovellus
+      - id: result_peruutusYhtAikaSovellus
         name: Sovelluksen kanssa
         value: 
         isTime: true
@@ -806,11 +851,11 @@ Pylvasdiagrammit:
       - name: Vuosi 2
       - name: Vuosi 3
     barDataKey:
-      - id: result_palkatYht
+      - id: result_peruutusYhtPalkat
         name: Kustannukset
         value: 
         isTime: false
-      - id: result_palkatYhtSovellus
+      - id: result_peruutusYhtPalkatSovellus
         name: Sovelluksen kanssa
         value: 
         isTime: false
@@ -829,6 +874,33 @@ Pylvasdiagrammit:
     unit: €
     section: Laskurit
 
+  - id: kokonaisAika
+    xAxisDatakey:
+      - name: Vuosi 1
+      # - name: Vuosi 2
+      # - name: Vuosi 3
+    barDataKey:
+      - id: result_lukujarjMuutosPylvasAika
+        name: Kokonais aika
+        value: 100000
+        isTime: false
+      - id: result_lukujarjMuutosPylvasSovellus
+        name: Sovelluksen kanssa
+        value: 100
+        isTime: false
+    growthRate:
+      value: 1
+      min: 1
+      max: 15
+      marks:
+        - value: 0
+          label: "0%"
+        - value: 15
+          label: "15%"
+      isVisible: false
+    unit: pv
+    section: Suunnittelu
+
 
   - id: kokonais
     xAxisDatakey:
@@ -836,11 +908,11 @@ Pylvasdiagrammit:
       - name: Vuosi 2
       - name: Vuosi 3
     barDataKey:
-      - id: result_kustannuksetYhtUusiKK
+      - id: result_lukujarjMuutosEurotKK
         name: Kokonaiskustannus
         value: 100000
         isTime: false
-      - id: result_kustannuksetYhtUusiKKSovellus
+      - id: result_lukujarjMuutosEurotKKSovellus
         name: Sovelluksen kanssa
         value: 100
         isTime: false
@@ -869,13 +941,13 @@ Piirakkadiagrammit:
         name: Säästetty
         value: 9
     unit: €
-  - id: Toinen
-    section: Kuljetuskustannukset
-    data:
-      - id: result_kustannuksetYhtUusi
-        name: Kustannukset
-        value: 10
-      - id: result_saastotVuosi
-        name: Säästetty
-        value: 9
-    unit: €
+  # - id: Toinen
+  #   section: Kuljetuskustannukset
+  #   data:
+  #     - id: result_kustannuksetYhtUusi
+  #       name: Kustannukset
+  #       value: 10
+  #     - id: result_saastotVuosi
+  #       name: Säästetty
+  #       value: 9
+  #   unit: €

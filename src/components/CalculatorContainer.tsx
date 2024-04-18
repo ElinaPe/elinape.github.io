@@ -28,6 +28,7 @@ type ValidatedDataKey = 'LaskuritEtusivu' | 'Laskurit' | 'Suunnittelu' | 'Kuljet
     const validatedPieDiagrams = validatedData.Piirakkadiagrammit;
 
     const [calculators, setCalculators] = useState<Calculator[]>([]);
+    
     const [diagrams, setDiagrams] = useState<Diagram[]>([]);
     const [pieDiagrams, setPieDiagrams] = useState<PieDiagram[]>([]);
 
