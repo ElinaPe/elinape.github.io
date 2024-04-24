@@ -41,7 +41,7 @@ const Laskuri: React.FC<CalculatorProps> = ({ calculator, onCalculatorChange }) 
     } catch (error) {
       console.error('Kaavan arviointivirhe:', error);
     }
-  }, [fields, calculator.formula, variables]);
+  }, [fields, variables, calculator.formula]);
   
   
   useEffect(() => {

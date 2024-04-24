@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { AppBar, Tabs, Tab, Typography, Box, styled } from '@mui/material';
 import CalculatorContainer from '../components/CalculatorContainer';
 
@@ -62,6 +62,8 @@ export default function SimpleTabs() {
 };
 const tabNames=['LaskuritEtusivu', 'Laskurit', 'Suunnittelu', 'Kuljetuskustannukset'];
 
+const Tabi1 = useMemo(() => <CalculatorContainer activeSection={tabNames[0]} updateTabData={updateTabData} tabData={tabData} />, [])
+
 return (
     <div>
       <BottomAppBar position="fixed">
@@ -73,7 +75,7 @@ return (
         </Tabs>
       </BottomAppBar>
       <TabPanel value={value} index={0}>
-      <CalculatorContainer activeSection={tabNames[0]} updateTabData={updateTabData} tabData={tabData} />
+        {Tabi1}
       </TabPanel>
       <TabPanel value={value} index={1}>
       <CalculatorContainer activeSection={tabNames[1]} updateTabData={updateTabData} tabData={tabData} />

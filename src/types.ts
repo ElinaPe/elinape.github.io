@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+
 const OtsikotSchema = z.record(z.string());
 
 const Mark = z.object({
@@ -99,6 +100,16 @@ const Result = z.record(z.string(), z.number());
 
 export const CalculatorsSchema = z.array(CalculatorSchema)
 
+export interface CalculatorState {
+	[section: string]: {
+		[id: string]: number | null; 
+	};
+  }
+  
+  export interface CalculatorContextType {
+	calculatorsState: CalculatorState;
+	updateCalculatorState: (section: string, id: string, value: number | null) => void;
+  }
 
 export type Field = z.infer<typeof Field>;
 export type Calculator = z.infer<typeof CalculatorSchema>;

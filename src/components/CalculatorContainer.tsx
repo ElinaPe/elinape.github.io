@@ -40,12 +40,32 @@ type ValidatedDataKey = 'LaskuritEtusivu' | 'Laskurit' | 'Suunnittelu' | 'Kuljet
     const [showDiagram, setShowDiagram] = useState<boolean>(false);
    
 
+    // useEffect(() => {
+    //     const validatedCalculators = validatedData[activeSection as ValidatedDataKey] || [];
+    //     setCalculators(validatedCalculators.map(calculator => ({
+    //         ...calculator, variables: endResults
+    //     })));
+    //   }, [activeSection]);
+
     useEffect(() => {
-        const validatedCalculators = validatedData[activeSection as ValidatedDataKey] || [];
-        setCalculators(validatedCalculators.map(calculator => ({
-            ...calculator, variables: endResults
-        })));
-      }, [activeSection]);
+      const sectionData = validatedData[activeSection as ValidatedDataKey] || [];
+      const updatedCalculators = sectionData.map(calculator => {
+        const resultKey = `result_${calculator.id}`;
+        const existingResult = tabData[activeSection]?.[resultKey];
+    
+        console.log(`Existing result for ${resultKey}:`, existingResult);
+    
+        return {
+            ...calculator,
+            result: {
+                ...calculator.result,
+                value: existingResult !== undefined ? existingResult : calculator.result.value
+            }
+        };
+      });
+    
+      setCalculators(updatedCalculators);
+    }, [activeSection]);
 
       const sectionTitle = validatedOtsikot[activeSection];
 
@@ -69,19 +89,18 @@ type ValidatedDataKey = 'LaskuritEtusivu' | 'Laskurit' | 'Suunnittelu' | 'Kuljet
       useEffect(() => {
         const newResults: { name: string; value: number | null }[] = [];
       
-        // Käy läpi tabData ja lisää sen tiedot newResultsiin
         for (const section in tabData) {
           for (const name in tabData[section]) {
             newResults.push({ name, value: tabData[section][name] });
           }
         }
-      
-        // Aseta uusi endResults-tila
         setEndResults(newResults);
       }, [tabData]);
+      console.log('tabdata:', tabData)
       
     const handleCalculatorChange = (calculatorId: string, result: number|null) => {
-        const newValue = typeof result === 'number' ? result : parseFloat(result || '0');
+      console.log('handlecalculator aktivoitu')  
+      const newValue = typeof result === 'number' ? result : parseFloat(result || '0');
         setCalculators(prevCalculators =>
           prevCalculators.map(calculator =>
             calculator.id === calculatorId
@@ -90,14 +109,20 @@ type ValidatedDataKey = 'LaskuritEtusivu' | 'Laskurit' | 'Suunnittelu' | 'Kuljet
           )
         );
       };
+      
 
       useEffect(() => {
         const newResults = calculators.map(calculator => ({
           name: `result_${calculator.id}`,
           value: calculator.result.value,
         }));
-        setEndResults(newResults);
-        updateTabData(activeSection, newResults.reduce((acc, curr) => ({ ...acc, [curr.name]: curr.value }), {}));
+        if (JSON.stringify(newResults) !== JSON.stringify(endResults)) {
+          // setEndResults(newResults);
+          updateTabData(activeSection, newResults.reduce((acc, curr) => ({ ...acc, [curr.name]: curr.value }), {}));
+          
+      }
+        // setEndResults(newResults);
+        // updateTabData(activeSection, newResults.reduce((acc, curr) => ({ ...acc, [curr.name]: curr.value }), {}));
       }, [calculators]);
 
 

@@ -1,12 +1,11 @@
 import React from "react";
-import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+import { PieChart, Pie, Cell, Tooltip, Legend, TooltipProps } from "recharts";
 import { PieDiagram } from "../types";
 
-
-const CustomTooltip = ({ active, payload }) => {
-  if (active && payload && payload.length) {
+const CustomTooltip: React.FC<TooltipProps<number, string>> = ({ active, payload }) => {
+  if (active && payload && payload.length > 0 && payload[0].value !== undefined) {
     return (
-      <div className="custom-tooltip" style={{ backgroundColor: '#fff', padding: '5px', border: '1px solid #ccc', borderRadius: '10px', justifyItems: 'center', alignItems: 'center' }}>
+      <div className="custom-tooltip" style={{ backgroundColor: '#fff', padding: '5px', border: '1px solid #ccc', borderRadius: '10px' }}>
         <p className="label">{`${payload[0].name}: ${payload[0].value.toFixed(0)} €`}</p>
       </div>
     );
@@ -72,41 +71,3 @@ const PieChartComponent: React.FC<PieChartComponentProps> = ({ data }) => {
   );
 }
 export default PieChartComponent
-
-// import React from 'react';
-// import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-// import { PieDiagram } from '../types'
-
-// interface PieChartComponentProps {
-//     data: PieDiagram['data'];
-// }
-
-// const PieChartComponent: React.FC<PieChartComponentProps> = ({ data }) => {
-//     const COLORS = ['#0088FE', '#00C49F'];
-//     console.log('piechartista')
-
-//     return (
-//         <ResponsiveContainer width="100%" height={400}>
-//             <PieChart>
-//                 <Pie
-//                     data={data}
-//                     cx="50%"
-//                     cy="50%"
-//                     labelLine={false}
-//                     outerRadius={150}
-//                     fill="#8884d8"
-//                     dataKey="value"
-//                     label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-//                 >
-//                     {data.map((entry, index) => (
-//                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-//                     ))}
-//                 </Pie>
-//                 <Tooltip />
-//                 <Legend />
-//             </PieChart>
-//         </ResponsiveContainer>
-//     );
-// };
-
-// export default PieChartComponent;
