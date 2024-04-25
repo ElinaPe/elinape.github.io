@@ -18,13 +18,13 @@ function TabPanel(props: { [x: string]: any; children: any; value: any; index: a
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3, borderColor: 'divider'}}>
+        <Box sx={{ p: 3, borderColor: 'divider' }}>
           <Typography component="div">{children}</Typography>
         </Box>
       )}
     </div>
   );
-} 
+}
 
 const BottomAppBar = styled(AppBar)({
   top: 'auto',
@@ -37,54 +37,54 @@ const CustomTab = styled(Tab)({
 });
 
 export default function SimpleTabs() {
-    
 
-  const [value, setValue] = useState(0);
+
+  const [selectedTab, setSelectedTab] = useState(0);
   const [tabData, setTabData] = useState<TabData>({
     LaskuritEtusivu: {},
     Laskurit: {},
     Suunnittelu: {},
     Kuljetuskustannukset: {},
-});
+  });
 
   const handleChange = (_event: unknown, newValue: number) => {
-    setValue(newValue);
+    setSelectedTab(newValue);
   };
 
-  const updateTabData = (section:string, data:object) => {
+  const updateTabData = (section: string, data: object) => {
     setTabData(prev => ({
-        ...prev,
-        [section]: {
-            ...prev[section],
-            ...data,
-        },
+      ...prev,
+      [section]: {
+        ...prev[section],
+        ...data,
+      },
     }));
-};
-const tabNames=['LaskuritEtusivu', 'Laskurit', 'Suunnittelu', 'Kuljetuskustannukset'];
+  };
+  const tabNames = ['LaskuritEtusivu', 'Laskurit', 'Suunnittelu', 'Kuljetuskustannukset'];
 
-const Tabi1 = useMemo(() => <CalculatorContainer activeSection={tabNames[0]} updateTabData={updateTabData} tabData={tabData} />, [])
-
-return (
+  return (
     <div>
       <BottomAppBar position="fixed">
-        <Tabs value={value} onChange={handleChange} aria-label="tabs" centered>
+        <Tabs value={selectedTab} onChange={handleChange} aria-label="tabs" centered>
           <CustomTab label="Esitiedot" />
           <CustomTab label="Peruutukset" />
           <CustomTab label="Suunnittelu" />
           <CustomTab label="Kuljetuskustannukset" />
         </Tabs>
       </BottomAppBar>
-      <TabPanel value={value} index={0}>
-        {Tabi1}
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-      <CalculatorContainer activeSection={tabNames[1]} updateTabData={updateTabData} tabData={tabData} />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-      <CalculatorContainer activeSection={tabNames[2]} updateTabData={updateTabData} tabData={tabData} />
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-      <CalculatorContainer activeSection={tabNames[3]} updateTabData={updateTabData} tabData={tabData} />
+      <TabPanel value={0} index={0}>
+        <div style={{ display: selectedTab === 0 ? 'block' : 'none' }}>
+          <CalculatorContainer activeSection="LaskuritEtusivu" updateTabData={updateTabData} tabData={tabData} />
+        </div>
+        <div style={{ display: selectedTab === 1 ? 'block' : 'none' }}>
+          <CalculatorContainer activeSection="Laskurit" updateTabData={updateTabData} tabData={tabData} />
+        </div>
+        <div style={{ display: selectedTab === 2 ? 'block' : 'none' }}>
+          <CalculatorContainer activeSection="Suunnittelu" updateTabData={updateTabData} tabData={tabData} />
+        </div>
+        <div style={{ display: selectedTab === 3 ? 'block' : 'none' }}>
+          <CalculatorContainer activeSection="Kuljetuskustannukset" updateTabData={updateTabData} tabData={tabData} />
+        </div>
       </TabPanel>
     </div>
   );
