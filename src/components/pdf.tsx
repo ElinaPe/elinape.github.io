@@ -29,7 +29,7 @@ interface PdfReportProps {
 
     return (
         <div className='printingPdf'>
-            <button onClick={handleCreatePdf}>Luo PDF</button>
+            <button onClick={handleCreatePdf} aria-label="Print">Luo PDF</button>
             <div ref={targetRef} style={{ 
             visibility: isCreatingPdf ? 'visible' : 'hidden',
             // position: isCreatingPdf ? 'relative' : 'absolute',

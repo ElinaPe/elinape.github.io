@@ -161,7 +161,7 @@ type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCos
 
     return (
         <div ref={targetRef} className='calculatorContainer'>
-          <p className='printBtn' onClick={() => toPDF()}><FontAwesomeIcon icon={faPrint} /></p>
+          <button className='printBtn' onClick={() => toPDF()}><FontAwesomeIcon icon={faPrint} aria-label="Print" /></button>
             <h2>{sectionTitle}</h2>
             <div className='calculatorTesti'>
                 <div className={`calculatorContent ${showDiagrams ? '' : 'Full'}`}>
