@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 
-const OtsikotSchema = z.record(z.string());
+const HeadingsSchema = z.record(z.string());
 
 const Mark = z.object({
 	value: z.number(),
@@ -84,15 +84,14 @@ export const PieDiagramSchema = z.object({
 })
 
 export const RootSchema = z.object({
-	Otsikot: OtsikotSchema,
-	LaskuritEtusivu: z.array(CalculatorSchema),
-	Laskurit: z.array(CalculatorSchema),
-	Suunnittelu: z.array(CalculatorSchema),
-	Kuljetuskustannukset: z.array(CalculatorSchema),
+	Headings: HeadingsSchema,
+	Landing: z.array(CalculatorSchema),
+	DailyWork: z.array(CalculatorSchema),
+	PlanningWork: z.array(CalculatorSchema),
+	TransportCosts: z.array(CalculatorSchema),
 	Pylvasdiagrammit: z.array(DiagramSchema),
 	Piirakkadiagrammit: z.array(PieDiagramSchema),
 });
-
 
 const InputValues = z.record(z.string(), z.record(z.string(), z.number()));
 
@@ -109,6 +108,10 @@ export interface CalculatorState {
   export interface CalculatorContextType {
 	calculatorsState: CalculatorState;
 	updateCalculatorState: (section: string, id: string, value: number | null) => void;
+  }
+
+  export interface TabData {
+	[section: string]: { [name: string]: number | null };
   }
 
 export type Field = z.infer<typeof Field>;

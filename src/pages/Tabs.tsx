@@ -1,6 +1,7 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { AppBar, Tabs, Tab, Typography, Box, styled } from '@mui/material';
 import CalculatorContainer from '../components/CalculatorContainer';
+import PdfReport from '../components/pdf';
 
 interface TabData {
   [section: string]: { [name: string]: number | null };
@@ -38,17 +39,28 @@ const CustomTab = styled(Tab)({
 
 export default function SimpleTabs() {
 
-
+  const sections = ['Landing', 'DailyWork', 'PlanningWork', 'TransportCosts'];
   const [selectedTab, setSelectedTab] = useState(0);
   const [tabData, setTabData] = useState<TabData>({
-    LaskuritEtusivu: {},
-    Laskurit: {},
-    Suunnittelu: {},
-    Kuljetuskustannukset: {},
+    Landing: {},
+    DailyWork: {},
+    PlanningWork: {},
+    TransportCosts: {},
   });
 
-  const handleChange = (_event: unknown, newValue: number) => {
+  const [showDiagrams, setShowDiagrams] = useState<{ [key: string]: boolean }>(
+    sections.reduce((acc, section) => ({ ...acc, [section]: false }), {})
+  );
+
+ const handleChange = (_event: any, newValue: number) => {
     setSelectedTab(newValue);
+  };
+
+  const handleToggleDiagrams = (section: string) => {
+    setShowDiagrams(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
   };
 
   const updateTabData = (section: string, data: object) => {
@@ -60,31 +72,40 @@ export default function SimpleTabs() {
       },
     }));
   };
-  const tabNames = ['LaskuritEtusivu', 'Laskurit', 'Suunnittelu', 'Kuljetuskustannukset'];
 
   return (
     <div>
       <BottomAppBar position="fixed">
         <Tabs value={selectedTab} onChange={handleChange} aria-label="tabs" centered>
           <CustomTab label="Esitiedot" />
-          <CustomTab label="Peruutukset" />
-          <CustomTab label="Suunnittelu" />
+          <CustomTab label="Päivittäinen työ" />
+          <CustomTab label="Suunnittelutyö" />
           <CustomTab label="Kuljetuskustannukset" />
         </Tabs>
       </BottomAppBar>
       <TabPanel value={0} index={0}>
-        <div style={{ display: selectedTab === 0 ? 'block' : 'none' }}>
-          <CalculatorContainer activeSection="LaskuritEtusivu" updateTabData={updateTabData} tabData={tabData} />
+      
+        <div>
+            {sections.map((section, index) => (
+                <div key={section} style={{ display: index === selectedTab ? 'block' : 'none' }}>
+                  <CalculatorContainer
+                    activeSection={section}
+                    tabData={tabData}
+                    updateTabData={updateTabData}
+                    // defaultValues={{
+                    //   taksitUusi: tabData.Landing['result_taksitLkm'] // Tässä välitetään ensimmäisen laskurin tulosta toiselle laskurille.
+                    // }}
+                    showDiagrams={showDiagrams[section]}
+                    setShowDiagrams={() => handleToggleDiagrams(section)}
+                    />
+                    {index === sections.length - 1 && (
+                      <PdfReport tabData={tabData} updateTabData={updateTabData} showDiagrams={showDiagrams[section]} setShowDiagrams={() => handleToggleDiagrams(section)} />
+                  )}
+                </div>
+            ))}
+            
         </div>
-        <div style={{ display: selectedTab === 1 ? 'block' : 'none' }}>
-          <CalculatorContainer activeSection="Laskurit" updateTabData={updateTabData} tabData={tabData} />
-        </div>
-        <div style={{ display: selectedTab === 2 ? 'block' : 'none' }}>
-          <CalculatorContainer activeSection="Suunnittelu" updateTabData={updateTabData} tabData={tabData} />
-        </div>
-        <div style={{ display: selectedTab === 3 ? 'block' : 'none' }}>
-          <CalculatorContainer activeSection="Kuljetuskustannukset" updateTabData={updateTabData} tabData={tabData} />
-        </div>
+        
       </TabPanel>
     </div>
   );

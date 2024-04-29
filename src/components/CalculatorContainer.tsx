@@ -5,25 +5,26 @@ import yamlData from '../laskuri.yaml';
 import { Calculator, Diagram, PieDiagram, RootSchema } from '../types';
 import BarChartBar from './BarChart';
 import PieChartComponent from './PieChart';
+import { usePDF } from 'react-to-pdf';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPrint } from '@fortawesome/free-solid-svg-icons';
+import { TabData } from '../types';
 
-
-interface TabData {
-    [section: string]: {
-      [name: string]: number | null;
-    };
-  }
 interface CalculatorContainerProps {
     activeSection: string;
     updateTabData: (section: string, data: Record<string, any>) => void;
     tabData: TabData;
+    // defaultValues: number,
+    showDiagrams: boolean;
+    setShowDiagrams: () => void;
 }
 
-type ValidatedDataKey = 'LaskuritEtusivu' | 'Laskurit' | 'Suunnittelu' | 'Kuljetuskustannukset';  
-  const CalculatorContainer: React.FC<CalculatorContainerProps> = ({ activeSection, updateTabData, tabData }) => {
+type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCosts';  
+  const CalculatorContainer: React.FC<CalculatorContainerProps> = ({ activeSection, showDiagrams, setShowDiagrams, updateTabData, tabData }) => {
 
     const validatedData = RootSchema.parse(yamlData);
-    const validatedOtsikot = validatedData.Otsikot;
-    // const validatedCalculators = validatedData.Laskurit;
+    const validatedHeadings = validatedData.Headings;
+    // const validatedCalculators = validatedData.DailyWork;
     const validatedDiagrams = validatedData.Pylvasdiagrammit;
     const validatedPieDiagrams = validatedData.Piirakkadiagrammit;
 
@@ -36,9 +37,8 @@ type ValidatedDataKey = 'LaskuritEtusivu' | 'Laskurit' | 'Suunnittelu' | 'Kuljet
     // const [calculators, setCalculators] = useState(validatedCalculators.map(calculator => ({
     //     ...calculator, variables:endResults
     // })));
-
-    const [showDiagram, setShowDiagram] = useState<boolean>(false);
    
+    const { toPDF, targetRef } = usePDF({filename: 'calculator.pdf'});
 
     // useEffect(() => {
     //     const validatedCalculators = validatedData[activeSection as ValidatedDataKey] || [];
@@ -53,8 +53,6 @@ type ValidatedDataKey = 'LaskuritEtusivu' | 'Laskurit' | 'Suunnittelu' | 'Kuljet
         const resultKey = `result_${calculator.id}`;
         const existingResult = tabData[activeSection]?.[resultKey];
     
-        console.log(`Existing result for ${resultKey}:`, existingResult);
-    
         return {
             ...calculator,
             result: {
@@ -63,11 +61,19 @@ type ValidatedDataKey = 'LaskuritEtusivu' | 'Laskurit' | 'Suunnittelu' | 'Kuljet
             }
         };
       });
-    
+      
       setCalculators(updatedCalculators);
     }, [activeSection]);
 
-      const sectionTitle = validatedOtsikot[activeSection];
+    // useEffect(() => {
+    //   // Tarkista, onko initialValues asetettu ja päivitä laskurin aloitusarvot
+    //   if (defaultValues && defaultValues.taksitUusi) {
+        
+    //   }
+    // }, [defaultValues]);
+    
+
+      const sectionTitle = validatedHeadings[activeSection];
 
       useEffect(() => {
         const sectionBarDiagrams = validatedDiagrams.filter(diagram => diagram.section === activeSection);
@@ -96,10 +102,10 @@ type ValidatedDataKey = 'LaskuritEtusivu' | 'Laskurit' | 'Suunnittelu' | 'Kuljet
         }
         setEndResults(newResults);
       }, [tabData]);
-      console.log('tabdata:', tabData)
+
+
       
     const handleCalculatorChange = (calculatorId: string, result: number|null) => {
-      console.log('handlecalculator aktivoitu')  
       const newValue = typeof result === 'number' ? result : parseFloat(result || '0');
         setCalculators(prevCalculators =>
           prevCalculators.map(calculator =>
@@ -125,11 +131,6 @@ type ValidatedDataKey = 'LaskuritEtusivu' | 'Laskurit' | 'Suunnittelu' | 'Kuljet
         // updateTabData(activeSection, newResults.reduce((acc, curr) => ({ ...acc, [curr.name]: curr.value }), {}));
       }, [calculators]);
 
-
-    // useEffect(() => {
-    //         console.log('useEffectistä' , calculators)
-    // }, [])
-
     useEffect(() => {
         const updatedDiagrams = diagrams.map(diagram => {
             const updatedBarDataKey = diagram.barDataKey.map(key => {
@@ -148,52 +149,43 @@ type ValidatedDataKey = 'LaskuritEtusivu' | 'Laskurit' | 'Suunnittelu' | 'Kuljet
 
       useEffect(() => {
         const updatedPieData = pieDiagrams.map(pieDiagram => {
-          // Päivitä jokainen data-objekti pieDiagrammissa
           const updatedData = pieDiagram.data.map(dataItem => {
-            // Etsi vastaava tulos endResults-tilasta käyttäen dataItem.id
             const result = endResults.find(result => result.name === dataItem.id);
-            console.log('Searching for:', dataItem.id, 'Found:', result);
-            // Palauta päivitetty data-objekti, jos löytyy vastaava tulos
             return result ? { ...dataItem, value: result.value } : dataItem;
           });
       
-          // Palauta päivitetty pieDiagram objekti uudella datalla
           return { ...pieDiagram, data: updatedData };
         });
         setPieDiagrams(updatedPieData);
       }, [endResults]);
 
-
-      const handleDiagram = () => {
-        setShowDiagram(!showDiagram)
-      }
-  
-
-
     return (
-        <div className='calculatorContainer'>
+        <div ref={targetRef} className='calculatorContainer'>
+          <p className='printBtn' onClick={() => toPDF()}><FontAwesomeIcon icon={faPrint} /></p>
             <h2>{sectionTitle}</h2>
             <div className='calculatorTesti'>
-                <div className={`calculatorContent ${showDiagram ? '' : 'Full'}`}>
+                <div className={`calculatorContent ${showDiagrams ? '' : 'Full'}`}>
                     
-                
-                    
-                {calculators.filter(calc => calc.isVisible).map((calculator) => (
-                        <Laskuri
-                            key={calculator.id}
-                            calculator={{...calculator, variables: endResults}}
-                            onCalculatorChange={handleCalculatorChange}
-                        />
-                    ))}
-                  
-                    {activeSection !== 'LaskuritEtusivu' &&
+                {calculators.map((calculator) => (
+                  <div 
+                    key={calculator.id} 
+                    style={{ display: calculator.isVisible ? 'block' : 'none' }}
+                  >
+                    <Laskuri
+                      calculator={{...calculator, variables: endResults}}
+                      onCalculatorChange={handleCalculatorChange}
+                    />
+                  </div>
+                ))}
+                 {activeSection !== 'Landing' &&
                     <div>
-                        <Button className='diagramBtn' variant={'outlined'} onClick={handleDiagram}>Näytä pylväät</Button>
-                        {/* <Button className='diagramBtn' variant={'outlined'} onClick={handleDiagram}>Sovelluksen kanssa tee checkbox</Button> */}
+                        <Button className="diagramBtn" variant="outlined" onClick={setShowDiagrams}>
+                          {showDiagrams ? 'Piilota pylväät' : 'Näytä pylväät'}
+                        </Button>
                     </div> }
                 </div>
 
-                {showDiagram &&
+                {showDiagrams &&
                 <div className='calculatorContainerChartBar'>
                     {diagrams.map((diagram) => (
                         <BarChartBar
@@ -203,7 +195,7 @@ type ValidatedDataKey = 'LaskuritEtusivu' | 'Laskurit' | 'Suunnittelu' | 'Kuljet
                     ))}
                 </div>
                 }
-                {showDiagram &&
+                {showDiagrams &&
                 <div className='calculatorContainerChartPie'>
                   {pieDiagrams.map((diagram) => (
                         <PieChartComponent 

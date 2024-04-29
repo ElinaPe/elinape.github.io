@@ -366,10 +366,6 @@ fieldset {
   min-height: 50px;
 }
 
-#errorMsg{
-  color:red;
-}
-
 .calculatorContainerChartBar {
   width:45%;
   position: fixed;
@@ -398,6 +394,48 @@ fieldset {
 }
 
 
+
+.printingPdf {
+  .calculatorContent {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    width: 80%;
+    justify-content: center;
+  }
+  .calculatorContainerChartBar {
+    position: relative;
+    right: 5px;
+    // top: -100px;
+    width: 45%;
+    float: right;
+    justify-items: center;
+    bottom: 10px;
+  }
+  .calculatorContainerChartPie {
+    position: relative;
+    right: 5px;
+    // top: -500px;
+    width: 45%;
+    float: right;
+    justify-items: center;
+    bottom: 10px;
+  }
+  .calculatorTesti {
+    display: flex;
+  }
+}
+
+.printBtn {
+  // background-color: fff;
+  color: #004256;
+  cursor: pointer;
+}
+
+.pageChange {
+  margin-top: 300px
+}
+
+
 @media (min-width: 1024px) {
   .calculatorContent.Full {
     grid-template-columns: repeat(3, 1fr);
@@ -418,9 +456,10 @@ fieldset {
     width: 100%;
     position: relative;
   }
-  .calculatorContent.Full {
-    grid-template-columns: 1fr;
-  }
+  // .calculatorContent.Full {
+  //   grid-template-columns: 1fr;
+  // }
+
   // .calculatorContent.Full > div:nth-child(3n) {
   //   grid-column: span 1;
   // }
