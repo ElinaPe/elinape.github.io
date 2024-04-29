@@ -7,7 +7,7 @@ import { TabData } from '../types';
 interface PdfReportProps {
     tabData: TabData;
     updateTabData: (section: string, data: Record<string, any>) => void;
-    showDiagrams: boolean; // Oletan että tämä on yksittäinen boolean arvo joka hallitsee näkyvyyttä
+    showDiagrams: boolean;
     setShowDiagrams: () => void;
 }
   
@@ -23,7 +23,7 @@ interface PdfReportProps {
         setTimeout(async () => {
             await toPDF();
             setIsCreatingPdf(false); 
-        }, 10); 
+        }, 50); 
     };
 
 
@@ -31,7 +31,9 @@ interface PdfReportProps {
         <div className='printingPdf'>
             <button onClick={handleCreatePdf}>Luo PDF</button>
             <div ref={targetRef} style={{ 
-            // opacity: isCreatingPdf ? 1 : 0,
+            visibility: isCreatingPdf ? 'visible' : 'hidden',
+            // position: isCreatingPdf ? 'relative' : 'absolute',
+            // left: isCreatingPdf ? '0' : '-9999px',
             padding: 20
         }}>
             
@@ -42,6 +44,7 @@ interface PdfReportProps {
                 showDiagrams={showDiagrams}
                 setShowDiagrams={setShowDiagrams}
             /> 
+           <div style={{height:200}}></div>
             <CalculatorContainer 
                 activeSection="DailyWork" 
                 updateTabData={updateTabData}
@@ -58,6 +61,7 @@ interface PdfReportProps {
                 setShowDiagrams={setShowDiagrams} 
                 />
             </div>
+            <div style={{height:200}}></div>
                 <CalculatorContainer 
                 activeSection="TransportCosts" 
                 updateTabData={updateTabData}

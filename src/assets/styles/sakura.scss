@@ -396,13 +396,15 @@ fieldset {
 
 
 .printingPdf {
+  margin-top: 10px;
+  overflow: hidden;
   .calculatorContent {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    width: 80%;
+    width: 82%;
     justify-content: center;
   }
-  .calculatorContainerChartBar {
+  .calculatorContainerChartBar, .calculatorContainerChartPie {
     position: relative;
     right: 5px;
     // top: -100px;
@@ -411,15 +413,7 @@ fieldset {
     justify-items: center;
     bottom: 10px;
   }
-  .calculatorContainerChartPie {
-    position: relative;
-    right: 5px;
-    // top: -500px;
-    width: 45%;
-    float: right;
-    justify-items: center;
-    bottom: 10px;
-  }
+
   .calculatorTesti {
     display: flex;
   }
@@ -432,7 +426,7 @@ fieldset {
 }
 
 .pageChange {
-  margin-top: 300px
+  margin-top: 350px
 }
 
 
