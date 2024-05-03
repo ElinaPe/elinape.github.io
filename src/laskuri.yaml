@@ -119,7 +119,7 @@ Landing:
           - value: 100
             label: "30%"
         defaultValue: 5
-    formula: b/100*a
+    formula: b/100*a 
     result:
       name: Määrä
       unit: lasta pois
@@ -183,6 +183,13 @@ Landing:
     description: Minibussien osuus vuosikustannuksista. Kerrotaan paikkamäärällä ja tietynlaisella kertoimella. Taksit ajaa suhteessa enemmän, kuin bussit esim. (Keskimääräisiä lukuja ja arvioita)
     isTime: false
     isInteger: true
+    variables:
+      - name: result_taksitLkm
+        value: 8
+      - name: result_minibussitLkm
+        value: 4
+      - name: result_bussitLkm
+        value: 2
     formula: (result_minibussitLkm * 22 * 1.0) / ((result_taksitLkm * 6.5 * 1.5) + (result_minibussitLkm * 22 * 1.0) + (result_bussitLkm * 40 * 0.6)) * result_kuljetuskustannukset
     result:
       name: Minibussien osuus
@@ -197,6 +204,13 @@ Landing:
     description: Bussien osuus vuosikustannuksista. Kerrotaan paikkamäärällä ja tietynlaisella kertoimella. Taksit ajaa suhteessa enemmän, kuin bussit esim. (Keskimääräisiä lukuja ja arvioita)
     isTime: false
     isInteger: true
+    variables:
+      - name: result_taksitLkm
+        value: 8
+      - name: result_minibussitLkm
+        value: 4
+      - name: result_bussitLkm
+        value: 2
     formula: (result_bussitLkm * 40 * 0.6) / ((result_taksitLkm * 6.5 * 1.5) + (result_minibussitLkm * 22 * 1.0) + (result_bussitLkm * 40 * 0.6)) * result_kuljetuskustannukset
     result:
       name: Bussien osuus
@@ -211,6 +225,11 @@ Landing:
     description: Rahallisesti yksi osa takseista. Sidotaan autot annettuun alkuarvioon.
     isTime: false
     isInteger: true
+    variables:
+      - name: result_taksitEuro
+        value: 
+      - name: result_taksitLkm
+        value: 
     formula: result_taksitEuro / result_taksitLkm
     result:
       name: Taksien yksi osa
@@ -225,6 +244,11 @@ Landing:
     description: Rahallisesti yksi osa minibusseista. Sidotaan autot annettuun alkuarvioon.
     isTime: false
     isInteger: true
+    variables:
+      - name: result_minibussitEuro
+        value: 
+      - name: result_minibussitLkm
+        value: 
     formula: result_minibussitEuro / result_minibussitLkm
     result:
       name: Minibussien yksi osa
@@ -239,6 +263,11 @@ Landing:
     description: Rahallisesti yksi osa busseista. Sidotaan autot annettuun alkuarvioon.
     isTime: false
     isInteger: true
+    variables:
+      - name: result_bussitEuro
+        value: 
+      - name: result_bussitLkm
+        value: 
     formula: result_bussitEuro / result_bussitLkm
     result:
       name: Bussien yksi osa
@@ -530,6 +559,9 @@ PlanningWork:
     description: Tämä lasketaan pylväsdiagrammia varten.
     isTime: false
     isInteger: true
+    variables:
+      - name: result_lukujarjMuutosAika
+        value: 
     formula: result_lukujarjMuutosAika / 12
     result:
       name: Yhteensä
@@ -544,6 +576,9 @@ PlanningWork:
     description: Tämä lasketaan pylväsdiagrammia varten. Arvio.
     isTime: false
     isInteger: true
+    variables:
+      - name: result_lukujarjMuutosPylvasAika
+        value: 
     formula: result_lukujarjMuutosPylvasAika / 100 * 40
     result:
       name: Yhteensä
@@ -558,6 +593,11 @@ PlanningWork:
     description: Vuosikulut
     isTime: false
     isInteger: true
+    variables:
+      - name: result_palkkatiedo
+        value: 
+      - name: result_lukujarjMuutosAika
+        value: 
     formula: (result_palkkatiedot / 22) * result_lukujarjMuutosAika
     result:
       name: Yhteensä
@@ -573,6 +613,9 @@ PlanningWork:
     description: Laskettu kuukausikulu, pylväsdiagrammia varten
     isTime: false
     isInteger: true
+    variables:
+      - name: result_lukujarjMuutosEurotVuosi
+        value: 
     formula:  (result_lukujarjMuutosEurotVuosi / 12)
     result:
       name: Yhteensä
@@ -587,6 +630,9 @@ PlanningWork:
     description: Laskettu kuukausikulu sovelluksen kanssa, pylväsdiagrammia varten
     isTime: false
     isInteger: true
+    variables:
+      - name: result_lukujarjMuutosEurotVuosi
+        value: 
     formula: ((result_lukujarjMuutosEurotVuosi / 12) / 100 * 50)
     result:
       name: Yhteensä
@@ -601,6 +647,9 @@ PlanningWork:
     description: 
     isTime: false
     isInteger: true
+    variables:
+      - name: result_lukujarjMuutosEurotVuosi
+        value: 
     formula: result_lukujarjMuutosEurotVuosi - (result_lukujarjMuutosEurotVuosi / 100 * 40)
     result:
       name: Yhteensä
@@ -751,6 +800,9 @@ TransportCosts:
     description:
     isTime: false
     isInteger: true
+    variables:
+      - name: result_kilometrihinta
+        value: 
     formula: result_kilometrihinta * 22
     result:
       name: Säästetyt eurot kuukaudessa kilometreillä
@@ -765,6 +817,13 @@ TransportCosts:
     description: Tämä laskuri esittää kattavan arvion vuosittaisista kokonaiskustannuksista, sisältäen ei vain suorat kulut, kuten kuljetuskustannukset, vaan myös työntekijöiden palkkakulut. Laskennassa huomioidaan myös ylimääräiset työmäärät, kuten lukujärjestyksen muutosten aiheuttamat kustannukset. Näin saadaan tarkempi kuva koko vuoden aikana syntyvistä taloudellisista rasitteista, jotka yleensä jäävät huomioimatta perinteisissä kustannusarvioissa.
     isTime: false
     isInteger: true
+    variables:
+      - name: result_kuljetuskustannukset
+        value: 
+      - name: result_peruutusYhtPalkat
+        value: 
+      - name: result_lukujarjMuutosEurotVuosi
+        value: 
     formula: result_kuljetuskustannukset + (result_peruutusYhtPalkat * 12) + result_lukujarjMuutosEurotVuosi
     result:
       name: Yhteensä
@@ -779,6 +838,19 @@ TransportCosts:
     description: Sovelluksen avulla voidaan vähentää hallinnollisia ja operatiivisia kuluja optimoimalla suunnitteluprosesseja ja minimoimalla inhimilliset virheet. Sovellus tukee tehokasta resurssien hallintaa, mikä johtaa suoriin säästöihin kuljetuskustannuksissa, työaikojen suunnittelussa ja henkilöstöhallinnassa.
     isTime: false
     isInteger: true
+    variables:
+      - name: result_peruutusYhtPalkatSovellus
+        value: 
+      - name: result_lukujarjMuutosEurotKKSovellus
+        value: 
+      - name: result_taksitUusi
+        value: 
+      - name: result_minibussitUusi
+        value: 
+      - name: result_bussitUusi
+        value: 
+      - name: result_saastohintaKm
+        value: 
     formula: ((result_peruutusYhtPalkatSovellus * 12) + (result_lukujarjMuutosEurotKKSovellus * 12)) + result_taksitUusi + result_minibussitUusi + result_bussitUusi - ( result_saastohintaKm * 12 )
     result:
       name: Yhteensä
@@ -793,6 +865,15 @@ TransportCosts:
     description: 
     isTime: false
     isInteger: true
+    variables:
+      - name: result_peruutusYhtPalkat
+        value: 
+      - name: result_lukujarjMuutosEurotVuosi
+        value: 
+      - name: result_kuljetuskustannukset
+        value: 
+      - name: result_kustannuksetYhtUusi
+        value: 
     formula: ((result_peruutusYhtPalkat * 12) + result_lukujarjMuutosEurotVuosi) + result_kuljetuskustannukset - result_kustannuksetYhtUusi
     result:
       name: Säästetyt eurot vuodessa
