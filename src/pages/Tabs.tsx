@@ -98,9 +98,9 @@ export default function SimpleTabs() {
                     showDiagrams={showDiagrams[section]}
                     setShowDiagrams={() => handleToggleDiagrams(section)}
                     />
-                    {index === sections.length - 1 && (
+                    {/* {index === sections.length - 1 && (
                       <PdfReport tabData={tabData} updateTabData={updateTabData} showDiagrams={showDiagrams[section]} setShowDiagrams={() => handleToggleDiagrams(section)} />
-                  )}
+                  )} */}
                 </div>
             ))}
             
