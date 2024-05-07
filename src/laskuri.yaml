@@ -36,7 +36,7 @@ Landing:
     formula: kuljetuskustannus
     result:
       name: Määrä
-      unit: e
+      unit: €
       value: 
     cssClasses:
       - calculators

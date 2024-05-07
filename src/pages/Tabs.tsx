@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AppBar, Tabs, Tab, Typography, Box, styled } from '@mui/material';
 import CalculatorContainer from '../components/CalculatorContainer';
 import PdfReport from '../components/pdf';
+import SaveButton from '../modals/saveModal';
 
 interface TabData {
   [section: string]: { [name: string]: number | null };
@@ -103,7 +104,6 @@ export default function SimpleTabs() {
                   )} */}
                 </div>
             ))}
-            
         </div>
         
       </TabPanel>

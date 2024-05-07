@@ -116,6 +116,7 @@ export interface CalculatorState {
 
 export type Field = z.infer<typeof Field>;
 export type Calculator = z.infer<typeof CalculatorSchema>;
+export type Calculators = z.infer<typeof CalculatorsSchema>;
 export type InputValues = z.infer<typeof InputValues>;
 export type Result = z.infer<typeof Result>;
 export type Diagram = z.infer<typeof DiagramSchema>;

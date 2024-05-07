@@ -13,6 +13,7 @@
     "@modyfi/vite-plugin-yaml": "^1.1.0",
     "@mui/material": "^5.15.13",
     "@mui/styled-engine-sc": "^6.0.0-alpha.17",
+    "axios": "^1.6.8",
     "mathjax": "^3.2.2",
     "mathjs": "^12.4.0",
     "react": "^18.2.0",

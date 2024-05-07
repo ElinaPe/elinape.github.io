@@ -9,6 +9,7 @@ import { usePDF } from 'react-to-pdf';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPrint } from '@fortawesome/free-solid-svg-icons';
 import { TabData } from '../types';
+import SaveButton from '../modals/saveModal';
 
 interface CalculatorContainerProps {
     activeSection: string;
@@ -205,6 +206,8 @@ type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCos
                     ))}
                 </div>
                 }
+                {activeSection === 'TransportCosts' &&
+                <SaveButton calculators={calculators} />}
 
             </div>
         </div>

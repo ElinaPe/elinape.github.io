@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, Slider, Input, styled } from '@mui/material';
 import { Field } from '../types';
-// import MuiInput from '@mui/material/Input';
 
 
 interface CustomInputProps {
