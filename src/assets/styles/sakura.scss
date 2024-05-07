@@ -429,6 +429,33 @@ fieldset {
   margin-top: 350px
 }
 
+.resultsPageContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+
+.showCitysContainer {
+  width: 30%;
+  flex-direction: column;
+}
+
+.showCitysContainer h3, .showCitysContainer p {
+  margin: 5px;
+  cursor: pointer;
+}
+
+.showResultsContainer {
+  border-left: 1px solid gray;
+  width: 70%;
+  padding: 5px;
+}
+
+.cityList {
+  display: flex;
+  flex-direction: row;
+}
+
 
 @media (min-width: 1024px) {
   .calculatorContent.Full {

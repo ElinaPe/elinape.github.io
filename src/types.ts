@@ -9,11 +9,13 @@ const Mark = z.object({
 });
 
 const Variable = z.object({
+	variableId: z.number().optional(),
 	name: z.string(),
 	value: z.number().nullable(),
 })
 
 export const Field = z.object({
+	fieldId: z.number().optional(),
 	name: z.string(),
 	variable: z.string(),
 	controlType: z.enum(["type", "slider"]),
@@ -26,6 +28,7 @@ export const Field = z.object({
 
 
 export const CalculatorSchema = z.object({
+	calculatorId: z.number().optional(),
 	id: z.string(),
 	title: z.string(),
 	description: z.string().optional().nullable(),
@@ -35,6 +38,7 @@ export const CalculatorSchema = z.object({
 	variables: z.array(Variable).optional(),
 	formula: z.string(),
 	result: z.object({
+		resultId: z.number().optional(),
 		name: z.string(),
 		unit: z.string().optional().nullable(),
 		value: z.number().nullable()
@@ -121,3 +125,10 @@ export type InputValues = z.infer<typeof InputValues>;
 export type Result = z.infer<typeof Result>;
 export type Diagram = z.infer<typeof DiagramSchema>;
 export type PieDiagram = z.infer<typeof PieDiagramSchema>;
+
+//db
+export type ResultList = {
+    resultListId: number;
+    placeName: string;
+    savingDate: string;
+};
