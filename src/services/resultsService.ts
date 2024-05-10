@@ -1,10 +1,12 @@
 import Axios from "axios"
-import { ResultList } from "../types"
+import { Calculator, ResultList } from "../types"
 interface CalculatorsList {
     title: string;
-    resultName: string;
-    resultUnit: string;
-    resultValue: number;
+    result: {
+        name: string;
+        value: number | null;  
+        unit?: string | null;  
+    }
 }
 interface ApiResponse {
     resultsListId: number;
@@ -29,5 +31,18 @@ const getCalculatorsByCityId = (cityId: number) => {
         });
 };
 
-export default { getCityNames, getCalculatorsByCityId }
-	
+const bulkSave = (placeName: string, calculators: Calculator[]) => {
+    const payload = {
+        placeName: placeName,
+        calculators: calculators
+    };
+    console.log('payload', payload)
+    return Axios.post(`${baseUrl}/bulk-save`, payload)
+        .then(response => response.data)
+        .catch(error => {
+            console.error("Error during the bulk save:", error);
+            throw error;
+        });
+};
+
+export default { getCityNames, getCalculatorsByCityId, bulkSave }

@@ -3,9 +3,11 @@ import ResultsList from '../services/resultsService'
 
 interface CalculatorsList {
     title: string;
-    resultName: string;
-    resultUnit: string;
-    resultValue: number;
+    result: {
+        name: string;
+        value: number | null;  
+        unit?: string | null;  
+    }
 }
 
 const CalculatorDetails = ({ cityId }: { cityId: number }) => {
@@ -42,9 +44,9 @@ const CalculatorDetails = ({ cityId }: { cityId: number }) => {
            {calculators.map((calculator, index) => (
             <div key={index}>
                 <h5>{calculator.title}</h5>
-                {calculator.resultValue !== null && calculator.resultValue !== undefined ? (
+                {calculator.result && calculator.result.value !== null ? (
                     <p>
-                        {calculator.resultName}: {calculator.resultValue} {calculator.resultUnit}
+                        {calculator.result.name}: {calculator.result.value} {calculator.result.unit ?? ""}
                     </p>
                 ) : (
                     <p>Ei tulosta</p>

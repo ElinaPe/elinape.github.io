@@ -55,7 +55,7 @@ Landing:
     formula: taksiLkm
     result:
       name: Taksien määrä
-      unit: 
+      unit: kpl
       value: 
     cssClasses:
       - calculators
@@ -74,7 +74,7 @@ Landing:
     formula: minibussiLkm
     result:
       name: Minibussien määrä
-      unit: 
+      unit: kpl
       value: 0
     cssClasses:
       - calculators
@@ -93,7 +93,7 @@ Landing:
     formula: bussiLkm
     result:
       name: Bussien määrä
-      unit: 
+      unit: kpl
       value: 0
     cssClasses:
       - calculators
@@ -150,7 +150,7 @@ Landing:
     formula: palkka * 1.75
     result:
       name: Palkkakulut
-      unit: euroa
+      unit: €
       value: 
     cssClasses:
       - calculators
@@ -172,7 +172,7 @@ Landing:
     formula: (result_taksitLkm * 6.5 * 1.5) / ((result_taksitLkm * 6.5 * 1.5) + (result_minibussitLkm * 22 * 1.0) + (result_bussitLkm * 40 * 0.6)) * result_kuljetuskustannukset
     result:
       name: Taksien osuus
-      unit: euroa
+      unit: €
       value:
     cssClasses:
       - calculators
@@ -193,7 +193,7 @@ Landing:
     formula: (result_minibussitLkm * 22 * 1.0) / ((result_taksitLkm * 6.5 * 1.5) + (result_minibussitLkm * 22 * 1.0) + (result_bussitLkm * 40 * 0.6)) * result_kuljetuskustannukset
     result:
       name: Minibussien osuus
-      unit: euroa
+      unit: €
       value:
     cssClasses:
       - calculators
@@ -214,7 +214,7 @@ Landing:
     formula: (result_bussitLkm * 40 * 0.6) / ((result_taksitLkm * 6.5 * 1.5) + (result_minibussitLkm * 22 * 1.0) + (result_bussitLkm * 40 * 0.6)) * result_kuljetuskustannukset
     result:
       name: Bussien osuus
-      unit: euroa
+      unit: €
       value:
     cssClasses:
       - calculators
@@ -233,7 +233,7 @@ Landing:
     formula: result_taksitEuro / result_taksitLkm
     result:
       name: Taksien yksi osa
-      unit: euroa
+      unit: €
       value:
     cssClasses:
       - calculators
@@ -252,7 +252,7 @@ Landing:
     formula: result_minibussitEuro / result_minibussitLkm
     result:
       name: Minibussien yksi osa
-      unit: euroa
+      unit: €
       value:
     cssClasses:
       - calculators
@@ -271,7 +271,7 @@ Landing:
     formula: result_bussitEuro / result_bussitLkm
     result:
       name: Bussien yksi osa
-      unit: euroa
+      unit: €
       value:
     cssClasses:
       - calculators
@@ -443,7 +443,7 @@ DailyWork:
     formula: (result_palkkatiedot / 22 / 7.5) * (result_peruutusYhtAika / 60) * 22
     result:
         name: Kustannukset yhteensä
-        unit: euroa
+        unit: €
         value: 
     cssClasses:
       - calculators
@@ -463,7 +463,7 @@ DailyWork:
     formula: (result_palkkatiedot / 22 / 7.5) * (result_peruutusPaivaSeuranta / 60) * 22
     result:
         name: Kustannukset sovelluksen kanssa
-        unit: euroa
+        unit: €
         value: 0
     cssClasses:
       - calculators
@@ -482,7 +482,7 @@ DailyWork:
     formula: (result_peruutusYhtPalkat - result_peruutusYhtPalkatSovellus) * 12
     result:
         name: Vuosisäästö sovelluksen kanssa
-        unit: euroa
+        unit: €
         value: 0
     cssClasses:
       - calculators
@@ -601,7 +601,7 @@ PlanningWork:
     formula: (result_palkkatiedot / 22) * result_lukujarjMuutosAika
     result:
       name: Yhteensä
-      unit: 
+      unit: €
       value: 
     cssClasses:
       - calculators
@@ -644,7 +644,7 @@ PlanningWork:
 
   - id: lukujarjMuutosSaastoEurot
     title: Säästö vuodessa sovelluksen kanssa. Arvio.
-    description: 
+    description: Arvio.
     isTime: false
     isInteger: true
     variables:
@@ -681,7 +681,7 @@ TransportCosts:
     formula: result_taksitYksiOsuus * taksiUusi
     result:
       name: Uusi osuus
-      unit: 
+      unit: €
       value: 
     cssClasses:
       - calculators
@@ -708,7 +708,7 @@ TransportCosts:
     formula: result_minibussitYksiOsuus * minibussiUusi
     result:
       name: Minibussien osuus
-      unit: 
+      unit: €
       value: 
     cssClasses:
       - calculators
@@ -735,7 +735,7 @@ TransportCosts:
     formula: result_bussitYksiOsuus * bussiUusi
     result:
       name: Bussien osuus
-      unit: 
+      unit: €
       value: 2
     cssClasses:
       - calculators
@@ -797,7 +797,7 @@ TransportCosts:
 
   - id: saastohintaKm
     title: Kilometrimaksut kuukaudessa
-    description:
+    description: Kilometrimaksut kuukaudessa
     isTime: false
     isInteger: true
     variables:
@@ -854,7 +854,7 @@ TransportCosts:
     formula: ((result_peruutusYhtPalkatSovellus * 12) + (result_lukujarjMuutosEurotKKSovellus * 12)) + result_taksitUusi + result_minibussitUusi + result_bussitUusi - ( result_saastohintaKm * 12 )
     result:
       name: Yhteensä
-      unit: 
+      unit: €
       value: 
     cssClasses:
       - calculators
@@ -862,7 +862,7 @@ TransportCosts:
 
   - id: saastotVuosi
     title: Säästöt Vuodessa
-    description: 
+    description: Säästöt Vuodessa
     isTime: false
     isInteger: true
     variables:

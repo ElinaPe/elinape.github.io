@@ -3,6 +3,9 @@ import { AppBar, Tabs, Tab, Typography, Box, styled } from '@mui/material';
 import CalculatorContainer from '../components/CalculatorContainer';
 import PdfReport from '../components/pdf';
 import SaveButton from '../modals/saveModal';
+import { RootSchema } from '../types';
+import yamlData from '../laskuri.yaml';
+
 
 interface TabData {
   [section: string]: { [name: string]: number | null };
@@ -39,6 +42,8 @@ const CustomTab = styled(Tab)({
 });
 
 export default function SimpleTabs() {
+
+  const validatedData = RootSchema.parse(yamlData);
 
   const sections = ['Landing', 'DailyWork', 'PlanningWork', 'TransportCosts'];
   const [selectedTab, setSelectedTab] = useState(0);

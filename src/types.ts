@@ -28,7 +28,6 @@ export const Field = z.object({
 
 
 export const CalculatorSchema = z.object({
-	calculatorId: z.number().optional(),
 	id: z.string(),
 	title: z.string(),
 	description: z.string().optional().nullable(),
@@ -38,7 +37,6 @@ export const CalculatorSchema = z.object({
 	variables: z.array(Variable).optional(),
 	formula: z.string(),
 	result: z.object({
-		resultId: z.number().optional(),
 		name: z.string(),
 		unit: z.string().optional().nullable(),
 		value: z.number().nullable()
