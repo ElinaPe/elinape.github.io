@@ -176,13 +176,13 @@ Landing:
       value:
     cssClasses:
       - calculators
-    isVisible: true
+    isVisible: false
 
   - id: minibussitEuro
     title: Minibussien osuus
     description: Minibussien osuus vuosikustannuksista. Kerrotaan paikkamäärällä ja tietynlaisella kertoimella. Taksit ajaa suhteessa enemmän, kuin bussit esim. (Keskimääräisiä lukuja ja arvioita)
     isTime: false
-    isInteger: true
+    isInteger: false
     variables:
       - name: result_taksitLkm
         value: 8
@@ -197,7 +197,7 @@ Landing:
       value:
     cssClasses:
       - calculators
-    isVisible: true
+    isVisible: false
 
   - id: bussitEuro
     title: Bussien osuus
@@ -218,7 +218,7 @@ Landing:
       value:
     cssClasses:
       - calculators
-    isVisible: true
+    isVisible: false
 
   - id: taksitYksiOsuus
     title: Taksien yksi osa
@@ -237,7 +237,7 @@ Landing:
       value:
     cssClasses:
       - calculators
-    isVisible: true
+    isVisible: false
 
   - id: minibussitYksiOsuus
     title: Minibussien yksi osa
@@ -256,7 +256,7 @@ Landing:
       value:
     cssClasses:
       - calculators
-    isVisible: true
+    isVisible: false
 
   - id: bussitYksiOsuus
     title: Bussien yksi osa
@@ -275,7 +275,7 @@ Landing:
       value:
     cssClasses:
       - calculators
-    isVisible: true
+    isVisible: false
 
 
 DailyWork:

@@ -9,8 +9,8 @@ function App() {
     return (
         <>
         <CalculatorProvider>
-            {/* <SimpleTabs /> */}
-            <ListedResults/>
+            <SimpleTabs />
+            {/* <ListedResults/> */}
         </CalculatorProvider>
             
         </>

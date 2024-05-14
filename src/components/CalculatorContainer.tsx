@@ -1,5 +1,5 @@
 import Button from '@mui/material/Button';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Laskuri from '../components/Calculator';
 import yamlData from '../laskuri.yaml';
 import { Calculator, Diagram, PieDiagram, RootSchema } from '../types';
@@ -10,7 +10,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPrint } from '@fortawesome/free-solid-svg-icons';
 import { TabData } from '../types';
 import SaveButton from '../modals/saveModal';
+import { CalculatorContext } from './CalculatorContext';
 
+
+interface GlobalData {
+  [section: string]: Calculator[];
+}
 interface CalculatorContainerProps {
     activeSection: string;
     updateTabData: (section: string, data: Record<string, any>) => void;
@@ -18,9 +23,10 @@ interface CalculatorContainerProps {
     // defaultValues: number,
     showDiagrams: boolean;
     setShowDiagrams: () => void;
+
 }
 
-type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCosts';  
+type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCosts';
   const CalculatorContainer: React.FC<CalculatorContainerProps> = ({ activeSection, showDiagrams, setShowDiagrams, updateTabData, tabData }) => {
 
     const validatedData = RootSchema.parse(yamlData);
@@ -30,15 +36,17 @@ type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCos
     const validatedPieDiagrams = validatedData.Piirakkadiagrammit;
 
     const [calculators, setCalculators] = useState<Calculator[]>([]);
-    
+
     const [diagrams, setDiagrams] = useState<Diagram[]>([]);
     const [pieDiagrams, setPieDiagrams] = useState<PieDiagram[]>([]);
+
+    const { globalData, updateCalculatorData } = useContext(CalculatorContext);
 
     const [endResults, setEndResults] = useState<{ name: string; value: number|null }[]>([]);
     // const [calculators, setCalculators] = useState(validatedCalculators.map(calculator => ({
     //     ...calculator, variables:endResults
     // })));
-   
+
     const { toPDF, targetRef } = usePDF({filename: 'calculator.pdf'});
 
     // useEffect(() => {
@@ -48,12 +56,13 @@ type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCos
     //     })));
     //   }, [activeSection]);
 
+
     useEffect(() => {
       const sectionData = validatedData[activeSection as ValidatedDataKey] || [];
       const updatedCalculators = sectionData.map(calculator => {
         const resultKey = `result_${calculator.id}`;
         const existingResult = tabData[activeSection]?.[resultKey];
-    
+
         return {
             ...calculator,
             result: {
@@ -62,40 +71,42 @@ type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCos
             }
         };
       });
-      
+
       setCalculators(updatedCalculators);
+      updateCalculatorData(activeSection, updatedCalculators);
     }, [activeSection]);
 
     // useEffect(() => {
     //   // Tarkista, onko initialValues asetettu ja päivitä laskurin aloitusarvot
     //   if (defaultValues && defaultValues.taksitUusi) {
-        
+
     //   }
     // }, [defaultValues]);
-    
+
 
       const sectionTitle = validatedHeadings[activeSection];
+
 
       useEffect(() => {
         const sectionBarDiagrams = validatedDiagrams.filter(diagram => diagram.section === activeSection);
         const needsUpdateBar = diagrams.length !== sectionBarDiagrams.length || diagrams.some((diag, index) => diag.id !== sectionBarDiagrams[index]?.id);
-    
+
         if (needsUpdateBar) {
             setDiagrams(sectionBarDiagrams);
         }
-    
+
         const sectionPieDiagrams = validatedPieDiagrams.filter(diagram => diagram.section === activeSection);
         const needsUpdatePie = pieDiagrams.length !== sectionPieDiagrams.length || pieDiagrams.some((diag, index) => diag.id !== sectionPieDiagrams[index]?.id);
-    
+
         if (needsUpdatePie) {
             setPieDiagrams(sectionPieDiagrams);
         }
-    
+
     }, [activeSection, validatedDiagrams, validatedPieDiagrams, diagrams, pieDiagrams]);
-    
+
       useEffect(() => {
         const newResults: { name: string; value: number | null }[] = [];
-      
+
         for (const section in tabData) {
           for (const name in tabData[section]) {
             newResults.push({ name, value: tabData[section][name] });
@@ -104,19 +115,26 @@ type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCos
         setEndResults(newResults);
       }, [tabData]);
 
+      // Esimerkiksi kerää kaikki laskurit kaikista osioista
 
-      
-    const handleCalculatorChange = (calculatorId: string, result: number|null) => {
+
+    const handleCalculatorChange = (section: string, calculatorId: string, result: number|null) => {
       const newValue = typeof result === 'number' ? result : parseFloat(result || '0');
-        setCalculators(prevCalculators =>
-          prevCalculators.map(calculator =>
-            calculator.id === calculatorId
-              ? { ...calculator, result: { ...calculator.result, value: newValue } }
-              : calculator
-          )
-        );
+      setCalculators(prevCalculators => {
+        const newCalculators = prevCalculators.map(calculator => {
+          if (calculator.id === calculatorId) {
+            const updatedCalculator = { ...calculator, result: { ...calculator.result, value: newValue } };
+            return updatedCalculator;
+          }
+          return calculator;
+        });
+        // Päivitä globalData vain, jos calculators on kokonaan päivitetty
+        updateCalculatorData(section, newCalculators);
+        return newCalculators;
+      });
       };
-      
+
+
 
       useEffect(() => {
         const newResults = calculators.map(calculator => ({
@@ -126,7 +144,7 @@ type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCos
         if (JSON.stringify(newResults) !== JSON.stringify(endResults)) {
           // setEndResults(newResults);
           updateTabData(activeSection, newResults.reduce((acc, curr) => ({ ...acc, [curr.name]: curr.value }), {}));
-          
+
       }
         // setEndResults(newResults);
         // updateTabData(activeSection, newResults.reduce((acc, curr) => ({ ...acc, [curr.name]: curr.value }), {}));
@@ -154,7 +172,7 @@ type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCos
             const result = endResults.find(result => result.name === dataItem.id);
             return result ? { ...dataItem, value: result.value } : dataItem;
           });
-      
+
           return { ...pieDiagram, data: updatedData };
         });
         setPieDiagrams(updatedPieData);
@@ -166,16 +184,15 @@ type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCos
             <h2>{sectionTitle}</h2>
             <div className='calculatorTesti'>
                 <div className={`calculatorContent ${showDiagrams ? '' : 'Full'}`}>
-                    
+
                 {calculators.map((calculator) => (
-                  <div 
-                    key={calculator.id} 
+                  <div
+                    key={calculator.id}
                     style={{ display: calculator.isVisible ? 'block' : 'none' }}
                   >
                     <Laskuri
                       calculator={{...calculator, variables: endResults}}
-                      onCalculatorChange={handleCalculatorChange}
-                    />
+                      onCalculatorChange={(calculatorId, result) => handleCalculatorChange(activeSection, calculatorId, result)}                    />
                   </div>
                 ))}
                  {activeSection !== 'Landing' &&
@@ -199,7 +216,7 @@ type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCos
                 {showDiagrams &&
                 <div className='calculatorContainerChartPie'>
                   {pieDiagrams.map((diagram) => (
-                        <PieChartComponent 
+                        <PieChartComponent
                         key={diagram.id}
                         data={diagram.data}
                         />
@@ -207,7 +224,7 @@ type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCos
                 </div>
                 }
                 {activeSection === 'TransportCosts' &&
-                <SaveButton calculators={calculators} />}
+                <SaveButton globalData={globalData} />}
 
             </div>
         </div>

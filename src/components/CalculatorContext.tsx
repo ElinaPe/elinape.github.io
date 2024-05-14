@@ -1,43 +1,48 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { ReactNode, createContext, useContext, useState } from 'react';
+import { Calculator } from '../types';
 
-interface EndResult {
-  name: string;
-  value: number | null;
+
+interface GlobalData {
+  [key: string]: Calculator[];
 }
+
 
 interface CalculatorContextType {
-  endResults: EndResult[];
-  setEndResults: (results: EndResult[]) => void;
-  updateEndResult: (name: string, value: number | null) => void;
+  globalData: GlobalData;
+  updateCalculatorData: (section: string, calculatorData: Calculator[]) => void;
 }
 
-const CalculatorContext = createContext<CalculatorContextType | undefined>(undefined);
-
-export const useCalculatorContext = () => {
-  const context = useContext(CalculatorContext);
-  if (!context) {
-    throw new Error("useCalculatorContext must be used within a CalculatorProvider");
-  }
-  return context;
+const defaultContextValue: CalculatorContextType = {
+  globalData: {
+    Landing: [],
+    DailyWork: [],
+    PlanningWork: [],
+    TransportCosts: [],
+  },
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  updateCalculatorData: () => {}  
 };
 
-export const CalculatorProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [endResults, setEndResults] = useState<EndResult[]>([]);
+export const CalculatorContext = createContext<CalculatorContextType>(defaultContextValue);
 
-  const updateEndResult = (name: string, value: number | null) => {
-    setEndResults(prev => {
-      const index = prev.findIndex(result => result.name === name);
-      if (index !== -1) {
-        const newResults = [...prev];
-        newResults[index] = { name, value };
-        return newResults;
-      }
-      return [...prev, { name, value }];
-    });
-  };
+export const CalculatorProvider = ({ children }: { children: ReactNode }) => {
+  const [globalData, setGlobalData] = useState({
+    Landing: [],
+    DailyWork: [],
+    PlanningWork: [],
+    TransportCosts: [],
+  });
+
+  const updateCalculatorData = (section: string, calculators: Calculator[]) => {
+    setGlobalData(prev => ({
+      ...prev,
+      [section]: calculators
+    }));
+};
+  console.log('globaldata', globalData);
 
   return (
-    <CalculatorContext.Provider value={{ endResults, setEndResults, updateEndResult }}>
+    <CalculatorContext.Provider value={{ globalData, updateCalculatorData }}>
       {children}
     </CalculatorContext.Provider>
   );

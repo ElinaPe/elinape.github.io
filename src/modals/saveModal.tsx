@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { Modal, TextField, Button, Box } from "@mui/material";
-import { Calculators } from "../types";
+import { Calculator, Calculators } from "../types";
 import api from "../services/resultsService"
 
+interface GlobalData {
+    [key: string]: Calculator[];
+  }
 interface saveButtonprops {
-    calculators: Calculators
+    globalData: GlobalData
 }
 
-const SaveButton: React.FC<saveButtonprops> = ({ calculators }) => {
+const SaveButton: React.FC<saveButtonprops> = ({ globalData }) => {
     const [open, setOpen] = useState(false);
     const [placeName, setPlaceName] = useState("");
 
@@ -18,7 +21,7 @@ const SaveButton: React.FC<saveButtonprops> = ({ calculators }) => {
         }
         setOpen(false);
         try {
-            api.bulkSave(placeName, calculators)
+            api.bulkSave(placeName, globalData)
             .then(data => {
                 console.log("Save successful:", data);
                 alert("Tiedot tallennettu onnistuneesti!");
@@ -27,6 +30,7 @@ const SaveButton: React.FC<saveButtonprops> = ({ calculators }) => {
                 console.error("Save failed:", error);
                 alert("Tallennus epäonnistui, yritä uudelleen.");
             });
+            
         } catch (error: any) {
             if (error.response) {
                 // Palvelimen antamat virheet

@@ -1,6 +1,7 @@
 import Axios from "axios"
 import { Calculator, ResultList } from "../types"
 interface CalculatorsList {
+    section: string
     title: string;
     result: {
         name: string;
@@ -15,6 +16,9 @@ interface ApiResponse {
     savingDate: string;
     calculators: CalculatorsList[];
 }
+interface GlobalData {
+    [key: string]: Calculator[];
+  }
 
 const baseUrl = "https://localhost:7252/api/calculator"
 
@@ -31,10 +35,11 @@ const getCalculatorsByCityId = (cityId: number) => {
         });
 };
 
-const bulkSave = (placeName: string, calculators: Calculator[]) => {
+const bulkSave = (placeName: string, globalData: GlobalData) => {
+    console.log('payloadin yläpuolella',JSON.stringify({ place_name: placeName, globalData }));
     const payload = {
         placeName: placeName,
-        calculators: calculators
+        calculators: globalData
     };
     console.log('payload', payload)
     return Axios.post(`${baseUrl}/bulk-save`, payload)
@@ -44,5 +49,13 @@ const bulkSave = (placeName: string, calculators: Calculator[]) => {
             throw error;
         });
 };
+const deleteResultList = (id: number) => {
+    return Axios.delete(`${baseUrl}/delete/${id}`)
+        .then(response => response.data)
+        .catch(error => {
+            console.error("Error during the delete operation:", error);
+            throw error;
+        });
+};
 
-export default { getCityNames, getCalculatorsByCityId, bulkSave }
+export default { getCityNames, getCalculatorsByCityId, bulkSave, deleteResultList }

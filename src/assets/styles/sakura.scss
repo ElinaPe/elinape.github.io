@@ -448,7 +448,7 @@ fieldset {
 .showResultsContainer {
   border-left: 1px solid gray;
   width: 70%;
-  padding: 5px;
+  padding: 10px;
 }
 
 .cityList {
@@ -456,6 +456,11 @@ fieldset {
   flex-direction: row;
 }
 
+.calculatorsStats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 3px;
+}
 
 @media (min-width: 1024px) {
   .calculatorContent.Full {

@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { AppBar, Tabs, Tab, Typography, Box, styled } from '@mui/material';
 import CalculatorContainer from '../components/CalculatorContainer';
 import PdfReport from '../components/pdf';
-import SaveButton from '../modals/saveModal';
-import { RootSchema } from '../types';
-import yamlData from '../laskuri.yaml';
+import ResultsList from './ResultsList';
+
 
 
 interface TabData {
@@ -43,8 +42,6 @@ const CustomTab = styled(Tab)({
 
 export default function SimpleTabs() {
 
-  const validatedData = RootSchema.parse(yamlData);
-
   const sections = ['Landing', 'DailyWork', 'PlanningWork', 'TransportCosts'];
   const [selectedTab, setSelectedTab] = useState(0);
   const [tabData, setTabData] = useState<TabData>({
@@ -79,6 +76,14 @@ export default function SimpleTabs() {
     }));
   };
 
+//   const handleSetGlobalData = useCallback((data: Calculator[]) => {
+//     setGlobalData(prev => ({
+//         ...prev,
+//         [selectedTab]: data  // Oletetaan, että `selectedTab` on esimerkiksi 'Landing', 'DailyWork', jne.
+//     }));
+//     console.log('global', globalData)
+// }, [selectedTab]);
+
   return (
     <div>
       <BottomAppBar position="fixed">
@@ -87,6 +92,7 @@ export default function SimpleTabs() {
           <CustomTab label="Päivittäinen työ" />
           <CustomTab label="Suunnittelutyö" />
           <CustomTab label="Kuljetuskustannukset" />
+          <CustomTab label="X" /> 
         </Tabs>
       </BottomAppBar>
       <TabPanel value={0} index={0}>
@@ -98,11 +104,10 @@ export default function SimpleTabs() {
                     activeSection={section}
                     tabData={tabData}
                     updateTabData={updateTabData}
-                    // defaultValues={{
-                    //   taksitUusi: tabData.Landing['result_taksitLkm'] // Tässä välitetään ensimmäisen laskurin tulosta toiselle laskurille.
-                    // }}
                     showDiagrams={showDiagrams[section]}
                     setShowDiagrams={() => handleToggleDiagrams(section)}
+                    // globalData={globalData}
+                    // setGlobalData={handleSetGlobalData}
                     />
                     {/* {index === sections.length - 1 && (
                       <PdfReport tabData={tabData} updateTabData={updateTabData} showDiagrams={showDiagrams[section]} setShowDiagrams={() => handleToggleDiagrams(section)} />
@@ -112,6 +117,10 @@ export default function SimpleTabs() {
         </div>
         
       </TabPanel>
+      <TabPanel value={selectedTab} index={sections.length}>
+      {/* Komponentti tilastojen näyttämiseen */}
+      <ResultsList />
+    </TabPanel>
     </div>
   );
 }
