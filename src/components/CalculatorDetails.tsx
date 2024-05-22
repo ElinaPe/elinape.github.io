@@ -15,7 +15,7 @@ interface CalculatorsList {
     }
 }
 
-const CalculatorDetails = ({ cityId }: { cityId: number }) => {
+const CalculatorDetails = ({ cityId, placeName }: { cityId: number }) => {
     const [calculators, setCalculators] = useState<CalculatorsList[]>([]);
 
     const sectionTitles:{ [key: string]: string } = {
@@ -50,17 +50,7 @@ const CalculatorDetails = ({ cityId }: { cityId: number }) => {
         return acc;
     }, {} as Record<string, CalculatorsList[]>);
 
-    // const handleDelete = () => {
-    //     resultsService.deleteResultList(resultListId)
-    //         .then(() => {
-    //             alert('Results list deleted successfully');
-    //             // Lisää logiikkaa tarvittaessa päivitysten tai reitityksen hallintaan
-    //         })
-    //         .catch(error => {
-    //             console.error('Failed to delete the results list:', error);
-    //             alert('Failed to delete the results list');
-    //         });
-    // };
+
 
     const handleDeleteSuccess = () => {
         console.log('Tietue poistettu onnistuneesti!');
@@ -69,8 +59,9 @@ const CalculatorDetails = ({ cityId }: { cityId: number }) => {
 
     return (
         <>
+        <h1>{placeName}</h1>
             {Object.entries(groupedCalculators).map(([section, calculatorsList], index) => (
-                <div key={index}>
+                <div className='calculatorsStatsCont' key={index}>
                     <h2>{section}</h2>
                     <div className='calculatorsStats'>
                     {calculatorsList.map((calculator, index) => (
@@ -78,7 +69,7 @@ const CalculatorDetails = ({ cityId }: { cityId: number }) => {
                             <h5>{calculator.title}</h5>
                             {calculator.result && calculator.result.value !== null ? (
                                 <p>
-                                    {calculator.result.name}: {calculator.result.value} {calculator.result.unit ?? ""}
+                                    {calculator.result.name}: <b>{calculator.result.value} {calculator.result.unit ?? ""}</b>
                                 </p>
                             ) : (
                                 <p>Ei tulosta</p>
@@ -88,6 +79,7 @@ const CalculatorDetails = ({ cityId }: { cityId: number }) => {
                     </div>
                 </div>
             ))}
+            <br/>
             <DeleteButton id={cityId} onSuccessfulDelete={handleDeleteSuccess} />
         </>
     );

@@ -4,33 +4,55 @@ import { ResultList } from '../types';
 import CalculatorDetails from '../components/CalculatorDetails';
 
 
-const ListedResults = () => {
+const ListedResults = ({setLoggedUser, setSelectedTab, setOpen}) => {
     const [cityNames, setCityNames] = useState<ResultList[]>([]);
     const [selectedCity, setSelectedCity] = useState<ResultList | null>(null);
     // const [showCalculators, setShowCalculators] = useState<boolean>(false)
+    const [isSelected, setIsSelected] = useState<boolean>(false);
 
     useEffect(() => {
+        const token = localStorage.getItem('token')
+            ResultsList
+                .setToken(token)
         ResultsList.getCityNames()
         .then(data => {
             setCityNames(data)
         })
+        setSelectedTab(4)
     },[]
     )
+
+    const handleCitySelection = (city: ResultList) => {
+        setSelectedCity(city);
+    }
+
+    const logout = () => {
+        localStorage.clear()
+        setLoggedUser('')
+        setSelectedTab(0);
+        setOpen(false)
+      }
 
     return (
         <div className='resultsPageContainer'>
             <div className='showCitysContainer'>
-                
+                <button onClick={logout}>Ulos</button>
                 <h1>Tallennetut tiedot</h1>
-                {cityNames.map(c => (
-                    <div className='cityList' key={c.resultsListId} onClick={() => setSelectedCity(c)}>
-                        <h3>{c.placeName}</h3> <p>({new Date(c.savingDate).toLocaleDateString("fi-FI")})</p>
+                {cityNames.map(city => (
+                    <div
+                        className={selectedCity && city.resultsListId === selectedCity.resultsListId ? 'citylistActive' : 'cityList'}
+                        key={city.resultsListId}
+                        onClick={() => handleCitySelection(city)}
+                    >
+                        <h3>{city.placeName}</h3>
+                        <p>({new Date(city.savingDate).toLocaleDateString("fi-FI")})</p>
                     </div>
                 ))}
+
             </div>
-            <div className='showResultsContainer'>
-                {selectedCity && <CalculatorDetails cityId={selectedCity.resultsListId} />}
-            </div>
+            {selectedCity && <div className='showResultsContainer'>
+                {selectedCity && <CalculatorDetails cityId={selectedCity.resultsListId} placeName={selectedCity.placeName} />}
+            </div>}
         </div>
     );
 }

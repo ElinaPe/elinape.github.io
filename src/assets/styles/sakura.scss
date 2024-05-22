@@ -293,6 +293,10 @@ fieldset {
   padding: 20px;
 }
 
+.calculatorContainer {
+  margin-bottom: 30px;
+}
+
 
 .diagramBtn {
   width: min-content;
@@ -393,7 +397,14 @@ fieldset {
   border-radius: 20px;
 }
 
+.buttons {
+  display: flex;
+  gap: 10px;
+}
 
+.delete-button {
+  border-radius: 10px;
+}
 
 .printingPdf {
   margin-top: 10px;
@@ -432,6 +443,7 @@ fieldset {
 .resultsPageContainer {
   display: flex;
   flex-direction: row;
+  margin-bottom: 30px;
 }
 
 
@@ -442,18 +454,47 @@ fieldset {
 
 .showCitysContainer h3, .showCitysContainer p {
   margin: 5px;
-  cursor: pointer;
 }
 
 .showResultsContainer {
-  border-left: 1px solid gray;
+  border: 2px solid #982c61;
+  border-radius: 10px;
+  background-color: #982c600c;
   width: 70%;
-  padding: 10px;
+  padding: 20px;
 }
 
 .cityList {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  min-width:95%;
+  width: fit-content;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.cityList:hover {
+  background-color: #bdbdbd;
+}
+
+.citylistActive {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  cursor: pointer;
+  padding: 5px;
+  border-start-start-radius: 10px;
+  border-bottom-left-radius: 10px;
+  background-color:#982c61;
+  color:white;
+}
+
+.calculatorsStatsCont {
+  border-bottom: solid 1px gray;
 }
 
 .calculatorsStats {
@@ -461,6 +502,72 @@ fieldset {
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 3px;
 }
+
+.login-modal {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background-color: #b79d9d;
+  border-radius: 10px;
+  box-shadow: 24;
+  color: #fff;
+  padding: 20px; 
+  z-index: 1;
+  overflow: hidden; 
+}
+
+.login-modal::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border-radius: 10px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1200 800'%3E%3Cdefs%3E%3CradialGradient id='a' cx='0' cy='800' r='800' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%2347248e'/%3E%3Cstop offset='1' stop-color='%2347248e' stop-opacity='0'/%3E%3C/radialGradient%3E%3CradialGradient id='b' cx='1200' cy='800' r='800' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%23139fbd'/%3E%3Cstop offset='1' stop-color='%23139fbd' stop-opacity='0'/%3E%3C/radialGradient%3E%3CradialGradient id='c' cx='600' cy='0' r='600' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%235719c8'/%3E%3Cstop offset='1' stop-color='%235719c8' stop-opacity='0'/%3E%3C/radialGradient%3E%3CradialGradient id='d' cx='600' cy='800' r='600' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%231D7484'/%3E%3Cstop offset='1' stop-color='%231D7484' stop-opacity='0'/%3E%3C/radialGradient%3E%3CradialGradient id='e' cx='0' cy='0' r='800' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%23982C61'/%3E%3Cstop offset='1' stop-color='%23982C61' stop-opacity='0'/%3E%3C/radialGradient%3E%3CradialGradient id='f' cx='1200' cy='0' r='800' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%230CF'/%3E%3Cstop offset='1' stop-color='%230CF' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect fill='url(%23a)' width='1200' height='800'/%3E%3Crect fill='url(%23b)' width='1200' height='800'/%3E%3Crect fill='url(%23c)' width='1200' height='800'/%3E%3Crect fill='url(%23d)' width='1200' height='800'/%3E%3Crect fill='url(%23e)' width='1200' height='800'/%3E%3Crect fill='url(%23f)' width='1200' height='800'/%3E%3C/svg%3E");
+  background-attachment: fixed;
+  background-size: cover;
+  z-index: -1;
+  pointer-events: none; 
+}
+
+.login-form{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  height: 50vh;
+  justify-content: center;
+  position: relative;
+  top: -30px;
+}
+.custom-typography {
+  text-align: center;
+}
+.form-textfield {
+  background-color: rgba(255, 255, 255, 0.774);
+  border-radius: 5px;
+  // color: #000;
+}
+.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #feffd3 !important;
+}
+.MuiFormLabel-root.Mui-focused {
+  color: #ffffe9 !important; /* Asettaa halutun värin */
+}
+
+.loginBtn {
+  background-color:#2990b0;
+  color:#fff;
+  padding: 6px;
+  border: 1px solid #08556c;
+  border-radius: 5px;
+  width: 95%;
+  align-self: center;
+}
+
 
 @media (min-width: 1024px) {
   .calculatorContent.Full {
@@ -497,3 +604,4 @@ fieldset {
 
 
 }
+

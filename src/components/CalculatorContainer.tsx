@@ -195,12 +195,17 @@ type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCos
                       onCalculatorChange={(calculatorId, result) => handleCalculatorChange(activeSection, calculatorId, result)}                    />
                   </div>
                 ))}
-                 {activeSection !== 'Landing' &&
-                    <div>
-                        <Button className="diagramBtn" variant="outlined" onClick={setShowDiagrams}>
-                          {showDiagrams ? 'Piilota pylväät' : 'Näytä pylväät'}
-                        </Button>
-                    </div> }
+                 
+                </div>
+                <div className='buttons'>
+                  {activeSection !== 'Landing' &&
+                      <div>
+                          <Button className="diagramBtn" variant="outlined" onClick={setShowDiagrams}>
+                            {showDiagrams ? 'Piilota pylväät' : 'Näytä pylväät'}
+                          </Button>
+                      </div> }
+                  {activeSection === 'TransportCosts' &&
+                  <SaveButton globalData={globalData} />}
                 </div>
 
                 {showDiagrams &&
@@ -223,8 +228,6 @@ type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCos
                     ))}
                 </div>
                 }
-                {activeSection === 'TransportCosts' &&
-                <SaveButton globalData={globalData} />}
 
             </div>
         </div>

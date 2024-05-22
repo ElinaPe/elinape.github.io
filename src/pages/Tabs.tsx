@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppBar, Tabs, Tab, Typography, Box, styled } from '@mui/material';
 import CalculatorContainer from '../components/CalculatorContainer';
-import PdfReport from '../components/pdf';
+import LoginModal from '../modals/loginModal';
 import ResultsList from './ResultsList';
-
-
 
 interface TabData {
   [section: string]: { [name: string]: number | null };
 }
 
-function TabPanel(props: { [x: string]: any; children: any; value: any; index: any; }) { // TabPanel vastaa yksittäisen välilehden sisällön renderöinnistä
+function TabPanel(props: { [x: string]: any; children: any; value: any; index: any; }) {
   const { children, value, index, ...other } = props;
 
   return (
@@ -41,9 +39,9 @@ const CustomTab = styled(Tab)({
 });
 
 export default function SimpleTabs() {
-
   const sections = ['Landing', 'DailyWork', 'PlanningWork', 'TransportCosts'];
   const [selectedTab, setSelectedTab] = useState(0);
+  const [open, setOpen] = useState(false);
   const [tabData, setTabData] = useState<TabData>({
     Landing: {},
     DailyWork: {},
@@ -55,8 +53,26 @@ export default function SimpleTabs() {
     sections.reduce((acc, section) => ({ ...acc, [section]: false }), {})
   );
 
- const handleChange = (_event: any, newValue: number) => {
-    setSelectedTab(newValue);
+  const [loggedUser, setLoggedUser] = useState<string>('')
+
+ useEffect(() => {
+    const storedUser = localStorage.getItem("username")
+    if (storedUser !== null)
+      setLoggedUser(storedUser)
+  
+ }, [])
+
+  const handleChange = (_event: any, newValue: number) => {
+    console.log('testataan sectioiden määrä',sections.length +1)
+    if (newValue === sections.length) {
+      if (loggedUser) {
+        setSelectedTab(newValue); // Avaa "X" -välilehti ja näyttää ResultsList
+      } else {
+        setOpen(true); // Avaa modaalin
+      }
+    } else {
+      setSelectedTab(newValue);
+    }
   };
 
   const handleToggleDiagrams = (section: string) => {
@@ -76,14 +92,6 @@ export default function SimpleTabs() {
     }));
   };
 
-//   const handleSetGlobalData = useCallback((data: Calculator[]) => {
-//     setGlobalData(prev => ({
-//         ...prev,
-//         [selectedTab]: data  // Oletetaan, että `selectedTab` on esimerkiksi 'Landing', 'DailyWork', jne.
-//     }));
-//     console.log('global', globalData)
-// }, [selectedTab]);
-
   return (
     <div>
       <BottomAppBar position="fixed">
@@ -95,32 +103,28 @@ export default function SimpleTabs() {
           <CustomTab label="X" /> 
         </Tabs>
       </BottomAppBar>
-      <TabPanel value={0} index={0}>
-      
-        <div>
-            {sections.map((section, index) => (
-                <div key={section} style={{ display: index === selectedTab ? 'block' : 'none' }}>
-                  <CalculatorContainer
-                    activeSection={section}
-                    tabData={tabData}
-                    updateTabData={updateTabData}
-                    showDiagrams={showDiagrams[section]}
-                    setShowDiagrams={() => handleToggleDiagrams(section)}
-                    // globalData={globalData}
-                    // setGlobalData={handleSetGlobalData}
-                    />
-                    {/* {index === sections.length - 1 && (
-                      <PdfReport tabData={tabData} updateTabData={updateTabData} showDiagrams={showDiagrams[section]} setShowDiagrams={() => handleToggleDiagrams(section)} />
-                  )} */}
-                </div>
-            ))}
-        </div>
-        
+      {sections.map((section, index) => (
+        <TabPanel key={section} value={selectedTab} index={index}>
+          <CalculatorContainer
+            activeSection={section}
+            tabData={tabData}
+            updateTabData={updateTabData}
+            showDiagrams={showDiagrams[section]}
+            setShowDiagrams={() => handleToggleDiagrams(section)}
+          />
+        </TabPanel>
+      ))}
+      <TabPanel value={sections.length} index={sections.length}>
+        {loggedUser && selectedTab === sections.length ? (
+          <ResultsList
+            setLoggedUser={setLoggedUser}
+            setSelectedTab={setSelectedTab}
+            setOpen={setOpen}
+          />
+        ) : (
+          <LoginModal open={open} onClose={() => setOpen(false)} setLoggedUser={setLoggedUser} />
+        )}
       </TabPanel>
-      <TabPanel value={selectedTab} index={sections.length}>
-      {/* Komponentti tilastojen näyttämiseen */}
-      <ResultsList />
-    </TabPanel>
     </div>
   );
 }
