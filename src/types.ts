@@ -130,3 +130,25 @@ export type ResultList = {
     placeName: string;
     savingDate: string;
 };
+
+export type CalculatorsList = {
+    section: string;
+    title: string;
+    result: {
+        name: string;
+        value: number | null;
+        unit?: string | null;
+    }
+}
+
+export type ApiResponse = {
+    resultsListId: number;
+    loginId: number;
+    placeName: string;
+    savingDate: string;
+    calculators: CalculatorsList[];
+}
+
+export type GlobalData = {
+	[section: string]: Calculator[];
+  }

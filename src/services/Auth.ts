@@ -1,8 +1,13 @@
 import axios from 'axios';
 
+interface UserForAuth {
+    username: string;
+    password: string;
+}
+
 const url = "https://localhost:7252/api/authentication";
 
-const authenticate = (userForAuth) => {
+const authenticate = (userForAuth: UserForAuth) => {
     const request = axios.post(url, userForAuth);
     return request.then(response => response);
 };

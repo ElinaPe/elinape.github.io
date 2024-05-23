@@ -12,10 +12,6 @@ import { TabData } from '../types';
 import SaveButton from '../modals/saveModal';
 import { CalculatorContext } from './CalculatorContext';
 
-
-interface GlobalData {
-  [section: string]: Calculator[];
-}
 interface CalculatorContainerProps {
     activeSection: string;
     updateTabData: (section: string, data: Record<string, any>) => void;

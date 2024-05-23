@@ -1,29 +1,11 @@
 import Axios from "axios"
-import { Calculator, ResultList } from "../types"
-interface CalculatorsList {
-    section: string
-    title: string;
-    result: {
-        name: string;
-        value: number | null;  
-        unit?: string | null;  
-    }
-}
-interface ApiResponse {
-    resultsListId: number;
-    loginId: number;
-    placeName: string;
-    savingDate: string;
-    calculators: CalculatorsList[];
-}
-interface GlobalData {
-    [key: string]: Calculator[];
-  }
+import { ResultList, ApiResponse, GlobalData } from "../types"
+
 
 const baseUrl = "https://localhost:7252/api/calculator"
 
-let token = null
-const setToken = newToken =>{
+let token: string | null = null
+const setToken = (newToken: string) =>{
     token = `bearer ${newToken}`
 }
 

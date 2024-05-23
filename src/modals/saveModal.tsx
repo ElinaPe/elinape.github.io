@@ -1,11 +1,8 @@
 import { useState } from "react";
 import { Modal, TextField, Button, Box } from "@mui/material";
-import { Calculator, Calculators } from "../types";
+import { Calculator, GlobalData } from "../types";
 import api from "../services/resultsService"
 
-interface GlobalData {
-    [key: string]: Calculator[];
-  }
 interface saveButtonprops {
     globalData: GlobalData
 }

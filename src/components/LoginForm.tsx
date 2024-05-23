@@ -2,13 +2,18 @@ import React, { useState } from 'react';
 import { Box, TextField, Typography } from '@mui/material';
 import LoginService from '../services/Auth';
 
-const LoginForm = ( { setLoggedUser }) => {
-    // const { register, handleSubmit } = useForm();
+interface LoginFormProps {
+    setLoggedUser: React.Dispatch<React.SetStateAction<string>>;
+    onClose: () => void;
+    setSelectedTab: (value: number) => void;
+  }
+
+const LoginForm: React.FC<LoginFormProps> = ( { setLoggedUser, onClose, setSelectedTab }) => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         
         try {
@@ -22,6 +27,8 @@ const LoginForm = ( { setLoggedUser }) => {
                 localStorage.setItem("username", response.data.userName)
                 localStorage.setItem("token", response.data.token)
                 setLoggedUser(response.data.userName)
+                onClose()
+                setSelectedTab(4);
             }
         } catch (error) {
             console.log('Authentication error:', error);

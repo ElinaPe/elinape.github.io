@@ -3,8 +3,13 @@ import ResultsList from '../services/resultsService'
 import { ResultList } from '../types';
 import CalculatorDetails from '../components/CalculatorDetails';
 
+interface ListedResultsProps {
+    setLoggedUser: (value: string) => void;
+    setSelectedTab: (value: number) => void;
+    setOpen: (value: boolean) => void;
+  }
 
-const ListedResults = ({setLoggedUser, setSelectedTab, setOpen}) => {
+const ListedResults: React.FC<ListedResultsProps> = ({setLoggedUser, setSelectedTab, setOpen}) => {
     const [cityNames, setCityNames] = useState<ResultList[]>([]);
     const [selectedCity, setSelectedCity] = useState<ResultList | null>(null);
     // const [showCalculators, setShowCalculators] = useState<boolean>(false)
@@ -12,6 +17,7 @@ const ListedResults = ({setLoggedUser, setSelectedTab, setOpen}) => {
 
     useEffect(() => {
         const token = localStorage.getItem('token')
+        if(token)
             ResultsList
                 .setToken(token)
         ResultsList.getCityNames()

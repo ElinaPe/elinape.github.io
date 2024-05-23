@@ -405,6 +405,10 @@ fieldset {
 .delete-button {
   border-radius: 10px;
 }
+.registerBtn {
+  border-radius: 5px;
+  padding: 8px;
+}
 
 .printingPdf {
   margin-top: 10px;
@@ -566,6 +570,24 @@ fieldset {
   border-radius: 5px;
   width: 95%;
   align-self: center;
+}
+
+.submitBackBtns{
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.register-modal {
+  background-color: white;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  border-radius: 10px;
+  padding: 20px;
+  height: 60vh;
 }
 
 

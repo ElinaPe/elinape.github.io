@@ -1,10 +1,5 @@
 import React, { ReactNode, createContext, useContext, useState } from 'react';
-import { Calculator } from '../types';
-
-
-interface GlobalData {
-  [key: string]: Calculator[];
-}
+import { Calculator, GlobalData } from '../types';
 
 
 interface CalculatorContextType {

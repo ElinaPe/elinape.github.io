@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import ResultsList from '../services/resultsService'
-import resultsService from '../services/resultsService';
 import DeleteButton from './DeleteButton';
-import Button from '@mui/material/Button';
 import { Snackbar } from '@mui/material';
+import { CalculatorsList } from '../types'
 
-interface CalculatorsList {
-    section: string;
-    title: string;
-    result: {
-        name: string;
-        value: number | null;
-        unit?: string | null;
-    }
-}
 
-const CalculatorDetails = ({ cityId, placeName }: { cityId: number }) => {
+
+const CalculatorDetails = ({ cityId, placeName }: { cityId: number, placeName: string }) => {
     const [calculators, setCalculators] = useState<CalculatorsList[]>([]);
 
     const sectionTitles:{ [key: string]: string } = {

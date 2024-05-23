@@ -63,7 +63,6 @@ export default function SimpleTabs() {
  }, [])
 
   const handleChange = (_event: any, newValue: number) => {
-    console.log('testataan sectioiden määrä',sections.length +1)
     if (newValue === sections.length) {
       if (loggedUser) {
         setSelectedTab(newValue); // Avaa "X" -välilehti ja näyttää ResultsList
@@ -90,6 +89,10 @@ export default function SimpleTabs() {
         ...data,
       },
     }));
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -122,7 +125,7 @@ export default function SimpleTabs() {
             setOpen={setOpen}
           />
         ) : (
-          <LoginModal open={open} onClose={() => setOpen(false)} setLoggedUser={setLoggedUser} />
+          <LoginModal open={open} onClose={handleClose} setLoggedUser={setLoggedUser} setSelectedTab={setSelectedTab} />
         )}
       </TabPanel>
     </div>
