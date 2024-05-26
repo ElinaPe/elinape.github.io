@@ -127,6 +127,7 @@ export type PieDiagram = z.infer<typeof PieDiagramSchema>;
 //db
 export type ResultList = {
     resultsListId: number;
+	loginId: number
     placeName: string;
     savingDate: string;
 };

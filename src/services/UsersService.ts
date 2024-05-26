@@ -1,6 +1,8 @@
 import Axios from "axios"
 
-const baseUrl = "https://localhost:7252/api/users"
+const baseUrl = "https://localhost:7252/api/users";
+
+// const baseUrl = "https://aisoftcalculator.azurewebsites.net/api/users"
 
 const createNewUser = (newName: string, newUsername: string, newPassword: string) => {
     const payload = {

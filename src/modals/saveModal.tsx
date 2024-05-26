@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { Modal, TextField, Button, Box } from "@mui/material";
-import { Calculator, GlobalData } from "../types";
+import { GlobalData } from "../types";
 import api from "../services/resultsService"
 
 interface saveButtonprops {
-    globalData: GlobalData
+    globalData: GlobalData,
+    loginId: number
 }
 
-const SaveButton: React.FC<saveButtonprops> = ({ globalData }) => {
+const SaveButton: React.FC<saveButtonprops> = ({ globalData, loginId }) => {
     const [open, setOpen] = useState(false);
     const [placeName, setPlaceName] = useState("");
 
@@ -18,7 +19,7 @@ const SaveButton: React.FC<saveButtonprops> = ({ globalData }) => {
         }
         setOpen(false);
         try {
-            api.bulkSave(placeName, globalData)
+            api.bulkSave(placeName, globalData, loginId)
             .then(data => {
                 console.log("Save successful:", data);
                 alert("Tiedot tallennettu onnistuneesti!");

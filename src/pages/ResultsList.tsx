@@ -2,18 +2,22 @@ import React, { useState, useEffect } from 'react'
 import ResultsList from '../services/resultsService'
 import { ResultList } from '../types';
 import CalculatorDetails from '../components/CalculatorDetails';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 interface ListedResultsProps {
     setLoggedUser: (value: string) => void;
+    loggedUser: string
     setSelectedTab: (value: number) => void;
     setOpen: (value: boolean) => void;
+    loginId: number;
   }
 
-const ListedResults: React.FC<ListedResultsProps> = ({setLoggedUser, setSelectedTab, setOpen}) => {
+const ListedResults: React.FC<ListedResultsProps> = ({setLoggedUser, loggedUser, setSelectedTab, setOpen, loginId}) => {
     const [cityNames, setCityNames] = useState<ResultList[]>([]);
     const [selectedCity, setSelectedCity] = useState<ResultList | null>(null);
     // const [showCalculators, setShowCalculators] = useState<boolean>(false)
-    const [isSelected, setIsSelected] = useState<boolean>(false);
+    const [showOnlyOwn, setShowOnlyOwn] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem('token')
@@ -28,8 +32,29 @@ const ListedResults: React.FC<ListedResultsProps> = ({setLoggedUser, setSelected
     },[]
     )
 
+    useEffect(() => {
+        // Varmistetaan, että token on asetettu ennen hakuja
+
+            if (showOnlyOwn && loginId) {
+                // Hakee vain kirjautuneen käyttäjän kaupungit
+                ResultsList.getCityNamesById(loginId)
+                    .then(setCityNames)
+                    .catch(error => console.error('Failed to fetch my city names', error));
+            } else {
+                // Hakee kaikki kaupungit
+                ResultsList.getCityNames()
+                    .then(setCityNames)
+                    .catch(error => console.error('Failed to fetch city names', error));
+            }
+        
+    }, [showOnlyOwn, loginId]);
+
     const handleCitySelection = (city: ResultList) => {
         setSelectedCity(city);
+    }
+
+    const toggleOwnResults = () => {
+        setShowOnlyOwn(!showOnlyOwn);
     }
 
     const logout = () => {
@@ -42,8 +67,18 @@ const ListedResults: React.FC<ListedResultsProps> = ({setLoggedUser, setSelected
     return (
         <div className='resultsPageContainer'>
             <div className='showCitysContainer'>
-                <button onClick={logout}>Ulos</button>
-                <h1>Tallennetut tiedot</h1>
+                <div className='userNameInfo'> 
+                    <div className='userNameInfoBorder'>
+                        <FontAwesomeIcon icon={faUser} /> {loggedUser} 
+                    </div>
+                    <button className='btn' onClick={logout}>
+                        Ulos
+                    </button>
+                </div>
+                <div className='infoHeaderWithButton'>
+                    <h1>Tallennetut tiedot</h1>
+                    <button className='btn savedBtn' onClick={toggleOwnResults}>{showOnlyOwn ? "Näytä kaikki" : "Vain omat"}</button>
+                </div>
                 {cityNames.map(city => (
                     <div
                         className={selectedCity && city.resultsListId === selectedCity.resultsListId ? 'citylistActive' : 'cityList'}
@@ -54,7 +89,7 @@ const ListedResults: React.FC<ListedResultsProps> = ({setLoggedUser, setSelected
                         <p>({new Date(city.savingDate).toLocaleDateString("fi-FI")})</p>
                     </div>
                 ))}
-
+                
             </div>
             {selectedCity && <div className='showResultsContainer'>
                 {selectedCity && <CalculatorDetails cityId={selectedCity.resultsListId} placeName={selectedCity.placeName} />}

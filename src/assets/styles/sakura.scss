@@ -318,6 +318,9 @@ fieldset {
   flex-wrap: wrap;
 }
 
+.margin{
+  margin-top: 10px;
+}
 
 //yamlissa määritelty
 .calculators{
@@ -448,6 +451,7 @@ fieldset {
   display: flex;
   flex-direction: row;
   margin-bottom: 30px;
+  // transition: transform 0.5s ease;
 }
 
 
@@ -480,7 +484,7 @@ fieldset {
 }
 
 .cityList:hover {
-  background-color: #bdbdbd;
+  background-color: #ddeaee;
 }
 
 .citylistActive {
@@ -505,6 +509,31 @@ fieldset {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 3px;
+}
+
+.infoHeaderWithButton {
+  display: flex;
+}
+
+.savedBtn {
+  height: 2.5em;
+  align-self: center;
+  margin: 5px;
+}
+
+.userNameInfo {
+  position: absolute;
+  top: 15px;
+  right: 30px;
+  display: flex;
+  gap: 5px;
+}
+
+.userNameInfoBorder {
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 5px;
+  align-self: center;
 }
 
 .login-modal {

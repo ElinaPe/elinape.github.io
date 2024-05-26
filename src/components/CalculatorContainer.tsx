@@ -19,11 +19,12 @@ interface CalculatorContainerProps {
     // defaultValues: number,
     showDiagrams: boolean;
     setShowDiagrams: () => void;
-
+    loggedUser: string;
+    loginId: number;
 }
 
 type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCosts';
-  const CalculatorContainer: React.FC<CalculatorContainerProps> = ({ activeSection, showDiagrams, setShowDiagrams, updateTabData, tabData }) => {
+  const CalculatorContainer: React.FC<CalculatorContainerProps> = ({ activeSection, showDiagrams, setShowDiagrams, updateTabData, tabData, loggedUser, loginId }) => {
 
     const validatedData = RootSchema.parse(yamlData);
     const validatedHeadings = validatedData.Headings;
@@ -200,8 +201,8 @@ type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCos
                             {showDiagrams ? 'Piilota pylväät' : 'Näytä pylväät'}
                           </Button>
                       </div> }
-                  {activeSection === 'TransportCosts' &&
-                  <SaveButton globalData={globalData} />}
+                  {activeSection === 'TransportCosts' && loggedUser &&
+                  <SaveButton globalData={globalData} loginId={loginId} />}
                 </div>
 
                 {showDiagrams &&

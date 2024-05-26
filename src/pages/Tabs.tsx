@@ -54,6 +54,7 @@ export default function SimpleTabs() {
   );
 
   const [loggedUser, setLoggedUser] = useState<string>('')
+  const [loginId, setLoginId] = useState<number>(0);
 
  useEffect(() => {
     const storedUser = localStorage.getItem("username")
@@ -106,26 +107,40 @@ export default function SimpleTabs() {
           <CustomTab label="X" /> 
         </Tabs>
       </BottomAppBar>
-      {sections.map((section, index) => (
-        <TabPanel key={section} value={selectedTab} index={index}>
-          <CalculatorContainer
-            activeSection={section}
-            tabData={tabData}
-            updateTabData={updateTabData}
-            showDiagrams={showDiagrams[section]}
-            setShowDiagrams={() => handleToggleDiagrams(section)}
-          />
-        </TabPanel>
-      ))}
-      <TabPanel value={sections.length} index={sections.length}>
+      <TabPanel value={0} index={0}>
+      
+        <div>
+            {sections.map((section, index) => (
+                <div key={section} style={{ display: index === selectedTab ? 'block' : 'none' }}>
+                  <CalculatorContainer
+                  activeSection={section}
+                  tabData={tabData}
+                  updateTabData={updateTabData}
+                  showDiagrams={showDiagrams[section]}
+                  setShowDiagrams={() => handleToggleDiagrams(section)}
+                  loggedUser={loggedUser} 
+                  loginId={loginId}                    
+                  // globalData={globalData}
+                    // setGlobalData={handleSetGlobalData}
+                    />
+                    {/* {index === sections.length - 1 && (
+                      <PdfReport tabData={tabData} updateTabData={updateTabData} showDiagrams={showDiagrams[section]} setShowDiagrams={() => handleToggleDiagrams(section)} />
+                  )} */}
+                </div>
+            ))}
+        </div>
+        
+      </TabPanel>
+      <TabPanel value={1} index={1}>
         {loggedUser && selectedTab === sections.length ? (
           <ResultsList
             setLoggedUser={setLoggedUser}
+            loggedUser={loggedUser}
             setSelectedTab={setSelectedTab}
-            setOpen={setOpen}
-          />
+            setOpen={setOpen} 
+            loginId={loginId}          />
         ) : (
-          <LoginModal open={open} onClose={handleClose} setLoggedUser={setLoggedUser} setSelectedTab={setSelectedTab} />
+          <LoginModal open={open} onClose={handleClose} setLoggedUser={setLoggedUser} setSelectedTab={setSelectedTab} setLoginId={setLoginId} />
         )}
       </TabPanel>
     </div>

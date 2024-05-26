@@ -23,14 +23,14 @@ const mockData = {
 // Tests go here
 describe('CalculatorContainer', () => {
     it('renders without crashing', () => {
-        render(<CalculatorContainer activeSection="DailyWork" updateTabData={jest.fn()} tabData={{}} showDiagrams={false} setShowDiagrams={jest.fn()} />);
+        render(<CalculatorContainer activeSection="DailyWork" updateTabData={jest.fn()} tabData={{}} showDiagrams={false} setShowDiagrams={jest.fn()} loggedUser={''} />);
         // Adjust the expected text to match what is actually being rendered
         expect(screen.getByText('Ajansäästö päivittäisessä koordinoinnissa')).toBeInTheDocument();
       });
 
     it('toggles diagrams visibility when the button is clicked', () => {
     const setShowDiagramsMock = jest.fn();
-    render(<CalculatorContainer activeSection="DailyWork" updateTabData={jest.fn()} tabData={{}} showDiagrams={false} setShowDiagrams={setShowDiagramsMock} />);
+    render(<CalculatorContainer activeSection="DailyWork" updateTabData={jest.fn()} tabData={{}} showDiagrams={false} setShowDiagrams={setShowDiagramsMock} loggedUser={''} />);
     const button = screen.getByText(/näytä pylväät/i);
     fireEvent.click(button);
     expect(setShowDiagramsMock).toHaveBeenCalled();

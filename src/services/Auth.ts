@@ -6,6 +6,7 @@ interface UserForAuth {
 }
 
 const url = "https://localhost:7252/api/authentication";
+// const url = "https://aisoftcalculator.azurewebsites.net/api/authentication"
 
 const authenticate = (userForAuth: UserForAuth) => {
     const request = axios.post(url, userForAuth);
