@@ -42,8 +42,8 @@ interface PdfReportProps {
                 updateTabData={updateTabData}
                 tabData={tabData}
                 showDiagrams={showDiagrams}
-                setShowDiagrams={setShowDiagrams}
-            /> 
+                setShowDiagrams={setShowDiagrams} loggedUser={''} loginId={0}           
+                /> 
            <div style={{height:200}}></div>
             <CalculatorContainer 
                 activeSection="DailyWork" 
@@ -51,6 +51,8 @@ interface PdfReportProps {
                 tabData={tabData}
                 showDiagrams={showDiagrams}
                 setShowDiagrams={setShowDiagrams}
+                loggedUser={''} 
+                loginId={0}
             />
             <div className='pageChange'>
             <CalculatorContainer  
@@ -59,6 +61,8 @@ interface PdfReportProps {
                 tabData={tabData}
                 showDiagrams={showDiagrams}
                 setShowDiagrams={setShowDiagrams} 
+                loggedUser={''} 
+                loginId={0}
                 />
             </div>
             <div style={{height:200}}></div>
@@ -68,6 +72,8 @@ interface PdfReportProps {
                 tabData={tabData}
                 showDiagrams={showDiagrams}
                 setShowDiagrams={setShowDiagrams}
+                loggedUser={''} 
+                loginId={0}
                 />
             </div>
         </div>

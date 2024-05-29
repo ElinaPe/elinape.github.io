@@ -4,11 +4,11 @@ import { Field } from '../types';
 
 
 interface CustomInputProps {
-    field: Field;
-    onChange: (variable: string, value: string | number) => void;
+    field: Field; // Kentän tiedot, kuten nimi, tyyppi, oletusarvo jne.
+    onChange: (variable: string, value: string | number) => void; // Muutoksen käsittelyfunktio
 }
 
-
+// Tyylitelty syötekenttä, jossa määriteltyä leveyttä ja fonttityyliä
 const InputBox = styled(Input)({
   width: '6em',
   height: '1.5em',
@@ -20,12 +20,11 @@ const InputBox = styled(Input)({
 
 const CustomInput: React.FC<CustomInputProps> = ({ field, onChange }) => {
 
-  const [sliderValue, setSliderValue] = useState(field.defaultValue)
+  const [sliderValue, setSliderValue] = useState(field.defaultValue) // Tilamuuttuja liukusäätimen arvolle
 
 
-    switch (field.controlType) {
+    switch (field.controlType) { // Tarkastetaan kentän tyyppi ja renderöidään sen mukaan
         case 'type':
-            // Render a TextField for numeric input with debounce feature (not implemented in this code snippet).
             return (
               <div className='inputTextField'>
                 <label htmlFor="inputId">{field.name}</label>
@@ -41,7 +40,6 @@ const CustomInput: React.FC<CustomInputProps> = ({ field, onChange }) => {
             );
 
         case 'slider':
-            // Render a Slider component configured according to the field properties.
             return (
               <div className='slider'>
                 <label>{field.name}</label>
@@ -84,8 +82,7 @@ const CustomInput: React.FC<CustomInputProps> = ({ field, onChange }) => {
                 </div>
               </div>
             );
-        default:
-            // Return null for unrecognized control types.
+        default: // Jos kentän tyyppiä ei tunnisteta, ei renderöidä mitään
             return null;
     }
   };

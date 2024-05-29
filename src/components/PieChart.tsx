@@ -2,6 +2,7 @@ import React from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend, TooltipProps } from "recharts";
 import { PieDiagram } from "../types";
 
+// Määritellään CustomTooltip-komponentti
 const CustomTooltip: React.FC<TooltipProps<number, string>> = ({ active, payload }) => {
   if (active && payload && payload.length > 0 && payload[0].value !== undefined) {
     return (
@@ -16,6 +17,7 @@ const CustomTooltip: React.FC<TooltipProps<number, string>> = ({ active, payload
 
 const COLORS = ["#0088FE", "#FFBB28", "#00C49F", "#FF8042"];
 
+// Määritellään renderCustomizedLabel-funktio, joka piirtää mukautetut "etiketit"
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
   cx,

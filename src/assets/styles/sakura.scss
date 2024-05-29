@@ -458,6 +458,19 @@ fieldset {
 .showCitysContainer {
   width: 30%;
   flex-direction: column;
+  position: static;
+  transform: translateX(0%);
+  transition: transform 0.5s ease;
+
+}
+
+.showCitysContainer.centered {
+  width: 35%;
+  flex-direction: column;
+  position: absolute;
+  justify-content: center;
+  transform: translateX(50%);
+  transition: transform 0.4s ease;
 }
 
 .showCitysContainer h3, .showCitysContainer p {
@@ -470,6 +483,14 @@ fieldset {
   background-color: #982c600c;
   width: 70%;
   padding: 20px;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.showResultsContainer.active{
+  opacity:1;
+  transition: opacity 0.8s ease;
+
 }
 
 .cityList {

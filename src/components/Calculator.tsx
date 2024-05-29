@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { Calculator, Field } from '../types';
-import CustomInput from './Input';
-import { parser } from "mathjs"
-import CalculatorInfoModal from '../modals/calculatorInfo';
+import { Calculator, Field } from '../types'; // Tuo tarvittavat tyypit
+import CustomInput from './Input'; // Tuo räätälöity syötekenttäkomponentti
+import { parser } from "mathjs"; // Tuo matemaattisten lausekkeiden jäsentäjä
+import CalculatorInfoModal from '../modals/calculatorInfo'; // Tuo modaalikomponentti, joka näyttää laskurin tiedot
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
+
+// Props-tyyppimäärittely
 interface CalculatorProps {
     calculator: Calculator;
-    // handleInputChange: (formulaName: string, variable: string, value: string | number) => void;
-    // result: number | string;
-    onCalculatorChange: (calculatorId: string, result: number|null) => void;
+    onCalculatorChange: (calculatorId: string, result: number|null) => void; // Funktio, joka kutsutaan, kun laskurin tulos muuttuu
     cssClasses?: string[]
 }
 
 const Laskuri: React.FC<CalculatorProps> = ({ calculator, onCalculatorChange }) => {
+  // Laskurin tuloksen tila
   const [result, setResult] = useState({value: calculator.result.value, name: '', unit: ''});
-  const { id, variables } = calculator
-  // field names and default values
-  const [fields, setFields] = useState(calculator.fields)
-  const [open, setOpen] = useState(false);
+  const { id, variables } = calculator;
+  // Kenttien tila
+  const [fields, setFields] = useState(calculator.fields);
+  // Modaalin tila
+  const [open, setOpen] = useState(false); 
 
-
+  // Tuloksen laskeminen ja päivitys, kun laskuriin liittyvät kentät tai muuttujat muuttuvat
   useEffect(() => {
     const p = parser();
     fields?.forEach(field => {
@@ -43,13 +45,13 @@ const Laskuri: React.FC<CalculatorProps> = ({ calculator, onCalculatorChange }) 
     }
   }, [fields, variables, calculator.formula]);
   
-  
+  // Kutsutaan onCalculatorChange aina kun result muuttuu
   useEffect(() => {
     if(result.value != null)
     onCalculatorChange(id, result.value)
   }, [result])
 
-
+// Käsittelee kentän arvon muutoksen ja päivittää kentät
 const handleFieldChange = (variable: string, value: string) => {
     const parsedValue = parseFloat(value) || 0; 
     setFields((prevFields) =>
@@ -59,26 +61,25 @@ const handleFieldChange = (variable: string, value: string) => {
     );
 };
 
+const handleOpen = () => setOpen(true); // Avaa modaalikomponentin
+const handleClose = () => setOpen(false); // Sulkee modaalikomponentin
 
-const handleOpen = () => setOpen(true);
-const handleClose = () => setOpen(false);
-
+// Muuttaa keston esitysmuotoa
 const parseDuration = (durationMin: number) => {
   const m = Number(durationMin);
   const h = Math.floor(m / 60);
   const remainingMinutes = m % 60;
   const hDisplay = h === 0 ? "" : `${h}h `;
-  const mDisplay = remainingMinutes === 0 ? "" : (remainingMinutes < 10 ? `${remainingMinutes}min` : `${remainingMinutes}min`);
+  const mDisplay = remainingMinutes === 0 ? "" : `${remainingMinutes}min`;
   return hDisplay + mDisplay;
 };
 
-
+// Näyttää laskurin tuloksen
   const displayResult = () => {
     if (result.value !== null) 
     if (result.value !== 0) {
       if (calculator.isTime) {
-        const totalMinutes = Math.round(result.value);
-        return parseDuration(totalMinutes);
+        return parseDuration(Math.round(result.value));
       } else if (calculator.isInteger) {
         return Math.round(result.value).toString();
       } else {

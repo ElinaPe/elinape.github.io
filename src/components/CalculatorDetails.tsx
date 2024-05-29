@@ -22,16 +22,16 @@ const CalculatorDetails = ({ cityId, placeName }: { cityId: number, placeName: s
                 if (response && response.calculators && Array.isArray(response.calculators)) {
                     setCalculators(response.calculators);
                 } else {
-                    setCalculators([]);  // Handle unexpected API response
+                    setCalculators([]); 
                 }
             }).catch(error => {
                 console.error('Failed to fetch calculators:', error);
-                setCalculators([]);  // Handle error
+                setCalculators([]); 
             });
         }
     }, [cityId]);
 
-    // Group calculators by section
+    // Ryhmittely osion mukaan
     const groupedCalculators = calculators.reduce((acc, calculator) => {
         const section = sectionTitles[calculator.section] || calculator.section;
         if (!acc[section]) {
@@ -44,7 +44,7 @@ const CalculatorDetails = ({ cityId, placeName }: { cityId: number, placeName: s
 
 
     const handleDeleteSuccess = () => {
-        console.log('Tietue poistettu onnistuneesti!');
+        console.log('Tiedot poistettu!');
         window.location.reload();
       };
 

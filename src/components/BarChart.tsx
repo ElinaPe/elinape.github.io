@@ -3,6 +3,7 @@ import React, { SyntheticEvent, useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LabelList } from "recharts";
 import { Diagram } from "../types";
 
+//Määritellään Entry-rajapinta, joka sisältää nimen ja avain-arvo-pareja 
 interface Entry {
   name: string;
   [key: string]: string | number;
@@ -14,10 +15,12 @@ interface BarChartBarProps {
 
 const BarChartBar: React.FC<BarChartBarProps> = ({ diagram }) => {
 
+  //tilanhallinta kasvuprosentille, alustettu 3
   const [growthRate, setGrowthRate] = useState(3);
 
+  //Muuntaa diagrammin datan Entry-taulukoksi
   const convertDiagramData = (diagram: Diagram): Entry[] => {
-    // Muunnetaan growthRate prosentista kertoimeksi
+    //Growthrate kerroin (prosentit)
     const growthMultiplier = 1 + (growthRate / 10)
 
     return diagram.xAxisDatakey.map((xAxisItem, index) => {
@@ -25,14 +28,14 @@ const BarChartBar: React.FC<BarChartBarProps> = ({ diagram }) => {
       diagram.barDataKey.forEach((barItem) => {
         let valueYear
         if(barItem.value !== null){
-          if(!barItem.isTime) {
+          if(!barItem.isTime) { //Jos ei ole aikatieto, kerrotaan arvo 12
             valueYear = barItem.value * 12
           }
         else{
-          const year = barItem.value / 60 / 24 * 22 * 12
+          const year = barItem.value / 60 / 24 * 22 * 12 //Jos on aikatieto, muunnetaan minuutit vuosiksi
           valueYear = Math.round(year)
         }
-        
+        //Lisätään arvo entryyn kasvukertoimen mukaan
         switch (index) {
           case 0:
             entry[barItem.name] = valueYear;
@@ -52,13 +55,13 @@ const BarChartBar: React.FC<BarChartBarProps> = ({ diagram }) => {
       return entry;
     });
   };
+  //Muunnetaan diagrammin data
   const diagramData = convertDiagramData(diagram);
 
-
-
-const handleGrowthRateChange = (event: Event | SyntheticEvent<Element, Event>, newValue: number | number[]) => {
-  setGrowthRate(Array.isArray(newValue) ? newValue[0] : newValue);
-};
+  //kasvuprosentin muutoksen käsittely
+  const handleGrowthRateChange = (event: Event | SyntheticEvent<Element, Event>, newValue: number | number[]) => {
+    setGrowthRate(Array.isArray(newValue) ? newValue[0] : newValue);
+  };
 
 // const parseDuration = (durationMin: number) => {
 //   const minutes = Number(durationMin);
@@ -74,6 +77,7 @@ const handleGrowthRateChange = (event: Event | SyntheticEvent<Element, Event>, n
 //   return dDisplay + hDisplay + mDisplay;
 // };
 
+//Palkkien luonti datasta
 const bars = diagram.barDataKey.map((barItem, index) => (
   <Bar
     key={index}

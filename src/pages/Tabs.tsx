@@ -8,6 +8,7 @@ interface TabData {
   [section: string]: { [name: string]: number | null };
 }
 
+// TabPanel-komponentti välilehtien sisällön hallintaan
 function TabPanel(props: { [x: string]: any; children: any; value: any; index: any; }) {
   const { children, value, index, ...other } = props;
 
@@ -56,6 +57,7 @@ export default function SimpleTabs() {
   const [loggedUser, setLoggedUser] = useState<string>('')
   const [loginId, setLoginId] = useState<number>(0);
 
+  //Onko käyttäjä kirjautuneena
  useEffect(() => {
     const storedUser = localStorage.getItem("username")
     if (storedUser !== null)
@@ -63,18 +65,20 @@ export default function SimpleTabs() {
   
  }, [])
 
+  //Välilehden vaihto
   const handleChange = (_event: any, newValue: number) => {
-    if (newValue === sections.length) {
+    if (newValue === sections.length) { //jos kyseessä on "X" välilehti
       if (loggedUser) {
         setSelectedTab(newValue); // Avaa "X" -välilehti ja näyttää ResultsList
       } else {
-        setOpen(true); // Avaa modaalin
+        setOpen(true); // Avaa kirjautumismodaalin
       }
     } else {
       setSelectedTab(newValue);
     }
   };
 
+  //Diagrammien näyttäminen / piilottaminen
   const handleToggleDiagrams = (section: string) => {
     setShowDiagrams(prev => ({
       ...prev,
@@ -82,6 +86,7 @@ export default function SimpleTabs() {
     }));
   };
 
+  //Välilehtidatan päivitys
   const updateTabData = (section: string, data: object) => {
     setTabData(prev => ({
       ...prev,

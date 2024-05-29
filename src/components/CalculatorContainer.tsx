@@ -26,9 +26,12 @@ interface CalculatorContainerProps {
 type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCosts';
   const CalculatorContainer: React.FC<CalculatorContainerProps> = ({ activeSection, showDiagrams, setShowDiagrams, updateTabData, tabData, loggedUser, loginId }) => {
 
+    //haetaan tieto yamlista
     const validatedData = RootSchema.parse(yamlData);
+    //asetetaan otsikot
     const validatedHeadings = validatedData.Headings;
     // const validatedCalculators = validatedData.DailyWork;
+    //haetaan diagrammidata
     const validatedDiagrams = validatedData.Pylvasdiagrammit;
     const validatedPieDiagrams = validatedData.Piirakkadiagrammit;
 
@@ -40,9 +43,7 @@ type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCos
     const { globalData, updateCalculatorData } = useContext(CalculatorContext);
 
     const [endResults, setEndResults] = useState<{ name: string; value: number|null }[]>([]);
-    // const [calculators, setCalculators] = useState(validatedCalculators.map(calculator => ({
-    //     ...calculator, variables:endResults
-    // })));
+
 
     const { toPDF, targetRef } = usePDF({filename: 'calculator.pdf'});
 
@@ -53,7 +54,7 @@ type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCos
     //     })));
     //   }, [activeSection]);
 
-
+// Laskureiden ja tulosten päivitys, kun aktiivinen osio muuttuu
     useEffect(() => {
       const sectionData = validatedData[activeSection as ValidatedDataKey] || [];
       const updatedCalculators = sectionData.map(calculator => {
@@ -70,7 +71,7 @@ type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCos
       });
 
       setCalculators(updatedCalculators);
-      updateCalculatorData(activeSection, updatedCalculators);
+      updateCalculatorData(activeSection, updatedCalculators); //contextiin päivitys
     }, [activeSection]);
 
     // useEffect(() => {
@@ -81,18 +82,22 @@ type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCos
     // }, [defaultValues]);
 
 
-      const sectionTitle = validatedHeadings[activeSection];
+      //Otsikkotieto yamlista
+      const sectionTitle = validatedHeadings[activeSection]; 
 
-
+      //Diagrammien määritys ja päivittäminen
       useEffect(() => {
+        //Näytetään diagrammit aktiivisen osion mukaan
         const sectionBarDiagrams = validatedDiagrams.filter(diagram => diagram.section === activeSection);
+        // Tarkista, tarvitaanko päivitys
         const needsUpdateBar = diagrams.length !== sectionBarDiagrams.length || diagrams.some((diag, index) => diag.id !== sectionBarDiagrams[index]?.id);
 
         if (needsUpdateBar) {
             setDiagrams(sectionBarDiagrams);
         }
-
+        // Hae aktiivisen osion piirakkadiagrammit
         const sectionPieDiagrams = validatedPieDiagrams.filter(diagram => diagram.section === activeSection);
+        // Tarkista, tarvitaanko päivitys
         const needsUpdatePie = pieDiagrams.length !== sectionPieDiagrams.length || pieDiagrams.some((diag, index) => diag.id !== sectionPieDiagrams[index]?.id);
 
         if (needsUpdatePie) {
@@ -101,6 +106,7 @@ type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCos
 
     }, [activeSection, validatedDiagrams, validatedPieDiagrams, diagrams, pieDiagrams]);
 
+      // Päivitä lopputulokset, kun tabData muuttuu
       useEffect(() => {
         const newResults: { name: string; value: number | null }[] = [];
 
@@ -112,9 +118,7 @@ type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCos
         setEndResults(newResults);
       }, [tabData]);
 
-      // Esimerkiksi kerää kaikki laskurit kaikista osioista
-
-
+    // Laskurin muutoksen käsittely
     const handleCalculatorChange = (section: string, calculatorId: string, result: number|null) => {
       const newValue = typeof result === 'number' ? result : parseFloat(result || '0');
       setCalculators(prevCalculators => {
@@ -125,14 +129,14 @@ type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCos
           }
           return calculator;
         });
-        // Päivitä globalData vain, jos calculators on kokonaan päivitetty
+        // Päivitä myös globalData
         updateCalculatorData(section, newCalculators);
         return newCalculators;
       });
       };
 
 
-
+      // Päivitä tabData, kun laskurit muuttuvat
       useEffect(() => {
         const newResults = calculators.map(calculator => ({
           name: `result_${calculator.id}`,
@@ -163,6 +167,7 @@ type ValidatedDataKey = 'Landing' | 'DailyWork' | 'PlanningWork' | 'TransportCos
 
       }, [endResults])
 
+      // Päivitä pylväsdiagrammien data, kun lopputulokset muuttuvat
       useEffect(() => {
         const updatedPieData = pieDiagrams.map(pieDiagram => {
           const updatedData = pieDiagram.data.map(dataItem => {

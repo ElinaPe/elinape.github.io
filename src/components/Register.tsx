@@ -13,7 +13,6 @@ const AddUserForm: React.FC<AddUserFormProps> = ({onBack}) => {
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        
         try {
             const response = await UserService.createNewUser(newName, newUsername, newPassword);
             console.log('User addition response:', response);

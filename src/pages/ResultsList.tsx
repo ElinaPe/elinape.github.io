@@ -19,6 +19,9 @@ const ListedResults: React.FC<ListedResultsProps> = ({setLoggedUser, loggedUser,
     // const [showCalculators, setShowCalculators] = useState<boolean>(false)
     const [showOnlyOwn, setShowOnlyOwn] = useState(false);
 
+    const [isCitySelected, setIsCitySelected] = useState<boolean>(false)
+
+    // Haetaan kaupungit ja asetetaan token
     useEffect(() => {
         const token = localStorage.getItem('token')
         if(token)
@@ -32,27 +35,29 @@ const ListedResults: React.FC<ListedResultsProps> = ({setLoggedUser, loggedUser,
     },[]
     )
 
+    // Haetaan kaupungit kun näytetään vain omat tai loginId muuttuu
     useEffect(() => {
-        // Varmistetaan, että token on asetettu ennen hakuja
-
-            if (showOnlyOwn && loginId) {
-                // Hakee vain kirjautuneen käyttäjän kaupungit
-                ResultsList.getCityNamesById(loginId)
-                    .then(setCityNames)
-                    .catch(error => console.error('Failed to fetch my city names', error));
-            } else {
-                // Hakee kaikki kaupungit
-                ResultsList.getCityNames()
-                    .then(setCityNames)
-                    .catch(error => console.error('Failed to fetch city names', error));
-            }
-        
+    // Varmistetaan, että token on asetettu ennen hakuja
+        if (showOnlyOwn && loginId) {
+            // Hakee vain kirjautuneen käyttäjän kaupungit
+            ResultsList.getCityNamesById(loginId)
+                .then(setCityNames)
+                .catch(error => console.error('Failed to fetch my city names', error));
+        } else {
+            // Hakee kaikki kaupungit
+            ResultsList.getCityNames()
+                .then(setCityNames)
+                .catch(error => console.error('Failed to fetch city names', error));
+        }
     }, [showOnlyOwn, loginId]);
 
+    // Käsitellään kaupungin valinta
     const handleCitySelection = (city: ResultList) => {
         setSelectedCity(city);
+        setIsCitySelected(true)
     }
 
+    // Näytetään vain omat kaupungit tai kaikki kaupungit
     const toggleOwnResults = () => {
         setShowOnlyOwn(!showOnlyOwn);
     }
@@ -66,8 +71,7 @@ const ListedResults: React.FC<ListedResultsProps> = ({setLoggedUser, loggedUser,
 
     return (
         <div className='resultsPageContainer'>
-            <div className='showCitysContainer'>
-                <div className='userNameInfo'> 
+             <div className='userNameInfo'> 
                     <div className='userNameInfoBorder'>
                         <FontAwesomeIcon icon={faUser} /> {loggedUser} 
                     </div>
@@ -75,6 +79,7 @@ const ListedResults: React.FC<ListedResultsProps> = ({setLoggedUser, loggedUser,
                         Ulos
                     </button>
                 </div>
+            <div className={`showCitysContainer ${isCitySelected ? '' : 'centered'}`}>
                 <div className='infoHeaderWithButton'>
                     <h1>Tallennetut tiedot</h1>
                     <button className='btn savedBtn' onClick={toggleOwnResults}>{showOnlyOwn ? "Näytä kaikki" : "Vain omat"}</button>
@@ -91,7 +96,7 @@ const ListedResults: React.FC<ListedResultsProps> = ({setLoggedUser, loggedUser,
                 ))}
                 
             </div>
-            {selectedCity && <div className='showResultsContainer'>
+            {<div className={`showResultsContainer ${isCitySelected ? 'active' : ''}`}>
                 {selectedCity && <CalculatorDetails cityId={selectedCity.resultsListId} placeName={selectedCity.placeName} />}
             </div>}
         </div>
