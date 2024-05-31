@@ -24,7 +24,7 @@ export const Field = z.object({
 	max: z.number().optional(),
 	marks: z.array(Mark).optional(),
 	defaultValue: z.number(),
-	checkboxValue: z.boolean().optional(),
+	checkboxTrueValue: z.number().optional(),
 });
 
 

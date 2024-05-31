@@ -19,8 +19,8 @@ const InputBox = styled(Input)({
   
 const CustomInput: React.FC<CustomInputProps> = ({ field, onChange }) => {
 
-  const [sliderValue, setSliderValue] = useState(field.defaultValue)
-  const [checkboxValue, setCheckboxValue] = useState(true); 
+  const [sliderValue, setSliderValue] = useState<number>(field.defaultValue)
+  const [checkboxValue, setCheckboxValue] = useState<boolean>(field.defaultValue === (field.checkboxTrueValue ?? field.defaultValue)); 
 
     switch (field.controlType) { // Tarkastetaan kentän tyyppi ja renderöidään sen mukaan
         case 'type':
@@ -90,7 +90,9 @@ const CustomInput: React.FC<CustomInputProps> = ({ field, onChange }) => {
                         checked={checkboxValue}
                         onChange={(e) => {
                           setCheckboxValue(e.target.checked);
-                          onChange(field.variable, e.target.checked ? field.defaultValue : 0);
+                          const newValue = e.target.checked ? (field.checkboxTrueValue ?? field.defaultValue) : field.defaultValue;
+                          console.log('New checkbox value:', newValue);
+                          onChange(field.variable, newValue);
                         }}
                         name={field.name}
                         color="primary"

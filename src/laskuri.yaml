@@ -20,18 +20,17 @@ Calculators:
         variable: aikaKuukaudessa
         controlType: type
         defaultValue: 2
-      - name: Montako henkeä jakaa?
+      - name: Jaetaanko puolisolle?
         variable: taloushenkilot
-        controlType: type
+        controlType: checkbox
         defaultValue: 1
+        checkboxTrueValue: 2
       - name: Omavastuu mukana?
         variable: omavastuu
         controlType: checkbox
-        defaultValue: 100
-      # - name: Accept Terms
-      #   variable: accept_terms
-      #   controlType: checkbox
-      #   defaultValue: false
+        defaultValue: 0
+        checkboxTrueValue: 100
+
     formula: (((tuntihinta * siivousaika * aikaKuukaudessa * 12) / 100 * 60) - omavastuu) / taloushenkilot
     result:
       name: Kotitalousvähennys on
