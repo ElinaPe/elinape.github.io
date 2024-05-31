@@ -1,6 +1,7 @@
-import { CalculatorProvider } from './components/CalculatorContext';
-import ListedResults from './pages/ResultsList';
-import SimpleTabs from './pages/Tabs';
+import CalculatorContainer from './components/CalculatorContainer';
+// import { CalculatorProvider } from './components/CalculatorContext';
+// import ListedResults from './pages/ResultsList';
+// import SimpleTabs from './pages/Tabs';
 
 
 
@@ -9,10 +10,11 @@ function App() {
 
     return (
         <>
-        <CalculatorProvider>
-            <SimpleTabs />
+        {/* <CalculatorProvider> */}
+            {/* <SimpleTabs /> */}
             {/* <ListedResults/> */}
-        </CalculatorProvider>
+            <CalculatorContainer />
+        {/* </CalculatorProvider> */}
             
         </>
     );

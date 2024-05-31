@@ -114,7 +114,7 @@ const parseDuration = (durationMin: number) => {
                 ))}
             </div>
             <div>
-              <p className='calculatorResult'>{calculator.result.name}: {resultValue} {calculator.result.unit} </p>
+              <p className='calculatorResult'>{calculator.result.name}: <b>{resultValue} {calculator.result.unit}</b> </p>
            </div>
         </div>
     );

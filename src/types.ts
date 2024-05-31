@@ -87,10 +87,7 @@ export const PieDiagramSchema = z.object({
 
 export const RootSchema = z.object({
 	Headings: HeadingsSchema,
-	Landing: z.array(CalculatorSchema),
-	DailyWork: z.array(CalculatorSchema),
-	PlanningWork: z.array(CalculatorSchema),
-	TransportCosts: z.array(CalculatorSchema),
+	Calculators: z.array(CalculatorSchema),
 	Pylvasdiagrammit: z.array(DiagramSchema),
 	Piirakkadiagrammit: z.array(PieDiagramSchema),
 });
