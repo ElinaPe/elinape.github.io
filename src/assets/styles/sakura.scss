@@ -347,6 +347,12 @@ fieldset {
   gap: 10px;
 }
 
+.MuiFormControlLabel-label {
+  font-size: medium !important;
+  // font-weight: 550 !important;
+
+}
+
 .peruutusLaskuri{
   display: grid;
   grid-template-columns: repeat(2, 50% [ col-start ]);

@@ -24,10 +24,14 @@ Calculators:
         variable: taloushenkilot
         controlType: type
         defaultValue: 1
-      - name: Omavastuu euroina
+      - name: Omavastuu mukana?
         variable: omavastuu
-        controlType: type
+        controlType: checkbox
         defaultValue: 100
+      # - name: Accept Terms
+      #   variable: accept_terms
+      #   controlType: checkbox
+      #   defaultValue: false
     formula: (((tuntihinta * siivousaika * aikaKuukaudessa * 12) / 100 * 60) - omavastuu) / taloushenkilot
     result:
       name: Kotitalousvähennys on

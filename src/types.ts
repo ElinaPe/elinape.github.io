@@ -18,12 +18,13 @@ export const Field = z.object({
 	fieldId: z.number().optional(),
 	name: z.string(),
 	variable: z.string(),
-	controlType: z.enum(["type", "slider"]),
+	controlType: z.enum(["type", "slider", "checkbox"]),
 	step: z.number().optional(),
 	min: z.number().optional(),
 	max: z.number().optional(),
 	marks: z.array(Mark).optional(),
 	defaultValue: z.number(),
+	checkboxValue: z.boolean().optional(),
 });
 
 
@@ -92,8 +93,6 @@ export const RootSchema = z.object({
 	Piirakkadiagrammit: z.array(PieDiagramSchema),
 });
 
-const InputValues = z.record(z.string(), z.record(z.string(), z.number()));
-
 const Result = z.record(z.string(), z.number());
 
 export const CalculatorsSchema = z.array(CalculatorSchema)
@@ -116,7 +115,6 @@ export interface CalculatorState {
 export type Field = z.infer<typeof Field>;
 export type Calculator = z.infer<typeof CalculatorSchema>;
 export type Calculators = z.infer<typeof CalculatorsSchema>;
-export type InputValues = z.infer<typeof InputValues>;
 export type Result = z.infer<typeof Result>;
 export type Diagram = z.infer<typeof DiagramSchema>;
 export type PieDiagram = z.infer<typeof PieDiagramSchema>;

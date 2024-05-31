@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { TextField, Slider, Input, styled } from '@mui/material';
+import { TextField, Slider, Input, styled, Checkbox, FormControlLabel } from '@mui/material';
 import { Field } from '../types';
 
 
 interface CustomInputProps {
     field: Field; // Kentän tiedot, kuten nimi, tyyppi, oletusarvo jne.
-    onChange: (variable: string, value: string | number) => void; // Muutoksen käsittelyfunktio
+    onChange: (variable: string, value: string | number | boolean) => void; // Muutoksen käsittelyfunktio
 }
 
 // Tyylitelty syötekenttä, jossa määriteltyä leveyttä ja fonttityyliä
@@ -17,11 +17,10 @@ const InputBox = styled(Input)({
   fontWeight: 'bold',
 })
   
-
 const CustomInput: React.FC<CustomInputProps> = ({ field, onChange }) => {
 
-  const [sliderValue, setSliderValue] = useState(field.defaultValue) // Tilamuuttuja liukusäätimen arvolle
-
+  const [sliderValue, setSliderValue] = useState(field.defaultValue)
+  const [checkboxValue, setCheckboxValue] = useState(true); 
 
     switch (field.controlType) { // Tarkastetaan kentän tyyppi ja renderöidään sen mukaan
         case 'type':
@@ -82,6 +81,25 @@ const CustomInput: React.FC<CustomInputProps> = ({ field, onChange }) => {
                 </div>
               </div>
             );
+            case 'checkbox':
+              return (
+                <div className='checkboxField'>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={checkboxValue}
+                        onChange={(e) => {
+                          setCheckboxValue(e.target.checked);
+                          onChange(field.variable, e.target.checked ? field.defaultValue : 0);
+                        }}
+                        name={field.name}
+                        color="primary"
+                      />
+                    }
+                    label={field.name}
+                  />
+                </div>
+              );
         default: // Jos kentän tyyppiä ei tunnisteta, ei renderöidä mitään
             return null;
     }

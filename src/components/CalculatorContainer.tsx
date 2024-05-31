@@ -65,8 +65,18 @@ import { z } from 'zod';
 
 
     // Laskurin muutoksen käsittely
-    const handleCalculatorChange = (calculatorId: string, result: number) => {
-      const newValue = typeof result === 'number' ? result : parseFloat(result);
+    const handleCalculatorChange = (calculatorId: string, result: number | string | null) => {
+      let newValue: number;
+      if (typeof result === 'number') {
+        newValue = result;
+      } else if (result === null) {
+        newValue = 0;
+      } else {
+        newValue = parseFloat(result);
+        if (isNaN(newValue)) {
+          newValue = 0;
+        }
+      }
       setCalculators(prevCalculators =>
         prevCalculators.map(calculator =>
           calculator.id === calculatorId
